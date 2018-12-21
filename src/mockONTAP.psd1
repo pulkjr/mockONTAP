@@ -10,18 +10,25 @@
     RequiredModules   = @('dataONTAP')
     FunctionsToExport = @(
         'Connect-NcController'
+        'Get-NcIgroup'
+        'New-NcIgroup'
         'New-NcVol'
         'New-NcVserver'
+        'New-MockNcController'
+        'New-MockNcIgroup'
+        'Remove-NcIgroup'
     )
     VariablesToExport = ''
     AliasesToExport   = ''
     FileList          = @(
         'mockONTAP.psd1'
         'mockONTAP.psm1'
-        'public/Connect-NcController.ps1'
-        'public/New-NcVol.ps1'
-        'public/New-NcVserver.ps1'
-        'public/'
+        'public\Connect-NcController.ps1'
+        'public\Get-NcIgroup.ps1'
+        'public\New-NcVol.ps1'
+        'public\New-NcVserver.ps1'
+        'public\New-NcIgroup.ps1'
+        'public\Remove-NcIgroup.ps1'
     )
     PrivateData       = @{
 

@@ -9,7 +9,7 @@ function New-NcIgroup
         [String]
         $Protocol,
         [ValidateSet('windows', 'vmware', 'solaris', 'hpux', 'aix', 'linux', 'netware', 'xen', 'hyper_v', 'openvms')]
-        $Type = 'windows',
+        $Type,
         $Portset,
         [Parameter(Mandatory)]
         [String]
@@ -38,6 +38,6 @@ function New-NcIgroup
     $_mockIgroup.InitiatorGroupVsaEnabled = $false
     $_mockIgroup.InitiatorGroupVsaEnabledSpecified = $true
     $_mockIgroup.LunIdSpecified = $false
-    $_mockIgroup.NcController
-    $_mockIgroup.Vserver
+    $_mockIgroup.NcController = $Controller
+    $_mockIgroup.Vserver = $VserverContext
 }
