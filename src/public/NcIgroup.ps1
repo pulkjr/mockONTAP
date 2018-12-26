@@ -62,6 +62,27 @@ function New-MockNcIgroup
     return $_mockIgroup
 }
 
+function New-NcIgroup
+{
+    param(
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
+        [Parameter(Mandatory)]
+        [ValidateSet('iscsi', 'fcp', 'mixed')]
+        [String]
+        $Protocol,
+        [ValidateSet('windows', 'vmware', 'solaris', 'hpux', 'aix', 'linux', 'netware', 'xen', 'hyper_v', 'openvms')]
+        $Type,
+        $Portset,
+        [Parameter(Mandatory)]
+        [String]
+        $VserverContext,
+        $Controller
+    )
+
+    New-MockNcIgroup @PSBoundParameters
+}
 function Get-NcIgroup
 {
     param(
@@ -120,6 +141,45 @@ function Set-NcIgroup
         Name    = $Name
         Vserver = $VserverContext
         Type    = $Value
+    }
+    
+    mockONTAP\New-MockNcIgroup @GetParam
+}
+
+function Add-NcIgroupInitiator
+{
+    param(
+        $Name,
+        $VserverContext,
+        $Controller,
+        $Initiator,
+        $ReturnInitiators
+    )
+
+    $GetParam = @{
+        Name       = $Name
+        Vserver    = $VserverContext
+        Controller = $Controller
+        Initiator  = $ReturnInitiators
+    }
+    
+    mockONTAP\New-MockNcIgroup @GetParam
+}
+function Remove-NcIgroupInitiator
+{
+    param(
+        $Name,
+        $VserverContext,
+        $Controller,
+        $Initiator,
+        $ReturnInitiators
+    )
+
+    $GetParam = @{
+        Name       = $Name
+        Vserver    = $VserverContext
+        Controller = $Controller
+        Initiator  = $ReturnInitiators
     }
     
     mockONTAP\New-MockNcIgroup @GetParam

@@ -28,10 +28,8 @@
         'mockONTAP.psm1'
         'public\Connect-NcController.ps1'
         'public\NcIgroup.ps1'
-        'public\NcIgroupInitiator.ps1'
         'public\New-NcVol.ps1'
         'public\New-NcVserver.ps1'
-        'public\New-NcIgroup.ps1'
     )
     PrivateData       = @{
 
