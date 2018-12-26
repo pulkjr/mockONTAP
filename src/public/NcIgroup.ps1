@@ -1,25 +1,21 @@
 function New-MockNcIgroup
 {
     param(
-        [Parameter(Mandatory, ParameterSetName = 'one')]
         [String]
         $Name,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
         [String]
         $Vserver,
-        [Parameter(ParameterSetName = 'one')]
-        [String]
+        [String[]]
         $Initiator,
-        [Parameter(ParameterSetName = 'two')]
         [switch]
         $Template,
-        [Parameter(ParameterSetName = 'three')]
         $Query,
-        [Parameter(ParameterSetName = 'one')]
-        [Parameter(ParameterSetName = 'three')]
         $Attributes,
         $VserverContext,
-        $Controller
+        $Controller,
+        $Type,
+        $Portset,
+        $Protocol
     )
 
     if ($query.Name)
@@ -54,6 +50,15 @@ function New-MockNcIgroup
     $_mockIgroup.NcController = $Controller
     $_mockIgroup.Vserver = $VserverContext
 
+    $_mockIgroup.Initiators = @()
+    foreach ( $i in $Initiator )
+    {
+        $_initiator = [DataONTAP.C.Types.Igroup.InitiatorInfo]::New()
+        $_initiator.InitiatorName = $i
+        $_initiator.NcController = $Controller
+        $_mockIgroup.Initiators += $_initiator
+    }
+
     return $_mockIgroup
 }
 
@@ -81,4 +86,41 @@ function Get-NcIgroup
         $Controller
     )
     New-MockNcIgroup @PSBoundParameters
+}
+
+function Remove-NcIgroup
+{
+    [OutputType([void])]
+    param(
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
+        [Parameter(Mandatory)]
+        [String]
+        $VserverContext,
+        $Controller,
+        [switch]
+        $Force
+    )
+
+    return
+}
+
+function Set-NcIgroup
+{
+    param(
+        $Name,
+        $VserverContext,
+        $Key,
+        $Value,
+        $Controller
+    )
+
+    $GetParam = @{
+        Name    = $Name
+        Vserver = $VserverContext
+        Type    = $Value
+    }
+    
+    mockONTAP\New-MockNcIgroup @GetParam
 }
