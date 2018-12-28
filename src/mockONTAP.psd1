@@ -11,6 +11,7 @@
     FunctionsToExport = @(
         'Connect-NcController'
         'Add-NcIgroupInitiator'
+        'Add-NcIgroupPortset'
         'Get-NcIgroup'
         'New-NcIgroup'
         'New-NcVol'
@@ -19,6 +20,7 @@
         'New-MockNcIgroup'
         'Remove-NcIgroup'
         'Remove-NcIgroupInitiator'
+        'Remove-NcIgroupPortset'
         'Set-NcIgroup'
     )
     VariablesToExport = ''

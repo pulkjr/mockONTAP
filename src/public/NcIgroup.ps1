@@ -184,3 +184,40 @@ function Remove-NcIgroupInitiator
     
     mockONTAP\New-MockNcIgroup @GetParam
 }
+function Remove-NcIgroupPortset
+{
+    param(
+        $Name,
+        $VserverContext,
+        $Controller
+    )
+
+    $param = @{
+        Name       = $Name
+        Vserver    = $VserverContext
+        Controller = $Controller
+    }
+    
+    mockONTAP\New-MockNcIgroup @param
+}
+function Add-NcIgroupPortset
+{
+    param(
+        [string]
+        $Name,
+        [string]
+        $Portset,
+        [string]
+        $VserverContext,
+        $Controller
+    )
+
+    $param = @{
+        Name       = $Name
+        Portset    = $Portset
+        Vserver    = $VserverContext
+        Controller = $Controller
+    }
+    
+    mockONTAP\New-MockNcIgroup @param
+}
