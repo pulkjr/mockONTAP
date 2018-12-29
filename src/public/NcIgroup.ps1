@@ -18,14 +18,19 @@ function New-MockNcIgroup
         $Protocol
     )
 
-    if ($query.Name)
+    if ($query.Name -and [string]::IsNullOrEmpty($Name))
     {
         $name = $Query.Name
     }
-    if ($Query.Vserver)
+    if ($Query.Vserver -and [string]::IsNullOrEmpty($Vserver))
     {
-        $Vserver = $Query
+        $Vserver = $Query.Vserver
     }
+    if ($VserverContext -and [string]::IsNullOrEmpty($Vserver))
+    {
+        $Vserver = $VserverContext
+    }
+
     $_mockIgroup = [DataONTAP.C.Types.Igroup.InitiatorGroupInfo]::New()
     $_mockIgroup.InitiatorGroupAluaEnabled = $true
     $_mockIgroup.InitiatorGroupAluaEnabledSpecified = $true
@@ -48,15 +53,23 @@ function New-MockNcIgroup
     $_mockIgroup.InitiatorGroupVsaEnabledSpecified = $true
     $_mockIgroup.LunIdSpecified = $false
     $_mockIgroup.NcController = $Controller
-    $_mockIgroup.Vserver = $VserverContext
+    $_mockIgroup.Vserver = $Vserver
 
-    $_mockIgroup.Initiators = @()
-    foreach ( $i in $Initiator )
+    if (-not $Initiator)
     {
-        $_initiator = [DataONTAP.C.Types.Igroup.InitiatorInfo]::New()
-        $_initiator.InitiatorName = $i
-        $_initiator.NcController = $Controller
-        $_mockIgroup.Initiators += $_initiator
+        $_mockIgroup.Initiators = $null
+    }
+    else
+    {
+        $_mockIgroup.Initiators = @()
+        foreach ( $i in $Initiator )
+        {
+            $_initiator = [DataONTAP.C.Types.Igroup.InitiatorInfo]::New()
+            $_initiator.InitiatorName = $i
+            $_initiator.NcController = $Controller
+            $_mockIgroup.Initiators += $_initiator
+        }
+
     }
 
     return $_mockIgroup
