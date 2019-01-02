@@ -12,15 +12,21 @@
         'Connect-NcController'
         'Add-NcIgroupInitiator'
         'Add-NcIgroupPortset'
+        'Add-NcPortset'
+        'Add-NcPortsetPort'
         'Get-NcIgroup'
         'New-NcIgroup'
+        'New-NcPortset'
         'New-NcVol'
         'New-NcVserver'
         'New-MockNcController'
         'New-MockNcIgroup'
+        'New-MockNcPortset'
         'Remove-NcIgroup'
         'Remove-NcIgroupInitiator'
         'Remove-NcIgroupPortset'
+        'Remove-NcPortset'
+        'Remove-NcPortsetPort'
         'Set-NcIgroup'
     )
     VariablesToExport = ''
@@ -28,10 +34,11 @@
     FileList          = @(
         'mockONTAP.psd1'
         'mockONTAP.psm1'
-        'public\Connect-NcController.ps1'
+        'public\NcController.ps1'
         'public\NcIgroup.ps1'
-        'public\New-NcVol.ps1'
-        'public\New-NcVserver.ps1'
+        'public\NcPortset.ps1'
+        'public\NcVol.ps1'
+        'public\NcVserver.ps1'
     )
     PrivateData       = @{
 
