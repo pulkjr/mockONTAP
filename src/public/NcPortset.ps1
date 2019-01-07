@@ -13,7 +13,7 @@ function New-MockNcPortset
         $Port
     )
     $portset = [DataONTAP.C.Types.Portset.PortsetInfo]::new()
-    $portset.NcController = $Controller
+    #$portset.NcController = $Controller
     $portset.PortsetName = $Name
     $portset.PortsetPortInfo = $Port
     $portset.PortsetPortTotal = @($Port).Count
