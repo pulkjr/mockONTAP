@@ -1,5 +1,4 @@
-function Resolve-DeserializedObject
-{
+function Resolve-DeserializedObject {
     <#
         .SYNOPSIS
         This function will serialize an DataONTAP object
@@ -7,37 +6,53 @@ function Resolve-DeserializedObject
     param(
         $InputObject,
         [string]
-        $ReturnObjectType
+        $ReturnObjectType,
+        [NetApp.Ontapi.Filer.C.NcController]
+        $Controller
     )
     
     Write-Verbose "Serializing object into: $ReturnObjectType"
+    if (-not $Controller) {
+        $Controller = New-MockNcController
+    }
 
-    $returnObject = New-Object -TypeName $ReturnObjectType
+    try {
+        $returnObject = New-Object -TypeName $ReturnObjectType
+
+    }
+    catch {
+        return
+    }
     $_properties = $returnObject | Get-Member -MemberType Property, NoteProperty
     
-    foreach ($_property in $_properties)
-    {
-        $_errorActionBefore = $ErrorActionPreference
-        $ErrorActionPreference = 'SilentlyContinue'
+    foreach ($_property in $_properties) {
 
-        if ($($InputObject.$($_property.Name)).gettype().name -ne 'PSObject')
-        {
-            $returnObject.$($_property.Name) = $InputObject.$($_property.Name)
+        $_OntapType = [regex]::Match($_property.Definition, 'DataONTAP([.].+?)+\s').value.trim()
+        $_NetAppType = [regex]::Match($_property.Definition, 'NetApp.Ontapi.Filer.C.NcController').value
+
+        if (-not [string]::IsNullOrEmpty($_NetAppType)) {
+            $returnObject.$($_property.Name) = $Controller
         }
-        else
-        {
-            $_OntapType = [regex]::Match($_property.Definition, 'DataONTAP([.].+?)+\s').value.trim()
-            if ([string]::IsNullOrEmpty($_OntapType))
-            {
+        elseif ([string]::IsNullOrEmpty($_OntapType)) {
+            try {
                 $returnObject.$($_property.Name) = $InputObject.$($_property.Name)
+
             }
-            else
-            {
-                $returnObject.$($_property.Name) = Resolve-DeserializedObject -InputObject $InputObject.$($_property.Name) -ReturnObjectType $_OntapType
+            catch {
+                if ($_ -match 'ReadOnly property') {
+                    continue
+                }
             }
         }
-        $ErrorActionPreference = $_errorActionBefore
+        else {
+            $returnObject.$($_property.Name) = Resolve-DeserializedObject -InputObject $InputObject.$($_property.Name) -ReturnObjectType $_OntapType
+        }
+        
+
     }
 
     return $returnObject
 }
+
+#$aggrs = Import-Clixml Z:\git\Examples\VolumePlacement\aggrListComplete.xml
+#Resolve-DeserializedObject -InputObject $aggrs[0] -ReturnObjectType 'DataONTAP.C.Types.Aggr.AggrAttributes'

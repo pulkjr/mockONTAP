@@ -1,3 +1,34 @@
+function New-MockNcVol
+{
+    [CmdletBinding()]
+    param (
+        # Provide a deserialized Volume object to be serialized and output correctly. For instance you can use Import-CliXML to and give the deserialized volume and they will be returned serialized correctly.
+        [Parameter(ValueFromPipeline)]
+        [ValidateNotNullOrEmpty()]
+        [Object[]]
+        $InputObject
+    )
+    
+    process
+    {
+
+        if ($InputObject)
+        {
+            foreach ($_deserializedObject in $InputObject)
+            {
+                $mock = Resolve-DeserializedObject -InputObject $_deserializedObject -ReturnObjectType 'DataONTAP.C.Types.Volume.VolumeAttributes'
+    
+                return $mock
+
+            }
+        }
+        else
+        {
+
+        }
+    }
+    
+}
 Function New-NcVol
 {
     [CmdletBinding()]

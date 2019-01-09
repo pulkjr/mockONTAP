@@ -34,7 +34,6 @@ function New-MockNcVserver
         $CachingPolicy = 'on_read',
         [switch]
         $Async,
-        [string]
         $Controller,
         [string[]]
         $AggrList = @('VICE07_aggr1', 'VICE08_aggr1'),
@@ -53,43 +52,66 @@ function New-MockNcVserver
         $UUID = 'f38f651a-ca22-11e5-9a1e-00a09830cb90',
         $VolumeDeleteRetentionHours = 12,
         $VserverType = 'data',
-        $VserverContext
+        $VserverContext,
+        # Provide a deserialized Vserver object to be serialized and output correctly. For instance you can use Import-CliXML to and give the deserialized vservers and they will be returned serialized correctly.
+        [Parameter(ValueFromPipeline)]
+        [ValidateNotNullOrEmpty()]
+        [Object[]]
+        $InputObject
     )
+
     if ($VserverContext -and (-not $Name) )
     {
         $name = $VserverContext
     }
+    if(-Not $Controller){
+        $Controller = New-MockNcController
+    }
+    if ($InputObject)
+    {
+        foreach ($_deserializedObject in $InputObject)
+        {
+            $mock = Resolve-DeserializedObject -InputObject $_deserializedObject -ReturnObjectType 'DataONTAP.C.Types.Vserver.VserverInfo' -Controller $Controller
 
-    $_mockSVM.AggrList = $AggrList
-    $_mockSVM.AllowedProtocols = $AllowedProtocols
-    $_mockSVM.AntivirusOnAccessPolicy = $AntivirusOnAccessPolicy
-    $_mockSVM.CachingPolicy = $CachingPolicy
-    $_mockSVM.Comment = $Comment
-    $_mockSVM.State = $state
-    $_mockSVM.DisallowedProtocols = $DisallowedProtocols
-    $_mockSVM.Ipspace = $Ipspace
-    $_mockSVM.Language = $Language
-    $_mockSVM.LdapDomain = $LdapDomain
-    $_mockSVM.MaxVolumes = $MaxVolumes
-    $_mockSVM.NameMappingSwitch = $NameMappingSwitch
-    $_mockSVM.NameServerSwitch = $NameServerSwitch
-    $_mockSVM.NcController = New-MockNcController
-    $_mockSVM.NisDomain = $NisDomain
-    $_mockSVM.OperationalState = $OperationalState
-    $_mockSVM.QosPolicyGroup = $QosPolicyGroup
-    $_mockSVM.QuotaPolicy = $QuotaPolicy
-    $_mockSVM.RootVolume = $RootVolume
-    $_mockSVM.RootVolumeAggregate = $RootVolumeAggregate
-    $_mockSVM.RootVolumeSecurityStyle = $RootVolumeSecurity
-    $_mockSVM.SnapshotPolicy = $SnapShotPolicy
-    $_mockSVM.Uuid = $UUID
-    $_mockSVM.VolumeDeleteRetentionHours = $VolumeDeleteRetentionHours
-    $_mockSVM.VserverName = $Name
-    $_mockSVM.VserverSubtype = $Subtype
-    $_mockSVM.VserverType = $VserverType
-    $_mockSVM.Vserver = $Name
+            return $mock
 
-    return $_mockSVM
+        }
+    }
+    else
+    {
+        $_mockSVM = [DataONTAP.C.Types.Vserver.VserverInfo]::new()
+
+        $_mockSVM.AggrList = $AggrList
+        $_mockSVM.AllowedProtocols = $AllowedProtocols
+        $_mockSVM.AntivirusOnAccessPolicy = $AntivirusOnAccessPolicy
+        $_mockSVM.CachingPolicy = $CachingPolicy
+        $_mockSVM.Comment = $Comment
+        $_mockSVM.State = $state
+        $_mockSVM.DisallowedProtocols = $DisallowedProtocols
+        $_mockSVM.Ipspace = $Ipspace
+        $_mockSVM.Language = $Language
+        $_mockSVM.LdapDomain = $LdapDomain
+        $_mockSVM.MaxVolumes = $MaxVolumes
+        $_mockSVM.NameMappingSwitch = $NameMappingSwitch
+        $_mockSVM.NameServerSwitch = $NameServerSwitch
+        $_mockSVM.NcController = $Controller
+        $_mockSVM.NisDomain = $NisDomain
+        $_mockSVM.OperationalState = $OperationalState
+        $_mockSVM.QosPolicyGroup = $QosPolicyGroup
+        $_mockSVM.QuotaPolicy = $QuotaPolicy
+        $_mockSVM.RootVolume = $RootVolume
+        $_mockSVM.RootVolumeAggregate = $RootVolumeAggregate
+        $_mockSVM.RootVolumeSecurityStyle = $RootVolumeSecurity
+        $_mockSVM.SnapshotPolicy = $SnapShotPolicy
+        $_mockSVM.Uuid = $UUID
+        $_mockSVM.VolumeDeleteRetentionHours = $VolumeDeleteRetentionHours
+        $_mockSVM.VserverName = $Name
+        $_mockSVM.VserverSubtype = $Subtype
+        $_mockSVM.VserverType = $VserverType
+        $_mockSVM.Vserver = $Name
+
+        return $_mockSVM
+    }
 }
 Function New-NcVserver
 {
