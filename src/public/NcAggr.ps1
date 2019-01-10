@@ -8,6 +8,15 @@ Function New-MockNcAggr
         $Template,
         $Fill,
         $Query,
+        $BlockType = '64_bit',
+        $HaPolicy = 'sfo',
+        $OwnerName = 'VICE-07',
+        $State = 'online',
+        [decimal]$SizeTotal = 0,
+        [decimal]$SizeUsed = 0,
+        [Int]$SnapShotReservePercent = 0,
+        [Int]$PercentUsedCapacity = 0,
+        [bool]$IsInconsistent = $false,
         # Provide a deserialized Aggr object to be serialized and output correctly. For instance you can use Import-CliXML to and give the deserialized Aggrs and they will be returned serialized correctly.
         [Parameter(ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
@@ -33,7 +42,7 @@ Function New-MockNcAggr
 
             $Aggr64bitUpgradeAttributes = [DataONTAP.C.Types.Aggr.Aggr64bitUpgradeAttributes]::new()
             $AggrFsAttributes = [DataONTAP.C.Types.Aggr.AggrFsAttributes]::new()
-            $AggrFsAttributes.BlockType = '64_bit'
+            $AggrFsAttributes.BlockType = $BlockType
             $AggrFsAttributes.Fsid = '1741636997'
             $AggrFsAttributes.NcController = New-MockNcController
             $AggrFsAttributes.Type = 'aggr'
@@ -68,7 +77,7 @@ Function New-MockNcAggr
             $AggrOwnershipAttributes.HomeName = 'VICE-07'
             $AggrOwnershipAttributes.NcController = New-MockNcController
             $AggrOwnershipAttributes.OwnerId = 536977440
-            $AggrOwnershipAttributes.OwnerName = 'VICE-07'
+            $AggrOwnershipAttributes.OwnerName = $OwnerName
             $AggrOwnershipAttributes.DrHomeIdSpecified = $False
             $AggrOwnershipAttributes.HomeIdSpecified = $True
             $AggrOwnershipAttributes.OwnerIdSpecified = $True
@@ -128,14 +137,14 @@ Function New-MockNcAggr
             $AggrRaidAttributes.ChecksumStatus = 'active'
             $AggrRaidAttributes.ChecksumStyle = 'block'
             $AggrRaidAttributes.DiskCount = 22
-            $AggrRaidAttributes.HaPolicy = 'sfo'
+            $AggrRaidAttributes.HaPolicy = $HaPolicy
             $AggrRaidAttributes.HasLocalRoot = $False
             $AggrRaidAttributes.HasPartnerRoot = $False
             $AggrRaidAttributes.IsChecksumEnabled = $True
             $AggrRaidAttributes.IsEncrypted = $False
             $AggrRaidAttributes.IsHybrid = $True
             $AggrRaidAttributes.IsHybridEnabled = $True
-            $AggrRaidAttributes.IsInconsistent = $False
+            $AggrRaidAttributes.IsInconsistent = $IsInconsistent
             $AggrRaidAttributes.IsMirrored = $False
             $AggrRaidAttributes.IsRootAggregate = $False
             $AggrRaidAttributes.MirrorStatus = 'unmirrored'
@@ -147,7 +156,7 @@ Function New-MockNcAggr
             $AggrRaidAttributes.RaidSize = 16
             $AggrRaidAttributes.RaidStatus = 'raid_dp, hybrid, normal'
             $AggrRaidAttributes.RaidType = 'raid_dp'
-            $AggrRaidAttributes.State = 'online'
+            $AggrRaidAttributes.State = $State
             $AggrRaidAttributes.UsesSharedDisks = $True
             $AggrRaidAttributes.CacheRaidGroupSizeSpecified = $True
             $AggrRaidAttributes.DiskCountSpecified = $True
@@ -184,11 +193,11 @@ Function New-MockNcAggr
             $AggrSnapshotAttributes.MaxfilesUsed = 0
             $AggrSnapshotAttributes.NcController = New-MockNcController
             $AggrSnapshotAttributes.PercentInodeUsedCapacity = 0
-            $AggrSnapshotAttributes.PercentUsedCapacity = 0
-            $AggrSnapshotAttributes.SizeAvailable = 0
-            $AggrSnapshotAttributes.SizeTotal = 0
-            $AggrSnapshotAttributes.SizeUsed = 0
-            $AggrSnapshotAttributes.SnapshotReservePercent = 0
+            $AggrSnapshotAttributes.PercentUsedCapacity = $PercentUsedCapacity
+            $AggrSnapshotAttributes.SizeAvailable = $($SizeTotal - $SizeUsed)
+            $AggrSnapshotAttributes.SizeTotal = $SizeTotal
+            $AggrSnapshotAttributes.SizeUsed = $SizeUsed
+            $AggrSnapshotAttributes.SnapshotReservePercent = $SnapShotReservePercent
             $AggrSnapshotAttributes.FilesTotalSpecified = $True
             $AggrSnapshotAttributes.FilesUsedSpecified = $True
             $AggrSnapshotAttributes.InofileVersionSpecified = $False
