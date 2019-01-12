@@ -14,8 +14,10 @@ Function New-MockNcAggr
         $State = 'online',
         [decimal]$SizeTotal = 0,
         [decimal]$SizeUsed = 0,
+        [decimal]$PhysicalUsed = 6363311718400,
         [Int]$SnapShotReservePercent = 0,
         [Int]$PercentUsedCapacity = 0,
+        [int]$PhysicalUsedPercent = 42,
         [bool]$IsInconsistent = $false,
         # Provide a deserialized Aggr object to be serialized and output correctly. For instance you can use Import-CliXML to and give the deserialized Aggrs and they will be returned serialized correctly.
         [Parameter(ValueFromPipeline)]
@@ -219,8 +221,8 @@ Function New-MockNcAggr
             $AggrSpaceAttributes.HybridCacheSizeTotal = 399684665344
             $AggrSpaceAttributes.NcController = New-MockNcController
             $AggrSpaceAttributes.PercentUsedCapacity = 44
-            $AggrSpaceAttributes.PhysicalUsed = 6363311718400
-            $AggrSpaceAttributes.PhysicalUsedPercent = 42
+            $AggrSpaceAttributes.PhysicalUsed = $PhysicalUsed
+            $AggrSpaceAttributes.PhysicalUsedPercent = $PhysicalUsedPercent
             $AggrSpaceAttributes.SizeAvailable = 8430225879040
             $AggrSpaceAttributes.SizeTotal = 15092552880128
             $AggrSpaceAttributes.SizeUsed = 6662327001088

@@ -1,0 +1,72 @@
+resources:
+  - repo: self
+    clean: true
+    fetchDepth: 15
+
+queue:
+  name: NetAppDocs
+
+trigger:
+  batch: true
+  branches:
+    include:
+     - master
+    exclude:
+      - refs/tags/*
+
+pr:
+  branches:
+    include:
+      - master
+
+steps:
+  - task: NuGetToolInstaller@0
+    displayName: Use NuGet 4.7.1
+    inputs:
+      versionSpec: 4.7.1
+
+  - powershell: |
+      if (-not (Get-PackageProvider -Name Nuget -ErrorAction Ignore)) {
+        [void](Install-PackageProvider -Name NuGet -Scope CurrentUser -Force)
+      }
+
+      if ((Get-Module -Name PowerShellGet -ListAvailable -ErrorAction Ignore | Sort-Object -Property Version | Select-Object -Last 1).Version -lt [version]::Parse('2.0.3')) {
+        Install-Module -Name PowerShellGet -Force -Repository PSGallery -Scope CurrentUser -ErrorAction Ignore -MinimumVersion 2.0.3
+        Remove-Module -Name PowerShellGet
+        Import-Module PowerShellGet -MinimumVersion 2.0.3
+      }
+
+      if ((Get-Module -Name InvokeBuild -ListAvailable -ErrorAction Ignore | Sort-Object -Property Version | Select-Object -Last 1).Version -lt [version]::Parse('5.4.2')) {
+        Install-Module -Name InvokeBuild -MinimumVersion 5.4.2 -Repository PSGallery -Scope CurrentUser -Force -ErrorAction Ignore
+        Import-Module InvokeBuild
+      }
+
+      if ((Get-Module -Name Pester -ListAvailable -ErrorAction Ignore | Sort-Object -Property Version | Select-Object -Last 1).Version -lt [version]::Parse('4.4.4')) {
+        Install-Module -Name Pester -MinimumVersion 4.4.4 -Repository PSGallery -Scope CurrentUser -Force -ErrorAction Ignore
+        Import-Module Pester
+      }
+    displayName: Set up build environment
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results **/TestResults*.xml'
+    condition: succeededOrFailed()
+    inputs:
+      testRunner: NUnit
+      testResultsFiles: '**/TestResults*.xml'
+      searchFolder: $(Build.ArtifactStagingDirectory)
+      mergeTestResults: false
+      publishRunAttachments: true
+
+  - powershell: Invoke-Build -Task Stage, Package
+    displayName: Stage and Package modules
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranchName'], 'master'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifacts
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: packages
+      publishLocation: container
+      parallel: true
+      parallelCount: 4
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranchName'], 'master'))
