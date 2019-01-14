@@ -13,12 +13,15 @@ Function New-MockNcAggr
         $OwnerName = 'VICE-07',
         $State = 'online',
         [decimal]$SizeTotal = 0,
+        [decimal]$SnapShotSizeTotal = 0,
         [decimal]$SizeUsed = 0,
+        [decimal]$SnapShotSizeUsed = 0,
         [decimal]$PhysicalUsed = 6363311718400,
         [Int]$SnapShotReservePercent = 0,
         [Int]$PercentUsedCapacity = 0,
         [int]$PhysicalUsedPercent = 42,
         [bool]$IsInconsistent = $false,
+        [bool]$IsRootAggregate = $false,
         # Provide a deserialized Aggr object to be serialized and output correctly. For instance you can use Import-CliXML to and give the deserialized Aggrs and they will be returned serialized correctly.
         [Parameter(ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
@@ -148,7 +151,7 @@ Function New-MockNcAggr
             $AggrRaidAttributes.IsHybridEnabled = $True
             $AggrRaidAttributes.IsInconsistent = $IsInconsistent
             $AggrRaidAttributes.IsMirrored = $False
-            $AggrRaidAttributes.IsRootAggregate = $False
+            $AggrRaidAttributes.IsRootAggregate = $IsRootAggregate
             $AggrRaidAttributes.MirrorStatus = 'unmirrored'
             $AggrRaidAttributes.MountState = 'online'
             $AggrRaidAttributes.NcController = New-MockNcController
@@ -196,9 +199,9 @@ Function New-MockNcAggr
             $AggrSnapshotAttributes.NcController = New-MockNcController
             $AggrSnapshotAttributes.PercentInodeUsedCapacity = 0
             $AggrSnapshotAttributes.PercentUsedCapacity = $PercentUsedCapacity
-            $AggrSnapshotAttributes.SizeAvailable = $($SizeTotal - $SizeUsed)
-            $AggrSnapshotAttributes.SizeTotal = $SizeTotal
-            $AggrSnapshotAttributes.SizeUsed = $SizeUsed
+            $AggrSnapshotAttributes.SizeAvailable = $($SnapShotSizeTotal - $SnapShotSizeUsed)
+            $AggrSnapshotAttributes.SizeTotal = $SnapShotSizeTotal
+            $AggrSnapshotAttributes.SizeUsed = $SnapShotSizeUsed
             $AggrSnapshotAttributes.SnapshotReservePercent = $SnapShotReservePercent
             $AggrSnapshotAttributes.FilesTotalSpecified = $True
             $AggrSnapshotAttributes.FilesUsedSpecified = $True
@@ -222,10 +225,14 @@ Function New-MockNcAggr
             $AggrSpaceAttributes.NcController = New-MockNcController
             $AggrSpaceAttributes.PercentUsedCapacity = 44
             $AggrSpaceAttributes.PhysicalUsed = $PhysicalUsed
+            if ($SizeTotal -and -not $PhysicalUsedPercent -and $PhysicalUsed)
+            {
+                $PhysicalUsedPercent = [math]::Round(($PhysicalUsed / $SizeTotal * 100), 0)
+            }
             $AggrSpaceAttributes.PhysicalUsedPercent = $PhysicalUsedPercent
-            $AggrSpaceAttributes.SizeAvailable = 8430225879040
-            $AggrSpaceAttributes.SizeTotal = 15092552880128
-            $AggrSpaceAttributes.SizeUsed = 6662327001088
+            $AggrSpaceAttributes.SizeAvailable = $($SizeTotal - $SizeUsed)
+            $AggrSpaceAttributes.SizeTotal = $SizeTotal
+            $AggrSpaceAttributes.SizeUsed = $SizeUsed
             $AggrSpaceAttributes.TotalReservedSpace = 0
             $AggrSpaceAttributes.AggregateMetadataSpecified = $False
             $AggrSpaceAttributes.DataCoalescedCountSpecified = $False
