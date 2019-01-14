@@ -46,14 +46,6 @@
     FileList          = @(
         'mockONTAP.psd1'
         'mockONTAP.psm1'
-        'private\helpers.ps1'
-        'public\NcAggr.ps1'
-        'public\NcController.ps1'
-        'public\NcDisk.ps1'
-        'public\NcIgroup.ps1'
-        'public\NcPortset.ps1'
-        'public\NcVol.ps1'
-        'public\NcVserver.ps1'
     )
     PrivateData       = @{
 
