@@ -51,13 +51,14 @@
 
         PSData = @{
 
-            Tags       = @(
+            Tags                       = @(
                 'NetApp'
                 'ONTAP'
                 'Pester'
             )
-            LicenseUri = 'https://github.com/pulkjr/mockONTAP/blob/master/LICENSE'
-            ProjectUri = 'https://github.com/pulkjr/mockONTAP'
+            LicenseUri                 = 'https://github.com/pulkjr/mockONTAP/blob/master/LICENSE'
+            ProjectUri                 = 'https://github.com/pulkjr/mockONTAP'
+            ExternalModuleDependencies = @('DataONTAP')
 
         } # End of PSData hashtable
 
