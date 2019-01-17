@@ -1,4 +1,4 @@
-@{
+﻿@{
     RootModule        = 'mockONTAP.psm1'
     ModuleVersion     = '0.0.1'
     GUID              = '9e5c466b-8966-499c-a0fc-1a59d94a4d37'
@@ -7,17 +7,19 @@
     Copyright         = '(c) Joseph Pulk. All rights reserved.'
     Description       = 'A PowerShell Module for Mocking DataONTAP toolkit functions'
     PowerShellVersion = '5.0'
-    RequiredModules   = @('dataONTAP')
+    RequiredModules   = @('DataONTAP')
     FunctionsToExport = @(
         'Connect-NcController'
         'Add-NcIgroupInitiator'
         'Add-NcIgroupPortset'
+        'Add-NcLunMap'
         'Add-NcPortset'
         'Add-NcPortsetPort'
         'Get-NcAggr'
         'Get-NcAggrSpace'
         'Get-NcDisk'
         'Get-NcIgroup'
+        'Get-NcLunMap'
         'Get-NcVserver'
         'New-NcIgroup'
         'New-NcPortset'
@@ -28,12 +30,14 @@
         'New-MockNcController'
         'New-MockNcDisk'
         'New-MockNcIgroup'
+        'New-MockNcLunMap'
         'New-MockNcPortset'
         'New-MockNcVol'
         'New-MockNcVserver'
         'Remove-NcIgroup'
         'Remove-NcIgroupInitiator'
         'Remove-NcIgroupPortset'
+        'Remove-NcLunMap'
         'Remove-NcPortset'
         'Remove-NcPortsetPort'
         'Remove-NcVserver'
