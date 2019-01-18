@@ -12,6 +12,7 @@ function New-MockNcLunMap {
         [string]$InitiatorGroup,
 
         [Parameter()]
+        [Alias('Id')]
         [int]$LunId,
 
         [Parameter()]
@@ -50,9 +51,9 @@ function New-MockNcLunMap {
         $Vserver = $VserverContext
     }
 
-    #if (-not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('LunId')) {
-    #    $LunId = 0
-    #}
+    if (-not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('LunId')) {
+        $LunId = 0
+    }
 
     $_mockNcLunMap = [DataONTAP.C.Types.Lun.LunMapInfo]::new()
     $_mockNcLunMap.InitiatorGroup = $InitiatorGroup
@@ -82,7 +83,7 @@ function Add-NcLunMap {
         [string]$VserverContext,
 
         [Parameter()]
-        [int]$LunId,
+        [int]$Id,
 
         [Parameter()]
         [string]$Node,
