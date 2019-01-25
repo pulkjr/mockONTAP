@@ -86,6 +86,7 @@ function New-MockNcNetInterface
     $returnObj.NetmaskLengthSpecified = $NetmaskLengthSpecified
     $returnObj.OpStatus = $OpStatus
 
+    return $returnObj
 }
 function Get-NcNetInterface
 {

@@ -39,9 +39,7 @@ function New-MockNcNodeInfo
         $SystemRevision = '',
         $SystemSerialNumber = '4082368-50-7',
         $VendorData1 = '',
-        $VendorId = 'NetApp',
-        $VmhostInfo = '',
-        $VmSystemDisks = ''
+        $VendorId = 'NetApp'
     )
     if ($name)
     {
@@ -87,8 +85,6 @@ function New-MockNcNodeInfo
     $returnObj.SystemSerialNumber = $SystemSerialNumber
     $returnObj.VendorData1 = $VendorData1
     $returnObj.VendorId = $VendorId
-    $returnObj.VmhostInfo = $VmhostInfo
-    $returnObj.VmSystemDisks = $VmSystemDisks
     return $returnObj
 }
 
@@ -140,9 +136,8 @@ function New-MockNcNode
         $NodeUuid = '2ba5e026-bb4d-11e8-93b6-000c2991c0e1',
         $NodeVendor = 'NetApp',
         $NvramBatteryStatus = 'battery_ok',
-        $ProductVersion = 'NetApp Release 9.4: Fri Jun 08 22:50:12 UTC 2018',
-        $VmhostInfo = '',
-        $VmSystemDisks = ''
+        $ProductVersion = 'NetApp Release 9.4: Fri Jun 08 22:50:12 UTC 2018'
+
     )
     $returnObj = [DataONTAP.C.Types.System.NodeDetailsInfo]::New()
     $returnObj.CpuBusytime = $CpuBusytime
@@ -191,8 +186,6 @@ function New-MockNcNode
     $returnObj.NodeVendor = $NodeVendor
     $returnObj.NvramBatteryStatus = $NvramBatteryStatus
     $returnObj.ProductVersion = $ProductVersion
-    $returnObj.VmhostInfo = $VmhostInfo
-    $returnObj.VmSystemDisks = $VmSystemDisks
     return $returnObj
 }
 
