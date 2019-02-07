@@ -205,7 +205,48 @@ function New-MockNcSnapMirror
     $returnObj.Vserver = $Vserver
     return $returnObj
 }
-
+function New-MockNcSnapMirrorJobStart
+{
+    param(
+        $ErrorCode = '',
+        $ErrorMessage = '',
+        $JobId = '',
+        $JobVserver = '',
+        $NcController = '172.16.32.20',
+        $ResultOperationId = '257d118d-2a32-11e9-bb03-000c297a98ed',
+        $Status = 'succeeded'
+    )
+    $returnObj = [DataONTAP.C.Types.Snapmirror.SnapmirrorJobStartResult]::New()
+    $returnObj.ErrorCode = $ErrorCode
+    $returnObj.ErrorMessage = $ErrorMessage
+    $returnObj.JobId = $JobId
+    $returnObj.JobVserver = $JobVserver
+    $returnObj.NcController = $NcController
+    $returnObj.ResultOperationId = $ResultOperationId
+    $returnObj.Status = $Status
+    return $returnObj
+}
+function New-MockNcSnapmirrorVolume
+{
+    param(
+        $IsDestination = 'False',
+        $IsSource = 'False',
+        $IsTransferBroken = 'False',
+        $IsTransferInProgress = 'False',
+        $NcController = '172.16.32.20',
+        $Volume = 'dp_dest',
+        $Vserver = 'sm_test'
+    )
+    $returnObj = [DataONTAP.C.Types.Snapmirror.VolSnapmirrorStatus]::New()
+    $returnObj.IsDestination = $IsDestination
+    $returnObj.IsSource = $IsSource
+    $returnObj.IsTransferBroken = $IsTransferBroken
+    $returnObj.IsTransferInProgress = $IsTransferInProgress
+    $returnObj.NcController = $NcController
+    $returnObj.Volume = $Volume
+    $returnObj.Vserver = $Vserver
+    return $returnObj
+}
 function Get-NcSnapMirror
 {
     param(
@@ -461,28 +502,6 @@ function Remove-NcSnapMirror
     return
 }
 
-function New-MockNcSnapmirrorVolume
-{
-    param(
-        $IsDestination = 'False',
-        $IsSource = 'False',
-        $IsTransferBroken = 'False',
-        $IsTransferInProgress = 'False',
-        $NcController = '172.16.32.20',
-        $Volume = 'dp_dest',
-        $Vserver = 'sm_test'
-    )
-    $returnObj = [DataONTAP.C.Types.Snapmirror.VolSnapmirrorStatus]::New()
-    $returnObj.IsDestination = $IsDestination
-    $returnObj.IsSource = $IsSource
-    $returnObj.IsTransferBroken = $IsTransferBroken
-    $returnObj.IsTransferInProgress = $IsTransferInProgress
-    $returnObj.NcController = $NcController
-    $returnObj.Volume = $Volume
-    $returnObj.Vserver = $Vserver
-    return $returnObj
-}
-
 function Test-NcSnapmirrorVolume
 {
     [CmdletBinding()]
@@ -553,5 +572,453 @@ function Invoke-NcSnapMirrorInitialize
         $Controller
     )
     
-    New-MockNcSnapmirror @PSBoundParameters
+    if ($Passthru)
+    {
+        [hashtable]$_PSBoundParameters = $PSBoundParameters
+
+        if ('TransferPriority' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('TransferPriority')
+            $_PSBoundParameters.Add('CurrentTransferPriority', $TransferPriority)
+        }
+        if ('SourceSnapshot' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('SourceSnapshot')
+            $_PSBoundParameters.Add('TransferSnapshot', $SourceSnapshot)
+        }
+        if ('IsAdaptive' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('IsAdaptive')
+            #TODO: HANDLE property
+        }
+        if ('Passthru' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Passthru')
+        }
+
+        New-MockNcSnapmirrorVolume @_PSBoundParameters
+    }
+    else
+    {
+        New-MockNcSnapMirrorJobStart
+    }
+}
+
+function Invoke-NcSnapMirrorAbort
+{
+    [CmdletBinding(DefaultParameterSetName = "one")]
+    param(
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Destination,
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Source,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $DestinationCluster,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVserver,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVolume,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceCluster,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVserver,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVolume,
+        [Switch]
+        $Passthru,
+        [Switch]
+        $ClearCheckpoint,
+        [Switch]
+        $CheckOnly,
+        [Switch]
+        $InfiniteVolume,
+        [Parameter()]
+        [NetApp.Ontapi.Filer.C.NcController]
+        $Controller
+    )
+    if ($Passthru)
+    {
+        [hashtable]$_PSBoundParameters = $PSBoundParameters
+    
+        if ('ClearCheckpoint' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('ClearCheckpoint')
+            #TODO: HANDLE property
+        }
+        if ('CheckOnly' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('CheckOnly')
+            #TODO: HANDLE property
+        }
+        if ('InfiniteVolume' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('InfiniteVolume')
+            #TODO: HANDLE property
+        }
+        if ('Passthru' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Passthru')
+        }
+
+        New-MockNcSnapmirrorVolume @_PSBoundParameters
+    }
+}
+function Invoke-NcSnapMirrorBreak
+{
+    [CmdletBinding(DefaultParameterSetName = "one")]
+    param(
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Destination,
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Source,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $DestinationCluster,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVserver,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVolume,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceCluster,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVserver,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVolume,
+        [Switch]
+        $Passthru,
+        [String]
+        $RestoreDestinationSnapshot,
+        [Switch]
+        $Recover,
+        [Switch]
+        $InfiniteVolume,
+        [Parameter()]
+        [NetApp.Ontapi.Filer.C.NcController]
+        $Controller
+    )
+    
+    if ($Passthru)
+    {
+        [hashtable]$_PSBoundParameters = $PSBoundParameters
+    
+        if ('RestoreDestinationSnapshot' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('RestoreDestinationSnapshot')
+            #TODO: HANDLE property
+        }
+        if ('Recover' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Recover')
+            #TODO: HANDLE property
+        }
+        if ('InfiniteVolume' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('InfiniteVolume')
+            #TODO: HANDLE property
+        }
+        if ('Passthru' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Passthru')
+        }
+
+        New-MockNcSnapmirrorVolume @_PSBoundParameters
+    }
+}
+
+function Invoke-NcSnapMirrorUpdate
+{
+    [CmdletBinding(DefaultParameterSetName = "one")]
+    param(
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Destination,
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Source,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $DestinationCluster,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVserver,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVolume,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceCluster,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVserver,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVolume,
+        [String]
+        $SourceSnapshot,
+        [String]
+        $TransferPriority,
+        [Int64]
+        $MaxTransferRate,
+        [Switch]
+        $EnableStorageEfficiency,
+        [Switch]
+        $Passthru,
+        [Parameter()]
+        [NetApp.Ontapi.Filer.C.NcController]
+        $Controller
+    )
+    
+    if ($Passthru)
+    {
+        [hashtable]$_PSBoundParameters = $PSBoundParameters
+
+        if ('TransferPriority' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('TransferPriority')
+            $_PSBoundParameters.Add('CurrentTransferPriority', $TransferPriority)
+        }
+        if ('SourceSnapshot' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('SourceSnapshot')
+            $_PSBoundParameters.Add('TransferSnapshot', $SourceSnapshot)
+        }
+
+        if ('Passthru' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Passthru')
+        }
+        if ('EnableStorageEfficiency' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('EnableStorageEfficiency')
+            #TODO: HANDLE property
+        }
+
+        New-MockNcSnapmirrorVolume @_PSBoundParameters
+    }
+    else
+    {
+        New-MockNcSnapMirrorJobStart
+    }
+}
+function Invoke-NcSnapmirrorQuiesce
+{
+    [CmdletBinding(DefaultParameterSetName = "one")]
+    param(
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Destination,
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Source,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $DestinationCluster,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVserver,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVolume,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceCluster,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVserver,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVolume,
+        [Parameter(ParameterSetName = 'three')]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
+        $Query,
+        [Parameter(ParameterSetName = 'three')]
+        [Switch]
+        $ContinueOnFailure,
+        [Parameter(ParameterSetName = 'three')]
+        [Int32]
+        $MaxFailureCount,
+        [Parameter(ParameterSetName = 'one')]
+        [Parameter(ParameterSetName = 'two')]
+        [Switch]
+        $Passthru,
+        [Parameter()]
+        [NetApp.Ontapi.Filer.C.NcController]
+        $Controller
+    )
+    
+    if ($Passthru)
+    {
+        [hashtable]$_PSBoundParameters = $PSBoundParameters
+
+        if ('Passthru' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Passthru')
+        }
+
+        New-MockNcSnapmirrorVolume @_PSBoundParameters
+    }
+    else
+    {
+        New-MockNcSnapMirrorJobStart
+    }
+}
+function Invoke-NcSnapmirrorResume
+{
+    [CmdletBinding(DefaultParameterSetName = "one")]
+    param(
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Destination,
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Source,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $DestinationCluster,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVserver,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVolume,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceCluster,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVserver,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVolume,
+        [Parameter(ParameterSetName = 'three')]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
+        $Query,
+        [Parameter(ParameterSetName = 'three')]
+        [Switch]
+        $ContinueOnFailure,
+        [Parameter(ParameterSetName = 'three')]
+        [Int32]
+        $MaxFailureCount,
+        [Parameter(ParameterSetName = 'one')]
+        [Parameter(ParameterSetName = 'two')]
+        [Switch]
+        $Passthru,
+        [Parameter()]
+        [NetApp.Ontapi.Filer.C.NcController]
+        $Controller
+    )
+    
+    if ($Passthru)
+    {
+        [hashtable]$_PSBoundParameters = $PSBoundParameters
+
+        if ('Passthru' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Passthru')
+        }
+
+        New-MockNcSnapmirrorVolume @_PSBoundParameters
+    }
+    else
+    {
+        New-MockNcSnapMirrorJobStart
+    }
+}
+
+function Invoke-NcSnapmirrorResync
+{
+    [CmdletBinding(DefaultParameterSetName = "one")]
+    param(
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Destination,
+        [Parameter(ParameterSetName = 'two')]
+        [string]
+        $Source,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $DestinationCluster,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVserver,
+        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [string]
+        $DestinationVolume,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceCluster,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVserver,
+        [Parameter(ParameterSetName = 'one')]
+        [string]
+        $SourceVolume,
+        [Int64]
+        $MaxTransferRate,
+        [String]
+        $SourceSnapshot,
+        [Switch]
+        $Preserve,
+        [Switch]
+        $Passthru,
+        [Switch]
+        $QuickResync,
+        [bool]
+        $IsAutoExpandEnabled,
+        [bool]
+        $IsAdaptive,
+        [Parameter()]
+        [NetApp.Ontapi.Filer.C.NcController]
+        $Controller
+    )
+    
+    if ($Passthru)
+    {
+        [hashtable]$_PSBoundParameters = $PSBoundParameters
+
+        if ('SourceSnapshot' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('SourceSnapshot')
+            $_PSBoundParameters.Add('TransferSnapshot', $SourceSnapshot)
+        }
+        if ('Preserve' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Preserve')
+            $_PSBoundParameters.Add('IdentityPreserve', $true)
+        }
+        if ('IsAdaptive' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('IsAdaptive')
+            #TODO: HANDLE property
+        }
+        if ('Passthru' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('Passthru')
+        }
+        if ('QuickResync' -in $_PSBoundParameters.Keys)
+        {
+            $_PSBoundParameters.Remove('QuickResync')
+        }
+
+        New-MockNcSnapmirrorVolume @_PSBoundParameters
+    }
+    else
+    {
+        New-MockNcSnapMirrorJobStart
+    }
 }
