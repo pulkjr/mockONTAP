@@ -1,6 +1,6 @@
 function New-MockNcLunMap {
     [CmdletBinding()]
-    [OutputType('DataONTAP.C.Types.Lun.LunMapInfo')]
+    [OutputType( 'DataONTAP.C.Types.Lun.LunMapInfo' )]
     param (
         [Parameter()]
         [string]$Path,
@@ -12,7 +12,7 @@ function New-MockNcLunMap {
         [string]$InitiatorGroup,
 
         [Parameter()]
-        [Alias('Id')]
+        [Alias( 'Id' )]
         [int]$LunId,
 
         [Parameter()]
@@ -31,27 +31,27 @@ function New-MockNcLunMap {
         $Controller
     )
 
-    if ($Query.Path -and [string]::IsNullOrEmpty($Path)) {
+    if ( $Query.Path -and [string]::IsNullOrEmpty( $Path ) ) {
         $Path = $Query.Path
     }
 
-    if ($Query.Vserver -and [string]::IsNullOrEmpty($Vserver)) {
+    if ( $Query.Vserver -and [string]::IsNullOrEmpty( $Vserver ) ) {
         $Vserver = $Query.Vserver
     }
 
-    if ($Query.InitiatorGroup -and [string]::IsNullOrEmpty($InitiatorGroup)) {
+    if ( $Query.InitiatorGroup -and [string]::IsNullOrEmpty( $InitiatorGroup ) ) {
         $InitiatorGroup = $Query.InitiatorGroup
     }
 
-    if ($Query.LunId -and [string]::IsNullOrEmpty($LunId)) {
+    if ( $Query.LunId -and [string]::IsNullOrEmpty( $LunId ) ) {
         $LunId = $Query.LunId
     }
 
-    if ($VserverContext -and [string]::IsNullOrEmpty($Vserver)) {
+    if ( $VserverContext -and [string]::IsNullOrEmpty( $Vserver ) ) {
         $Vserver = $VserverContext
     }
 
-    if (-not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey('LunId')) {
+    if ( -not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey( 'LunId' ) ) {
         $LunId = 0
     }
 
@@ -71,12 +71,12 @@ function New-MockNcLunMap {
 
 function Add-NcLunMap {
     [CmdletBinding()]
-    [OutputType('DataONTAP.C.Types.Lun.LunMapInfo')]
+    [OutputType( 'DataONTAP.C.Types.Lun.LunMapInfo' )]
     param (
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+        [Parameter( Mandatory, ValueFromPipelineByPropertyName )]
         [string]$Path,
 
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+        [Parameter( Mandatory, ValueFromPipelineByPropertyName )]
         [string]$InitiatorGroup,
 
         [Parameter()]
@@ -88,7 +88,7 @@ function Add-NcLunMap {
         [Parameter()]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter( ValueFromPipeline, ValueFromPipelineByPropertyName )]
         $Controller
     )
 
@@ -97,12 +97,12 @@ function Add-NcLunMap {
 
 function Get-NcLunMap {
     [CmdletBinding()]
-    [OutputType('DataONTAP.C.Types.Lun.LunMapInfo')]
+    [OutputType( 'DataONTAP.C.Types.Lun.LunMapInfo' )]
     param(
-        [Parameter(ValueFromPipelineByPropertyName)]
+        [Parameter( ValueFromPipelineByPropertyName )]
         [string]$Path,
 
-        [Parameter(ValueFromPipelineByPropertyName)]
+        [Parameter( ValueFromPipelineByPropertyName )]
         [string]$Vserver,
 
         [Parameter()]
@@ -114,28 +114,28 @@ function Get-NcLunMap {
         [Parameter()]
         [string]$VserverContext,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter( ValueFromPipeline, ValueFromPipelineByPropertyName )]
         $Controller
     )
 
-    if ($Query) {
-        if ($Query.Path) {
+    if ( $Query ) {
+        if ( $Query.Path ) {
             $Path = $Query.Path
         }
 
-        if ($Query.Vserver) {
+        if ( $Query.Vserver ) {
             $Vserver = $Query.Vserver
         }
 
-        if ($Query.InitiatorGroup) {
+        if ( $Query.InitiatorGroup ) {
             $InitiatorGroup = $Query.InitiatorGroup
         }
 
-        if ($Query.LunId) {
+        if ( $Query.LunId ) {
             $lunId = $Query.LunId
         }
 
-        if ($Query.Node) {
+        if ( $Query.Node ) {
             $node = $Query.Node
         }
     }
@@ -154,18 +154,18 @@ function Get-NcLunMap {
 
 function Remove-NcLunMap {
     [CmdletBinding()]
-    [OutputType([System.Void])]
+    [OutputType( [System.Void] )]
     param(
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+        [Parameter( Mandatory, ValueFromPipelineByPropertyName )]
         [string]$Path,
 
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+        [Parameter( Mandatory, ValueFromPipelineByPropertyName )]
         [string]$InitiatorGroup,
 
         [Parameter()]
         [string]$VserverContext,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter( ValueFromPipeline, ValueFromPipelineByPropertyName )]
         $Controller
     )
 

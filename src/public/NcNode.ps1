@@ -41,11 +41,10 @@ function New-MockNcNodeInfo
         $VendorData1 = '',
         $VendorId = 'NetApp'
     )
-    if ($name)
+    if ( $name )
     {
         $SystemName = $Name
     }
-    
     $returnObj = [DataONTAP.C.Types.System.SystemInfo]::New()
     $returnObj.BackplanePartNumber = $BackplanePartNumber
     $returnObj.BackplaneRevision = $BackplaneRevision

@@ -18,15 +18,15 @@ function New-MockNcIgroup
         $Protocol
     )
 
-    if ($query.Name -and [string]::IsNullOrEmpty($Name))
+    if ( $query.Name -and [string]::IsNullOrEmpty( $Name ) )
     {
         $name = $Query.Name
     }
-    if ($Query.Vserver -and [string]::IsNullOrEmpty($Vserver))
+    if ( $Query.Vserver -and [string]::IsNullOrEmpty( $Vserver ) )
     {
         $Vserver = $Query.Vserver
     }
-    if ($VserverContext -and [string]::IsNullOrEmpty($Vserver))
+    if ( $VserverContext -and [string]::IsNullOrEmpty( $Vserver ) )
     {
         $Vserver = $VserverContext
     }
@@ -37,10 +37,9 @@ function New-MockNcIgroup
     $_mockIgroup.InitiatorGroupName = $Name
     $_mockIgroup.InitiatorGroupOsType = $Type
 
-    if (-not [string]::IsNullOrEmpty($Portset))
+    if ( -not [string]::IsNullOrEmpty( $Portset ) )
     {
         $_mockIgroup.InitiatorGroupPortsetName = $Portset
-
     }
     $_mockIgroup.InitiatorGroupThrottleBorrow = $false
     $_mockIgroup.InitiatorGroupThrottleBorrowSpecified = $true
@@ -55,7 +54,7 @@ function New-MockNcIgroup
     $_mockIgroup.NcController = $Controller
     $_mockIgroup.Vserver = $Vserver
 
-    if (-not $Initiator)
+    if ( -not $Initiator )
     {
         $_mockIgroup.Initiators = $null
     }
@@ -69,7 +68,6 @@ function New-MockNcIgroup
             $_initiator.NcController = $Controller
             $_mockIgroup.Initiators += $_initiator
         }
-
     }
 
     return $_mockIgroup
@@ -78,17 +76,17 @@ function New-MockNcIgroup
 function New-NcIgroup
 {
     param(
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [String]
         $Name,
-        [Parameter(Mandatory)]
-        [ValidateSet('iscsi', 'fcp', 'mixed')]
+        [Parameter( Mandatory )]
+        [ValidateSet( 'iscsi', 'fcp', 'mixed' )]
         [String]
         $Protocol,
-        [ValidateSet('windows', 'vmware', 'solaris', 'hpux', 'aix', 'linux', 'netware', 'xen', 'hyper_v', 'openvms')]
+        [ValidateSet( 'windows', 'vmware', 'solaris', 'hpux', 'aix', 'linux', 'netware', 'xen', 'hyper_v', 'openvms' )]
         $Type,
         $Portset,
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [String]
         $VserverContext,
         $Controller
@@ -99,22 +97,22 @@ function New-NcIgroup
 function Get-NcIgroup
 {
     param(
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [String]
         $Name,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [String]
         $Vserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [String]
         $Initiator,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [switch]
         $Template,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         $Query,
-        [Parameter(ParameterSetName = 'one')]
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = 'three' )]
         $Attributes,
         $VserverContext,
         $Controller
@@ -124,12 +122,12 @@ function Get-NcIgroup
 
 function Remove-NcIgroup
 {
-    [OutputType([void])]
+    [OutputType( [void] )]
     param(
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [String]
         $Name,
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [String]
         $VserverContext,
         $Controller,
@@ -158,7 +156,6 @@ function Set-NcIgroup
     
     mockONTAP\New-MockNcIgroup @GetParam
 }
-
 function Add-NcIgroupInitiator
 {
     param(

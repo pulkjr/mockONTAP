@@ -23,7 +23,7 @@ Function New-MockNcAggr
         [bool]$IsInconsistent = $false,
         [bool]$IsRootAggregate = $false,
         # Provide a deserialized Aggr object to be serialized and output correctly. For instance you can use Import-CliXML to and give the deserialized Aggrs and they will be returned serialized correctly.
-        [Parameter(ValueFromPipeline)]
+        [Parameter( ValueFromPipeline )]
         [ValidateNotNullOrEmpty()]
         [Object[]]
         $InputObject
@@ -31,9 +31,9 @@ Function New-MockNcAggr
 
     process
     {
-        if ($InputObject)
+        if ( $InputObject )
         {
-            foreach ($_deserializedAggr in $InputObject)
+            foreach ( $_deserializedAggr in $InputObject )
             {
                 $mockAggr = Resolve-DeserializedObject -InputObject $_deserializedAggr -ReturnObjectType 'DataONTAP.C.Types.Aggr.AggrAttributes'
     
@@ -96,7 +96,7 @@ Function New-MockNcAggr
                 IsCacheTier                          = $False
                 IsRecomputingParity                  = $False
                 IsReconstructing                     = $False
-                NcController                         = [NetApp.Ontapi.Filer.C.NcController]::new('127.0.0.1')#New-MockNcController
+                NcController                         = [NetApp.Ontapi.Filer.C.NcController]::new( '127.0.0.1' )#New-MockNcController
                 RaidgroupName                        = '/VICE07_aggr1/plex0/rg0'
                 RecomputingParityPercentage          = 0
                 ReconstructionPercentage             = 0
@@ -111,7 +111,7 @@ Function New-MockNcAggr
                 IsCacheTier                          = $true
                 IsRecomputingParity                  = $False
                 IsReconstructing                     = $False
-                NcController                         = [NetApp.Ontapi.Filer.C.NcController]::new('127.0.0.1')#New-MockNcController
+                NcController                         = [NetApp.Ontapi.Filer.C.NcController]::new( '127.0.0.1' )#New-MockNcController
                 RaidgroupName                        = '/VICE07_aggr1/plex0/rg1'
                 RecomputingParityPercentage          = 0
                 ReconstructionPercentage             = 0
@@ -121,7 +121,7 @@ Function New-MockNcAggr
                 RecomputingParityPercentageSpecified = $True
                 ReconstructionPercentageSpecified    = $True
             }
-            $RaidgroupAttributes = ($RG0, $RG1| % {new-object DataONTAP.C.Types.Aggr.RaidgroupAttributes -Property $_})
+            $RaidgroupAttributes = ( $RG0, $RG1| % {new-object DataONTAP.C.Types.Aggr.RaidgroupAttributes -Property $_} )
             $PlexAttributes = [DataONTAP.C.Types.Aggr.PlexAttributes]::new()
             $PlexAttributes.IsOnline = $True
             $PlexAttributes.IsResyncing = $False
@@ -199,7 +199,7 @@ Function New-MockNcAggr
             $AggrSnapshotAttributes.NcController = New-MockNcController
             $AggrSnapshotAttributes.PercentInodeUsedCapacity = 0
             $AggrSnapshotAttributes.PercentUsedCapacity = $PercentUsedCapacity
-            $AggrSnapshotAttributes.SizeAvailable = $($SnapShotSizeTotal - $SnapShotSizeUsed)
+            $AggrSnapshotAttributes.SizeAvailable = $( $SnapShotSizeTotal - $SnapShotSizeUsed )
             $AggrSnapshotAttributes.SizeTotal = $SnapShotSizeTotal
             $AggrSnapshotAttributes.SizeUsed = $SnapShotSizeUsed
             $AggrSnapshotAttributes.SnapshotReservePercent = $SnapShotReservePercent
@@ -225,12 +225,12 @@ Function New-MockNcAggr
             $AggrSpaceAttributes.NcController = New-MockNcController
             $AggrSpaceAttributes.PercentUsedCapacity = 44
             $AggrSpaceAttributes.PhysicalUsed = $PhysicalUsed
-            if ($SizeTotal -and -not $PhysicalUsedPercent -and $PhysicalUsed)
+            if ( $SizeTotal -and -not $PhysicalUsedPercent -and $PhysicalUsed )
             {
-                $PhysicalUsedPercent = [math]::Round(($PhysicalUsed / $SizeTotal * 100), 0)
+                $PhysicalUsedPercent = [math]::Round( ( $PhysicalUsed / $SizeTotal * 100 ), 0 )
             }
             $AggrSpaceAttributes.PhysicalUsedPercent = $PhysicalUsedPercent
-            $AggrSpaceAttributes.SizeAvailable = $($SizeTotal - $SizeUsed)
+            $AggrSpaceAttributes.SizeAvailable = $( $SizeTotal - $SizeUsed )
             $AggrSpaceAttributes.SizeTotal = $SizeTotal
             $AggrSpaceAttributes.SizeUsed = $SizeUsed
             $AggrSpaceAttributes.TotalReservedSpace = 0
@@ -387,17 +387,17 @@ function Get-NcAggrSpace
 {
     [CmdletBinding()]
     param (
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $Name,
-        [Parameter(ParameterSetName = 'one')]
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = 'three' )]
         $Attributes,
         $Controller,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [switch]
         $Template,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         $Query
     )
     

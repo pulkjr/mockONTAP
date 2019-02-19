@@ -3,18 +3,17 @@ function New-MockNcVol
     [CmdletBinding()]
     param (
         # Provide a deserialized Volume object to be serialized and output correctly. For instance you can use Import-CliXML to and give the deserialized volume and they will be returned serialized correctly.
-        [Parameter(ValueFromPipeline)]
+        [Parameter( ValueFromPipeline )]
         [ValidateNotNullOrEmpty()]
         [Object[]]
         $InputObject
     )
-    
     process
     {
 
-        if ($InputObject)
+        if ( $InputObject )
         {
-            foreach ($_deserializedObject in $InputObject)
+            foreach ( $_deserializedObject in $InputObject )
             {
                 $mock = Resolve-DeserializedObject -InputObject $_deserializedObject -ReturnObjectType 'DataONTAP.C.Types.Volume.VolumeAttributes'
     
@@ -27,14 +26,13 @@ function New-MockNcVol
 
         }
     }
-    
 }
 Function New-NcVol
 {
     [CmdletBinding()]
-    Param([switch]$empty)
+    Param( [switch]$empty )
     $_mockVol = [DataONTAP.C.Types.Volume.VolumeAttributes]::new()
-    if ($empty)
+    if ( $empty )
     {
         # this is needed to mock the query objects
         $_mockVol.VolumeIdAttributes = [DataONTAP.C.Types.Volume.VolumeIdAttributes]::new()
@@ -138,7 +136,7 @@ Function New-NcVol
         $VolumeLanguageAttributes = [DataONTAP.C.Types.Volume.VolumeLanguageAttributes]::new()
         $VolumeLanguageAttributes.IsConvertUcodeEnabled = $True
         $VolumeLanguageAttributes.IsCreateUcodeEnabled = $True
-        $VolumeLanguageAttributes.Language = 'en_US (English (US))'
+        $VolumeLanguageAttributes.Language = 'en_US ( English ( US ) )'
         $VolumeLanguageAttributes.LanguageCode = 'en_us'
         $VolumeLanguageAttributes.NcController = New-MockNcController
         $VolumeLanguageAttributes.NfsCharacterSet = 'iso-8859-1|iso-8859-1|Thu Oct  1 18:00:53 EDT 1998'
@@ -216,7 +214,7 @@ Function New-NcVol
         $VolumeSnapshotAutodeleteAttributes.DestroyList = 'none'
         $VolumeSnapshotAutodeleteAttributes.IsAutodeleteEnabled = $False
         $VolumeSnapshotAutodeleteAttributes.NcController = New-MockNcController
-        $VolumeSnapshotAutodeleteAttributes.Prefix = '(not specified)'
+        $VolumeSnapshotAutodeleteAttributes.Prefix = '( not specified )'
         $VolumeSnapshotAutodeleteAttributes.TargetFreeSpace = 20
         $VolumeSnapshotAutodeleteAttributes.Trigger = 'volume'
         $VolumeSnapshotAutodeleteAttributes.IsAutodeleteEnabledSpecified = $True

@@ -250,40 +250,40 @@ function New-MockNcSnapmirrorVolume
 function Get-NcSnapMirror
 {
     param(
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string[]]
         $Destination,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [String[]]
         $DestinationCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [String[]]
         $DestinationVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [String[]]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [String[]]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [String[]]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [String[]]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [String[]]
         $SourceVolume,
         [switch]
         $Expand,
-        [Parameter(ParameterSetName = 'one')]
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = 'three' )]
         [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
         $Attributes,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
         $Query,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [Switch]
         $Template,
         [Parameter()]
@@ -295,32 +295,32 @@ function Get-NcSnapMirror
     )
 
     [hashtable]$_PSBoundParameters = $PSBoundParameters
-    if ('Template' -in $_PSBoundParameters.Keys)
+    if ( 'Template' -in $_PSBoundParameters.Keys )
     {
         return [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]::New()
     }
-    if ('Attributes' -in $_PSBoundParameters.Keys)
+    if ( 'Attributes' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Attributes')
+        $_PSBoundParameters.Remove( 'Attributes' )
     }
-    if ('Expand' -in $_PSBoundParameters.Keys)
+    if ( 'Expand' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Expand')
+        $_PSBoundParameters.Remove( 'Expand' )
     }
-    if ('Source' -in $_PSBoundParameters.Keys)
+    if ( 'Source' -in $_PSBoundParameters.Keys )
     {
         #TODO: Figure out way to handle this
-        $_PSBoundParameters.Remove('Source')
+        $_PSBoundParameters.Remove( 'Source' )
     }
-    if ('Destination' -in $_PSBoundParameters.Keys)
+    if ( 'Destination' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Destination')
+        $_PSBoundParameters.Remove( 'Destination' )
         #TODO: Figure out way to handle this
     }
-    if ('Controller' -in $_PSBoundParameters.Keys)
+    if ( 'Controller' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Controller')
-        $_PSBoundParameters.add('NcController', $Controller)
+        $_PSBoundParameters.Remove( 'Controller' )
+        $_PSBoundParameters.add( 'NcController', $Controller )
     }
 
     New-MockNcSnapMirror @_PSBoundParameters
@@ -328,30 +328,30 @@ function Get-NcSnapMirror
 
 function Set-NcSnapMirror
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
         [String]
@@ -370,49 +370,49 @@ function Set-NcSnapMirror
     )
 
     [hashtable]$_PSBoundParameters = $PSBoundParameters
-    if ('Source' -in $_PSBoundParameters.Keys)
+    if ( 'Source' -in $_PSBoundParameters.Keys )
     {
         #TODO: Figure out way to handle this
-        $_PSBoundParameters.Remove('Source')
+        $_PSBoundParameters.Remove( 'Source' )
     }
-    if ('Destination' -in $_PSBoundParameters.Keys)
+    if ( 'Destination' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Destination')
+        $_PSBoundParameters.Remove( 'Destination' )
         #TODO: Figure out way to handle this
     }
-    if ('Controller' -in $_PSBoundParameters.Keys)
+    if ( 'Controller' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Controller')
-        $_PSBoundParameters.add('NcController', $Controller)
+        $_PSBoundParameters.Remove( 'Controller' )
+        $_PSBoundParameters.add( 'NcController', $Controller )
     }
     New-MockNcSnapMirror @PSBoundParameters
 }
 function New-NcSnapMirror
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
         [String]
@@ -421,7 +421,7 @@ function New-NcSnapMirror
         $Tries,
         [Int64]
         $MaxTransferRate,
-        [ValidateSet('dp', 'ls', 'vault', 'restore', 'transition_data_protection')]
+        [ValidateSet( 'dp', 'ls', 'vault', 'restore', 'transition_data_protection' )]
         [String]
         $Type,
         [String]
@@ -436,60 +436,60 @@ function New-NcSnapMirror
     )
 
     [hashtable]$_PSBoundParameters = $PSBoundParameters
-    if ('Source' -in $_PSBoundParameters.Keys)
+    if ( 'Source' -in $_PSBoundParameters.Keys )
     {
         #TODO: Figure out way to handle this
-        $_PSBoundParameters.Remove('Source')
+        $_PSBoundParameters.Remove( 'Source' )
     }
-    if ('Destination' -in $_PSBoundParameters.Keys)
+    if ( 'Destination' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Destination')
+        $_PSBoundParameters.Remove( 'Destination' )
         #TODO: Figure out way to handle this
     }
-    if ('Type' -in $_PSBoundParameters.Keys)
+    if ( 'Type' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Type')
-        $_PSBoundParameters.add('RelationshipType', $Type)
+        $_PSBoundParameters.Remove( 'Type' )
+        $_PSBoundParameters.add( 'RelationshipType', $Type )
     }
-    if ('PreserveIdentity' -in $_PSBoundParameters.Keys)
+    if ( 'PreserveIdentity' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('PreserveIdentity')
-        $_PSBoundParameters.add('IdentityPreserve', $PreserveIdentity)
+        $_PSBoundParameters.Remove( 'PreserveIdentity' )
+        $_PSBoundParameters.add( 'IdentityPreserve', $PreserveIdentity )
     }
-    if ('Controller' -in $_PSBoundParameters.Keys)
+    if ( 'Controller' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Controller')
-        $_PSBoundParameters.add('NcController', $Controller)
+        $_PSBoundParameters.Remove( 'Controller' )
+        $_PSBoundParameters.add( 'NcController', $Controller )
     }
 
     New-MockNcSnapMirror @_PSBoundParameters
 }
 function Remove-NcSnapMirror
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
         [switch]
@@ -506,10 +506,10 @@ function Test-NcSnapmirrorVolume
 {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [String]
         $Vserver,
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [String]
         $Volume,
         [Parameter()]
@@ -519,40 +519,40 @@ function Test-NcSnapmirrorVolume
     
     [hashtable]$_PSBoundParameters = $PSBoundParameters
 
-    if ('Controller' -in $_PSBoundParameters.Keys)
+    if ( 'Controller' -in $_PSBoundParameters.Keys )
     {
-        $_PSBoundParameters.Remove('Controller')
-        $_PSBoundParameters.Add('NcController', $Controller)
+        $_PSBoundParameters.Remove( 'Controller' )
+        $_PSBoundParameters.Add( 'NcController', $Controller )
     }
     New-MockNcSnapmirrorVolume @_PSBoundParameters
 }
 
 function Invoke-NcSnapMirrorInitialize
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
         [Int64]
@@ -572,28 +572,28 @@ function Invoke-NcSnapMirrorInitialize
         $Controller
     )
     
-    if ($Passthru)
+    if ( $Passthru )
     {
         [hashtable]$_PSBoundParameters = $PSBoundParameters
 
-        if ('TransferPriority' -in $_PSBoundParameters.Keys)
+        if ( 'TransferPriority' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('TransferPriority')
-            $_PSBoundParameters.Add('CurrentTransferPriority', $TransferPriority)
+            $_PSBoundParameters.Remove( 'TransferPriority' )
+            $_PSBoundParameters.Add( 'CurrentTransferPriority', $TransferPriority )
         }
-        if ('SourceSnapshot' -in $_PSBoundParameters.Keys)
+        if ( 'SourceSnapshot' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('SourceSnapshot')
-            $_PSBoundParameters.Add('TransferSnapshot', $SourceSnapshot)
+            $_PSBoundParameters.Remove( 'SourceSnapshot' )
+            $_PSBoundParameters.Add( 'TransferSnapshot', $SourceSnapshot )
         }
-        if ('IsAdaptive' -in $_PSBoundParameters.Keys)
+        if ( 'IsAdaptive' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('IsAdaptive')
+            $_PSBoundParameters.Remove( 'IsAdaptive' )
             #TODO: HANDLE property
         }
-        if ('Passthru' -in $_PSBoundParameters.Keys)
+        if ( 'Passthru' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Passthru')
+            $_PSBoundParameters.Remove( 'Passthru' )
         }
 
         New-MockNcSnapmirrorVolume @_PSBoundParameters
@@ -606,30 +606,30 @@ function Invoke-NcSnapMirrorInitialize
 
 function Invoke-NcSnapMirrorAbort
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
         [Switch]
@@ -644,28 +644,28 @@ function Invoke-NcSnapMirrorAbort
         [NetApp.Ontapi.Filer.C.NcController]
         $Controller
     )
-    if ($Passthru)
+    if ( $Passthru )
     {
         [hashtable]$_PSBoundParameters = $PSBoundParameters
     
-        if ('ClearCheckpoint' -in $_PSBoundParameters.Keys)
+        if ( 'ClearCheckpoint' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('ClearCheckpoint')
+            $_PSBoundParameters.Remove( 'ClearCheckpoint' )
             #TODO: HANDLE property
         }
-        if ('CheckOnly' -in $_PSBoundParameters.Keys)
+        if ( 'CheckOnly' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('CheckOnly')
+            $_PSBoundParameters.Remove( 'CheckOnly' )
             #TODO: HANDLE property
         }
-        if ('InfiniteVolume' -in $_PSBoundParameters.Keys)
+        if ( 'InfiniteVolume' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('InfiniteVolume')
+            $_PSBoundParameters.Remove( 'InfiniteVolume' )
             #TODO: HANDLE property
         }
-        if ('Passthru' -in $_PSBoundParameters.Keys)
+        if ( 'Passthru' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Passthru')
+            $_PSBoundParameters.Remove( 'Passthru' )
         }
 
         New-MockNcSnapmirrorVolume @_PSBoundParameters
@@ -673,30 +673,30 @@ function Invoke-NcSnapMirrorAbort
 }
 function Invoke-NcSnapMirrorBreak
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
         [Switch]
@@ -712,28 +712,28 @@ function Invoke-NcSnapMirrorBreak
         $Controller
     )
     
-    if ($Passthru)
+    if ( $Passthru )
     {
         [hashtable]$_PSBoundParameters = $PSBoundParameters
     
-        if ('RestoreDestinationSnapshot' -in $_PSBoundParameters.Keys)
+        if ( 'RestoreDestinationSnapshot' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('RestoreDestinationSnapshot')
+            $_PSBoundParameters.Remove( 'RestoreDestinationSnapshot' )
             #TODO: HANDLE property
         }
-        if ('Recover' -in $_PSBoundParameters.Keys)
+        if ( 'Recover' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Recover')
+            $_PSBoundParameters.Remove( 'Recover' )
             #TODO: HANDLE property
         }
-        if ('InfiniteVolume' -in $_PSBoundParameters.Keys)
+        if ( 'InfiniteVolume' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('InfiniteVolume')
+            $_PSBoundParameters.Remove( 'InfiniteVolume' )
             #TODO: HANDLE property
         }
-        if ('Passthru' -in $_PSBoundParameters.Keys)
+        if ( 'Passthru' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Passthru')
+            $_PSBoundParameters.Remove( 'Passthru' )
         }
 
         New-MockNcSnapmirrorVolume @_PSBoundParameters
@@ -742,30 +742,30 @@ function Invoke-NcSnapMirrorBreak
 
 function Invoke-NcSnapMirrorUpdate
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
         [String]
@@ -783,28 +783,28 @@ function Invoke-NcSnapMirrorUpdate
         $Controller
     )
     
-    if ($Passthru)
+    if ( $Passthru )
     {
         [hashtable]$_PSBoundParameters = $PSBoundParameters
 
-        if ('TransferPriority' -in $_PSBoundParameters.Keys)
+        if ( 'TransferPriority' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('TransferPriority')
-            $_PSBoundParameters.Add('CurrentTransferPriority', $TransferPriority)
+            $_PSBoundParameters.Remove( 'TransferPriority' )
+            $_PSBoundParameters.Add( 'CurrentTransferPriority', $TransferPriority )
         }
-        if ('SourceSnapshot' -in $_PSBoundParameters.Keys)
+        if ( 'SourceSnapshot' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('SourceSnapshot')
-            $_PSBoundParameters.Add('TransferSnapshot', $SourceSnapshot)
+            $_PSBoundParameters.Remove( 'SourceSnapshot' )
+            $_PSBoundParameters.Add( 'TransferSnapshot', $SourceSnapshot )
         }
 
-        if ('Passthru' -in $_PSBoundParameters.Keys)
+        if ( 'Passthru' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Passthru')
+            $_PSBoundParameters.Remove( 'Passthru' )
         }
-        if ('EnableStorageEfficiency' -in $_PSBoundParameters.Keys)
+        if ( 'EnableStorageEfficiency' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('EnableStorageEfficiency')
+            $_PSBoundParameters.Remove( 'EnableStorageEfficiency' )
             #TODO: HANDLE property
         }
 
@@ -817,43 +817,43 @@ function Invoke-NcSnapMirrorUpdate
 }
 function Invoke-NcSnapmirrorQuiesce
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
         $Query,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         [Switch]
         $ContinueOnFailure,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         [Int32]
         $MaxFailureCount,
-        [Parameter(ParameterSetName = 'one')]
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = 'two' )]
         [Switch]
         $Passthru,
         [Parameter()]
@@ -861,13 +861,13 @@ function Invoke-NcSnapmirrorQuiesce
         $Controller
     )
     
-    if ($Passthru)
+    if ( $Passthru )
     {
         [hashtable]$_PSBoundParameters = $PSBoundParameters
 
-        if ('Passthru' -in $_PSBoundParameters.Keys)
+        if ( 'Passthru' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Passthru')
+            $_PSBoundParameters.Remove( 'Passthru' )
         }
 
         New-MockNcSnapmirrorVolume @_PSBoundParameters
@@ -879,43 +879,43 @@ function Invoke-NcSnapmirrorQuiesce
 }
 function Invoke-NcSnapmirrorResume
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
         $Query,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         [Switch]
         $ContinueOnFailure,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         [Int32]
         $MaxFailureCount,
-        [Parameter(ParameterSetName = 'one')]
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = 'two' )]
         [Switch]
         $Passthru,
         [Parameter()]
@@ -923,13 +923,13 @@ function Invoke-NcSnapmirrorResume
         $Controller
     )
     
-    if ($Passthru)
+    if ( $Passthru )
     {
         [hashtable]$_PSBoundParameters = $PSBoundParameters
 
-        if ('Passthru' -in $_PSBoundParameters.Keys)
+        if ( 'Passthru' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Passthru')
+            $_PSBoundParameters.Remove( 'Passthru' )
         }
 
         New-MockNcSnapmirrorVolume @_PSBoundParameters
@@ -942,30 +942,30 @@ function Invoke-NcSnapmirrorResume
 
 function Invoke-NcSnapmirrorResync
 {
-    [CmdletBinding(DefaultParameterSetName = "one")]
+    [CmdletBinding( DefaultParameterSetName = "one" )]
     param(
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Destination,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         [string]
         $Source,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $DestinationCluster,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVserver,
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string]
         $DestinationVolume,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceCluster,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVserver,
-        [Parameter(ParameterSetName = 'one')]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $SourceVolume,
         [Int64]
@@ -987,32 +987,32 @@ function Invoke-NcSnapmirrorResync
         $Controller
     )
     
-    if ($Passthru)
+    if ( $Passthru )
     {
         [hashtable]$_PSBoundParameters = $PSBoundParameters
 
-        if ('SourceSnapshot' -in $_PSBoundParameters.Keys)
+        if ( 'SourceSnapshot' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('SourceSnapshot')
-            $_PSBoundParameters.Add('TransferSnapshot', $SourceSnapshot)
+            $_PSBoundParameters.Remove( 'SourceSnapshot' )
+            $_PSBoundParameters.Add( 'TransferSnapshot', $SourceSnapshot )
         }
-        if ('Preserve' -in $_PSBoundParameters.Keys)
+        if ( 'Preserve' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Preserve')
-            $_PSBoundParameters.Add('IdentityPreserve', $true)
+            $_PSBoundParameters.Remove( 'Preserve' )
+            $_PSBoundParameters.Add( 'IdentityPreserve', $true )
         }
-        if ('IsAdaptive' -in $_PSBoundParameters.Keys)
+        if ( 'IsAdaptive' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('IsAdaptive')
+            $_PSBoundParameters.Remove( 'IsAdaptive' )
             #TODO: HANDLE property
         }
-        if ('Passthru' -in $_PSBoundParameters.Keys)
+        if ( 'Passthru' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('Passthru')
+            $_PSBoundParameters.Remove( 'Passthru' )
         }
-        if ('QuickResync' -in $_PSBoundParameters.Keys)
+        if ( 'QuickResync' -in $_PSBoundParameters.Keys )
         {
-            $_PSBoundParameters.Remove('QuickResync')
+            $_PSBoundParameters.Remove( 'QuickResync' )
         }
 
         New-MockNcSnapmirrorVolume @_PSBoundParameters

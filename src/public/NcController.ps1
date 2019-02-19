@@ -3,7 +3,7 @@ Function New-MockNcController
     [CmdletBinding()]
     param(
         $Name,
-        [ValidateSet(443, 80)]
+        [ValidateSet( 443, 80 )]
         $Port,
         $Credential,
         [switch]$HTTPS,
@@ -16,23 +16,23 @@ Function New-MockNcController
         $OntapiMinorVersion = 140
     )
     
-    $_mockController = [NetApp.Ontapi.Filer.C.NcController]::new('127.0.0.1')
+    $_mockController = [NetApp.Ontapi.Filer.C.NcController]::new( '127.0.0.1' )
     $_mockController.Name = $Name
-    $_mockController.Credentials = [NetApp.Ontapi.OntapiCredential]::new('admin', [securestring]::new())
+    $_mockController.Credentials = [NetApp.Ontapi.OntapiCredential]::new( 'admin', [securestring]::new() )
     $_mockController.Version = $Version
-    $_mockController.SetOntapiVersion($OntapiMajorVersion, $OntapiMinorVersion)
+    $_mockController.SetOntapiVersion( $OntapiMajorVersion, $OntapiMinorVersion )
 
-    if ($HTTPS)
+    if ( $HTTPS )
     {
         $port = 443
     }
-    if ($HTTP)
+    if ( $HTTP )
     {
         $port = 80
     }
     $_mockController.Port = $Port
 
-    if ($Vserver)
+    if ( $Vserver )
     {
         $_mockController.Vserver = $Vserver
     }
@@ -48,7 +48,7 @@ Function Connect-NcController
         $Credential,
         [switch]$HTTPS,
         [switch]$HTTP,
-        $Transient,
+        [switch]$Transient,
         $Vserver,
         $Timeout
     )
