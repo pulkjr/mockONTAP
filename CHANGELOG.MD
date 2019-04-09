@@ -1,5 +1,23 @@
 # Release History
 
+### [0.3.0 - UnReleased]
+
+#### Major Features
+
+- NcCifsShare Functions
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- None.
+
+#### Internal Changes
+
+- None.
+
 ### [0.2.0 - UnReleased]
 
 #### Major Features
