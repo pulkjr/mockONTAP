@@ -102,6 +102,7 @@ function Get-NcCifsShare
 }
 function Remove-NcCifsShare
 {
+    [CmdletBinding( DefaultParameterSetName = '1', SupportsShouldProcess = $true )]
     param (
         [Parameter( ParameterSetName = '1', Mandatory )]
         [String[]]
@@ -111,6 +112,7 @@ function Remove-NcCifsShare
         [NetApp.Ontapi.Filer.C.NcController]
         $Controller
     )
+    If ( $PSCmdlet.ShouldProcess( "Removing Cifs Share $Name" ) ) { return }
 }
 function Add-NcCifsShare
 {
