@@ -3,7 +3,7 @@ function New-MockNcDisk
     [CmdletBinding()]
     param (
         # Serialize an object from export-clixml back into an dataONTAP object.
-        [Parameter(ValueFromPipeline)]
+        [Parameter( ValueFromPipeline )]
         [Object]
         $InputObject,
         $Shelf,
@@ -20,12 +20,11 @@ function New-MockNcDisk
         [string]$DiskClass = 'performance',
         [string]$DiskType = 'SAS'
     )
-   
     process
     {
-        if ($InputObject)
+        if ( $InputObject )
         {
-            foreach ($_deserializedObject in $InputObject)
+            foreach ( $_deserializedObject in $InputObject )
             {
                 $returnObject = Resolve-DeserializedObject -InputObject $_deserializedObject -ReturnObjectType 'DataONTAP.C.Types.StorageDisk.StorageDiskInfo'
     
@@ -61,9 +60,7 @@ function New-MockNcDisk
             return $mock
         }
     }
-    
 }
-
 function Get-NcDisk
 {
     param(

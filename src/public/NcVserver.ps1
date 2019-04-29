@@ -9,7 +9,7 @@ function New-MockNcVserver
         [string]
         $RootVolumeAggregate = 'VICE08_aggr1',
         [string[]]
-        $NameServerSwitch = @('file'),
+        $NameServerSwitch = @( 'file' ),
         [string]
         $RootVolumeSecurity = 'unix',
         [string]
@@ -19,7 +19,7 @@ function New-MockNcVserver
         [string]
         $Language = 'c.utf_8',
         [string[]]
-        $NameMappingSwitch = @('file'),
+        $NameMappingSwitch = @( 'file' ),
         [string]
         $QuotaPolicy = 'default',
         [string]
@@ -36,13 +36,13 @@ function New-MockNcVserver
         $Async,
         $Controller,
         [string[]]
-        $AggrList = @('VICE07_aggr1', 'VICE08_aggr1'),
+        $AggrList = @( 'VICE07_aggr1', 'VICE08_aggr1' ),
         [String[]]
-        $AllowedProtocols = @('nfs', 'fcp'),
+        $AllowedProtocols = @( 'nfs', 'fcp' ),
         [string]
         $State = 'running',
         [string[]]
-        $DisallowedProtocols = @('cifs', 'iscsi', 'ndmp'),
+        $DisallowedProtocols = @( 'cifs', 'iscsi', 'ndmp' ),
         [string]
         $LdapDomain = 'ldap.netapp.com',
         $MaxVolumes = 'unlimited',
@@ -54,22 +54,22 @@ function New-MockNcVserver
         $VserverType = 'data',
         $VserverContext,
         # Provide a deserialized Vserver object to be serialized and output correctly. For instance you can use Import-CliXML to and give the deserialized vservers and they will be returned serialized correctly.
-        [Parameter(ValueFromPipeline)]
+        [Parameter( ValueFromPipeline )]
         [ValidateNotNullOrEmpty()]
         [Object[]]
         $InputObject
     )
 
-    if ($VserverContext -and (-not $Name) )
+    if ( $VserverContext -and ( -not $Name ) )
     {
         $name = $VserverContext
     }
-    if(-Not $Controller){
+    if( -Not $Controller ){
         $Controller = New-MockNcController
     }
-    if ($InputObject)
+    if ( $InputObject )
     {
-        foreach ($_deserializedObject in $InputObject)
+        foreach ( $_deserializedObject in $InputObject )
         {
             $mock = Resolve-DeserializedObject -InputObject $_deserializedObject -ReturnObjectType 'DataONTAP.C.Types.Vserver.VserverInfo' -Controller $Controller
 
@@ -117,7 +117,7 @@ Function New-NcVserver
 {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [string]
         $Name,
         [string]
@@ -126,17 +126,17 @@ Function New-NcVserver
         $RootVolumeAggregate,
         [string[]]
         $NameServerSwitch,
-        [ValidateSet('unix', 'ntfs', 'mixed')]
+        [ValidateSet( 'unix', 'ntfs', 'mixed' )]
         [string]
         $RootVolumeSecurity,
         [string]
         $AntivirusOnAccessPolicy,
         [string]
         $Comment,
-        [ValidateSet('C', 'ar', 'cs', 'da', 'de', 'en', 'en_US', 'es', 'fi', 'fr', 'he', 'hr', 'hu', 'it', 'ja', 'ja_v1', 'ja_JP.PCK', 'ja_JP.932', 'ja_JP.PCK_v2', 'ko', 'no', 'nl', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'sv', 'tr', 'zh', 'zh.GBK', 'zh_TW', 'zh_TW.BIG5')]
+        [ValidateSet( 'C', 'ar', 'cs', 'da', 'de', 'en', 'en_US', 'es', 'fi', 'fr', 'he', 'hr', 'hu', 'it', 'ja', 'ja_v1', 'ja_JP.PCK', 'ja_JP.932', 'ja_JP.PCK_v2', 'ko', 'no', 'nl', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'sv', 'tr', 'zh', 'zh.GBK', 'zh_TW', 'zh_TW.BIG5' )]
         [string]
         $Language,
-        [ValidateSet('file', 'ldap')]
+        [ValidateSet( 'file', 'ldap' )]
         [string[]]
         $NameMappingSwitch,
         [string]
@@ -163,25 +163,25 @@ function Get-NcVserver
 {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, ParameterSetName = 'one')]
+        [Parameter( Mandatory, ParameterSetName = 'one' )]
         [string[]]
         $Name,
-        [Parameter(ParameterSetName = 'one')]
-        [Parameter(ParameterSetName = 'two')]
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = 'two' )]
+        [Parameter( ParameterSetName = 'three' )]
         [string]
         $VserverContext,
-        [Parameter(ParameterSetName = 'one')]
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = 'three' )]
         $Attributes,
-        [Parameter(ParameterSetName = 'two')]
+        [Parameter( ParameterSetName = 'two' )]
         $Template,
-        [Parameter(ParameterSetName = 'three')]
+        [Parameter( ParameterSetName = 'three' )]
         $Query,
         $Controller
     )
 
-    foreach ($_name in $name)
+    foreach ( $_name in $name )
     {
         New-MockNcVserver @PSBoundParameters -Name $_Name
 
@@ -192,7 +192,7 @@ function Remove-NcVserver
 {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [string[]]
         $Name,
         [switch]
@@ -206,7 +206,7 @@ function Stop-NcVserver
 {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [string[]]
         $Name,
         $Controller
@@ -218,7 +218,7 @@ function Start-NcVserver
 {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory)]
+        [Parameter( Mandatory )]
         [string[]]
         $Name,
         $Controller,

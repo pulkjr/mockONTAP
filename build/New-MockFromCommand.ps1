@@ -1,9 +1,20 @@
 function New-MockFromCommand
 {
     param(
-        $CommandName
+        $CommandName,
+        [scriptblock]
+        $ScriptBlock
     )
-    $_output = invoke-Expression -Command $CommandName
+    if ($CommandName)
+    {
+        $_output = invoke-Expression -Command $CommandName
+
+    }
+    elseif ($ScriptBlock)
+    {
+        $_output = Invoke-Command -ScriptBlock $ScriptBlock
+
+    }
 
     $type = @($_output)[0].gettype().FullName
     $single = @($_output)[0]
