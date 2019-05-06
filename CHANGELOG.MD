@@ -1,6 +1,24 @@
 # Release History
 
-### [0.3.0 - UnReleased]
+### [0.4.0 - UnReleased]
+
+#### Major Features
+
+- NcJob Functions
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- None.
+
+#### Internal Changes
+
+- None.
+
+### [0.3.0 - Released]
 
 #### Major Features
 
@@ -18,7 +36,7 @@
 
 - None.
 
-### [0.2.0 - UnReleased]
+### [0.2.0 - Released]
 
 #### Major Features
 
