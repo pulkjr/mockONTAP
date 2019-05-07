@@ -4,11 +4,11 @@ function New-MockNcQuota
         $DiskLimit = '204800',
         $FileLimit = '10000',
         $NcController = 'cluster01',
-        $PerformUserMapping = '',
+        $PerformUserMapping,
         $PerformUserMappingSpecified = 'False',
         $Policy = 'default',
-        $Qtree = '',
-        $QuotaError = '',
+        $Qtree,
+        $QuotaError,
         $QuotaTarget = '/vol/CifsVol/newqtree',
         $QuotaType = 'tree',
         $SoftDiskLimit = '5120',
@@ -31,6 +31,31 @@ function New-MockNcQuota
     $returnObj.SoftDiskLimit = $SoftDiskLimit
     $returnObj.SoftFileLimit = $SoftFileLimit
     $returnObj.Threshold = $Threshold
+    $returnObj.Volume = $Volume
+    $returnObj.Vserver = $Vserver
+    return $returnObj
+}
+function New-MockNcQuotaStatus
+{
+    param(
+        $NcController = 'cluster01',
+        $PercentComplete,
+        $PercentCompleteSpecified = 'False',
+        $QuotaErrorMsgs,
+        $Reason,
+        $Status = 'on',
+        $Substatus = 'none',
+        $Volume = 'CifsVol',
+        $Vserver = 'TestSVM'
+    )
+    $returnObj = [DataONTAP.C.Types.Quota.QuotaStatusAttributes]::New()
+    $returnObj.NcController = $NcController
+    $returnObj.PercentComplete = $PercentComplete
+    $returnObj.PercentCompleteSpecified = $PercentCompleteSpecified
+    $returnObj.QuotaErrorMsgs = $QuotaErrorMsgs
+    $returnObj.Reason = $Reason
+    $returnObj.Status = $Status
+    $returnObj.Substatus = $Substatus
     $returnObj.Volume = $Volume
     $returnObj.Vserver = $Vserver
     return $returnObj
@@ -64,7 +89,7 @@ function Get-NcQuota
         [Parameter( ParameterSetName = 'ByName' )]
         [Parameter( ParameterSetName = 'Template' )]
         [Parameter( ParameterSetName = 'ByQuery' )]
-        [NetApp.Ontapi.Filer.C.NcController[]]$Controller,
+        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
     if ( $VserverContext )
     {
@@ -81,7 +106,7 @@ function Get-NcQuota
 }
 function Remove-NcQuota
 {
-    [CmdletBinding()]
+    [CmdletBinding( SupportsShouldProcess = $true )]
     param(
         [Parameter( ParameterSetName = 'User', Mandatory )]
         [string[]]$User,
@@ -121,7 +146,7 @@ function Remove-NcQuota
 }
 function Set-NcQuota
 {
-    [CmdletBinding()]
+    [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Quota.QuotaEntry] )]
     param(
         [Parameter( ParameterSetName = 'User', Mandatory )]
@@ -203,7 +228,7 @@ function Set-NcQuota
 }
 function Add-NcQuota
 {
-    [CmdletBinding()]
+    [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Quota.QuotaEntry] )]
     param(
         [Parameter( ParameterSetName = 'User', Mandatory )]
@@ -268,11 +293,11 @@ function Add-NcQuota
         [Parameter( ParameterSetName = 'ZAPI' )]
         [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
-    New-MockNc #TODO: Add call to mock
+    New-MockNcQuota @param
 }
 function Enable-NcQuota
 {
-    [CmdletBinding()]
+    [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Job.JobInfo] )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
@@ -286,7 +311,7 @@ function Enable-NcQuota
 }
 function Disable-NcQuota
 {
-    [CmdletBinding()]
+    [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Job.JobInfo] )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
@@ -300,7 +325,7 @@ function Disable-NcQuota
 }
 function Start-NcQuotaResize
 {
-    [CmdletBinding()]
+    [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Job.JobInfo] )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
@@ -311,4 +336,33 @@ function Start-NcQuotaResize
         [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
     New-MockNcJob -JobVserver $VserverContext -JobType 'Quota Operation'
+}
+function Get-NcQuotaStatus
+{
+    [CmdletBinding( DefaultParameterSetName = 'ByName' )]
+    [OutputType( [DataONTAP.C.Types.Quota.QuotaStatusAttributes] )]
+    param(
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [string[]]$Volume,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string[]]$Vserver,
+        [Parameter( ParameterSetName = 'Template', Mandatory )]
+        [switch]$Template,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.Quota.QuotaStatusAttributes]$Query,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [DataONTAP.C.Types.Quota.QuotaStatusAttributes]$Attributes,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
+    )
+    New-MockNcQuotaStatus
 }

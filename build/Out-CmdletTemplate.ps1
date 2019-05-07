@@ -19,6 +19,10 @@ function Out-CmdletTemplate
         {
             [void]$returnObj.Append( " DefaultParameterSetName='$( $cmdDefinition.DefaultParameterSet )' " )
         }
+        if ( $cmdDefinition.Parameters['Confirm'] )
+        {
+            [void]$returnObj.Append( " SupportsShouldProcess = `$true " )
+        }
         [void]$returnObj.Append( ")]" )
 
         if ( $cmdDefinition.OutputType )
