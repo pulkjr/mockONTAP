@@ -80,7 +80,25 @@ function Set-NcQtree
         [Parameter( ParameterSetName = 'ByName' )]
         [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
-    New-MockNcQtree -Volume $Volume -Qtree $Qtree -Vserver $VserverContext
+    [hashtable]$_mockParameters = @{
+        Volume        = $Volume
+        Qtree         = $Qtree
+        Mode          = $Mode
+        SecurityStyle = $SecurityStyle
+        ExportPolicy  = $ExportPolicy
+        Oplocks       = ''
+        Vserver       = $VserverContext
+        Controller    = $Controller
+    }
+    if ( $EnableOplocks )
+    {
+        $_mockParameters['Oplocks'] = 'enabled'
+    }
+    if ( $DisableOplocks )
+    {
+        $_mockParameters['Oplocks'] = 'disabled'
+    }
+    New-MockNcQtree @_mockParameters
 }
 function Remove-NcQtree
 {
