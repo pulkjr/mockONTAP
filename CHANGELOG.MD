@@ -5,6 +5,8 @@
 #### Major Features
 
 - NcJob Functions
+- NcQuota Functions
+- NcQtree Functions
 
 #### Enhancements
 
