@@ -249,49 +249,44 @@ function New-MockNcSnapmirrorVolume
 }
 function Get-NcSnapMirror
 {
+    [CmdletBinding( DefaultParameterSetName = 'ByName' )]
+    [OutputType( [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo] )]
     param(
-        [Parameter( ParameterSetName = 'one' )]
-        [string[]]
-        $Destination,
-        [Parameter( ParameterSetName = 'one' )]
-        [String[]]
-        $DestinationCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [String[]]
-        $DestinationVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [String[]]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [String[]]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [String[]]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [String[]]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [String[]]
-        $SourceVolume,
-        [switch]
-        $Expand,
-        [Parameter( ParameterSetName = 'one' )]
-        [Parameter( ParameterSetName = 'three' )]
-        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
-        $Attributes,
-        [Parameter( ParameterSetName = 'three' )]
-        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
-        $Query,
-        [Parameter( ParameterSetName = 'two' )]
-        [Switch]
-        $Template,
-        [Parameter()]
-        [String]
-        $VserverContext,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [switch]$Expand,
+        [Parameter( ParameterSetName = 'Template', Mandatory )]
+        [switch]$Template,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]$Query,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]$Attributes,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
 
     [hashtable]$_PSBoundParameters = $PSBoundParameters
@@ -328,45 +323,43 @@ function Get-NcSnapMirror
 
 function Set-NcSnapMirror
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo] )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [String]
-        $Schedule,
-        [Int32]
-        $Tries,
-        [Int64]
-        $MaxTransferRate,
-        [String]
-        $Policy,
-        [bool]
-        $IsAutoExpandEnabled,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Schedule,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[int]]$Tries,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[long]]$MaxTransferRate,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Policy,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[bool]]$IsAutoExpandEnabled,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
 
     [hashtable]$_PSBoundParameters = $PSBoundParameters
@@ -389,50 +382,49 @@ function Set-NcSnapMirror
 }
 function New-NcSnapMirror
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo] )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [String]
-        $Schedule,
-        [Int32]
-        $Tries,
-        [Int64]
-        $MaxTransferRate,
-        [ValidateSet( 'dp', 'ls', 'vault', 'restore', 'transition_data_protection' )]
-        [String]
-        $Type,
-        [String]
-        $Policy,
-        [switch]
-        $PreserveIdentity,
-        [bool]
-        $IsAutoExpandEnabled,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Schedule,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[int]]$Tries,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[long]]$MaxTransferRate,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Type,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Policy,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$PreserveIdentity,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[bool]]$IsAutoExpandEnabled,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
 
     [hashtable]$_PSBoundParameters = $PSBoundParameters
@@ -466,37 +458,30 @@ function New-NcSnapMirror
 }
 function Remove-NcSnapMirror
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [switch]
-        $InfiniteVolume,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$InfiniteVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     
     return
@@ -505,16 +490,14 @@ function Remove-NcSnapMirror
 function Test-NcSnapmirrorVolume
 {
     [CmdletBinding()]
-    param (
-        [Parameter( Mandatory )]
-        [String]
-        $Vserver,
-        [Parameter( Mandatory )]
-        [String]
-        $Volume,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+    [OutputType( [DataONTAP.C.Types.Snapmirror.VolSnapmirrorStatus] )]
+    param(
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Vserver,
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Volume,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     
     [hashtable]$_PSBoundParameters = $PSBoundParameters
@@ -529,47 +512,46 @@ function Test-NcSnapmirrorVolume
 
 function Invoke-NcSnapMirrorInitialize
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.PowerShell.SDK.Cmdlets.JobStartResult] )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [Int64]
-        $MaxTransferRate,
-        [String]
-        $TransferPriority,
-        [String]
-        $SourceSnapshot,
-        [Switch]
-        $Passthru,
-        [bool]
-        $IsAutoExpandEnabled,
-        [bool]
-        $IsAdaptive,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[long]]$MaxTransferRate,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$TransferPriority,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$SourceSnapshot,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Passthru,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[bool]]$IsAutoExpandEnabled,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[bool]]$IsAdaptive,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     
     if ( $Passthru )
@@ -606,43 +588,39 @@ function Invoke-NcSnapMirrorInitialize
 
 function Invoke-NcSnapMirrorAbort
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [Switch]
-        $Passthru,
-        [Switch]
-        $ClearCheckpoint,
-        [Switch]
-        $CheckOnly,
-        [Switch]
-        $InfiniteVolume,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$ClearCheckpoint,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$CheckOnly,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Passthru,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$InfiniteVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     if ( $Passthru )
     {
@@ -673,43 +651,39 @@ function Invoke-NcSnapMirrorAbort
 }
 function Invoke-NcSnapMirrorBreak
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [Switch]
-        $Passthru,
-        [String]
-        $RestoreDestinationSnapshot,
-        [Switch]
-        $Recover,
-        [Switch]
-        $InfiniteVolume,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Passthru,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$RestoreDestinationSnapshot,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$InfiniteVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Recover,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     
     if ( $Passthru )
@@ -742,45 +716,43 @@ function Invoke-NcSnapMirrorBreak
 
 function Invoke-NcSnapMirrorUpdate
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.PowerShell.SDK.Cmdlets.JobStartResult] )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [String]
-        $SourceSnapshot,
-        [String]
-        $TransferPriority,
-        [Int64]
-        $MaxTransferRate,
-        [Switch]
-        $EnableStorageEfficiency,
-        [Switch]
-        $Passthru,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$SourceSnapshot,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$TransferPriority,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[long]]$MaxTransferRate,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$EnableStorageEfficiency,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Passthru,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     
     if ( $Passthru )
@@ -817,48 +789,37 @@ function Invoke-NcSnapMirrorUpdate
 }
 function Invoke-NcSnapmirrorQuiesce
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [Parameter( ParameterSetName = 'three' )]
-        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
-        $Query,
-        [Parameter( ParameterSetName = 'three' )]
-        [Switch]
-        $ContinueOnFailure,
-        [Parameter( ParameterSetName = 'three' )]
-        [Int32]
-        $MaxFailureCount,
-        [Parameter( ParameterSetName = 'one' )]
-        [Parameter( ParameterSetName = 'two' )]
-        [Switch]
-        $Passthru,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Passthru,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]$Query,
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [switch]$ContinueOnFailure,
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [System.Nullable[int]]$MaxFailureCount,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     
     if ( $Passthru )
@@ -879,48 +840,37 @@ function Invoke-NcSnapmirrorQuiesce
 }
 function Invoke-NcSnapmirrorResume
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [Parameter( ParameterSetName = 'three' )]
-        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]
-        $Query,
-        [Parameter( ParameterSetName = 'three' )]
-        [Switch]
-        $ContinueOnFailure,
-        [Parameter( ParameterSetName = 'three' )]
-        [Int32]
-        $MaxFailureCount,
-        [Parameter( ParameterSetName = 'one' )]
-        [Parameter( ParameterSetName = 'two' )]
-        [Switch]
-        $Passthru,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Passthru,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]$Query,
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [switch]$ContinueOnFailure,
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [System.Nullable[int]]$MaxFailureCount,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     
     if ( $Passthru )
@@ -942,49 +892,49 @@ function Invoke-NcSnapmirrorResume
 
 function Invoke-NcSnapmirrorResync
 {
-    [CmdletBinding( DefaultParameterSetName = "one" )]
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.PowerShell.SDK.Cmdlets.JobStartResult] )]
     param(
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Destination,
-        [Parameter( ParameterSetName = 'two' )]
-        [string]
-        $Source,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $DestinationCluster,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVserver,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string]
-        $DestinationVolume,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceCluster,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [string]
-        $SourceVolume,
-        [Int64]
-        $MaxTransferRate,
-        [String]
-        $SourceSnapshot,
-        [Switch]
-        $Preserve,
-        [Switch]
-        $Passthru,
-        [Switch]
-        $QuickResync,
-        [bool]
-        $IsAutoExpandEnabled,
-        [bool]
-        $IsAdaptive,
-        [Parameter()]
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[long]]$MaxTransferRate,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$SourceSnapshot,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Preserve,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$Passthru,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$QuickResync,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[bool]]$IsAutoExpandEnabled,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [System.Nullable[bool]]$IsAdaptive,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     
     if ( $Passthru )
