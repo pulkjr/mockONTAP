@@ -1,125 +1,108 @@
 function New-MockNcPortset
 {
-    Param(
-        $Name,
-        $Vserver,
-        $Attributes,
-        $Controller,
-        $Template,
-        $Query,
-        $Protocol,
-        $VserverContext,
-        [string[]]
-        $Port
+    param(
+        $InitiatorGroupInfo = 'SanSVMiGroup',
+        $NcController = '172.16.32.10',
+        $PortsetName = 'SanSVMPortgroup',
+        $PortsetPortInfo = @( 'iscsi1', 'iscsi2' ),
+        $PortsetPortTotal = '2',
+        $PortsetType = 'iscsi',
+        $Vserver = 'TestSVM'
     )
-    $portset = [DataONTAP.C.Types.Portset.PortsetInfo]::new()
-    #$portset.NcController = $Controller
-    $portset.PortsetName = $Name
-    $portset.PortsetPortInfo = $Port
-    $portset.PortsetPortTotal = @( $Port ).Count
-    $portset.PortsetType = $Protocol
-    if ( $VserverContext )
-    {
-        $Vserver = $VserverContext
-    }
-    $portset.Vserver = $Vserver
-
-    return $portset
+    $returnObj = [DataONTAP.C.Types.Portset.PortsetInfo]::New()
+    $returnObj.InitiatorGroupInfo = $InitiatorGroupInfo
+    $returnObj.NcController = $NcController
+    $returnObj.PortsetName = $PortsetName
+    $returnObj.PortsetPortInfo = $PortsetPortInfo
+    $returnObj.PortsetPortTotal = $PortsetPortTotal
+    $returnObj.PortsetType = $PortsetType
+    $returnObj.Vserver = $Vserver
+    return $returnObj
 }
 function Get-NcPortset
 {
+    [CmdletBinding( DefaultParameterSetName = 'ByName' )]
+    [OutputType( [DataONTAP.C.Types.Portset.PortsetInfo] )]
     param(
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String[]]
-        $Name,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String[]]
-        $Vserver,
-        [Parameter( ParameterSetName = 'one' )]
-        [Parameter( ParameterSetName = 'three' )]
-        [DataONTAP.C.Types.Portset.PortsetInfo]
-        $Attributes,
-        [Parameter( ParameterSetName = 'two' )]
-        [Switch]
-        $Template,
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string[]]$Name,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string[]]$Vserver,
+        [Parameter( ParameterSetName = 'Template', Mandatory )]
+        [switch]$Template,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.Portset.PortsetInfo]$Query,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [DataONTAP.C.Types.Portset.PortsetInfo]$Attributes,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
-    foreach ( $_name in $Name )
-    {
-        New-MockNcPortset @PSBoundParameters
-    }
+    New-MockNcPortset -PortsetName $Name -Vserver $Vserver
 }
 function New-NcPortset
 {
+    [CmdletBinding( SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.Types.Portset.PortsetInfo] )]
     param(
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $Name,
-        [Parameter( ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Name,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
         [ValidateSet( 'iscsi', 'fcp', 'mixed' )]
-        [String]
-        $Protocol,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $VserverContext,
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [string]$Protocol,
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
-
-    New-MockNcPortset @PSBoundParameters
+    New-MockNcPortset -PortsetName $Name -Protocol $Protocol
 }
 function Remove-NcPortset
 {
+    [CmdletBinding( SupportsShouldProcess = $true )]
     param(
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $Name,
-        [Parameter( ParameterSetName = 'one' )]
-        [Switch]
-        $Force,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $VserverContext,
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Name,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [switch]$Force,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
-
-    $null
+    return
 }
 function Add-NcPortsetPort
 {
+    [CmdletBinding( SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.Types.Portset.PortsetInfo] )]
     param(
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $Name,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $Port,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $VserverContext,
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Name,
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Port,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
-
-    New-MockNcPortset @PSBoundParameters
+    New-MockNcPortset -PortsetName $Name -Port $Port -Vserver $VserverContext
 }
 function Remove-NcPortsetPort
 {
+    [CmdletBinding( SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.Types.Portset.PortsetInfo] )]
     param(
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $Name,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $Port,
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [String]
-        $VserverContext,
-        [NetApp.Ontapi.Filer.C.NcController]
-        $Controller
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Name,
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Port,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
-
-    return $null
+    New-MockNcPortset -PortsetName $Name -Port $Port -Vserver $VserverContext
 }
