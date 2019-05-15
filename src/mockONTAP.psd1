@@ -38,6 +38,7 @@
         'Invoke-NcSnapMirrorInitialize'
         'Invoke-NcSnapMirrorUpdate'
         'Invoke-NcSnapmirrorQuiesce'
+        'Invoke-NcSnapmirrorRelease'
         'Invoke-NcSnapmirrorResume'
         'Invoke-NcSnapmirrorResync'
         'New-NcIgroup'
