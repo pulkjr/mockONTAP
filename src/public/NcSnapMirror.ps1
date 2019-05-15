@@ -3,102 +3,102 @@ function New-MockNcSnapMirror
     param(
         $Status = 'idle',
         $BreakFailedCount = '0',
-        $BreakFailedCountSpecified = 'True',
+        $BreakFailedCountSpecified = $true,
         $BreakSuccessfulCount = '0',
-        $BreakSuccessfulCountSpecified = 'True',
-        $CurrentMaxTransferRate = '',
-        $CurrentMaxTransferRateSpecified = 'False',
-        $CurrentOperationId = '',
-        $CurrentTransferError = '',
-        $CurrentTransferPriority = '',
-        $CurrentTransferType = '',
-        $DestinationCluster = '',
+        $BreakSuccessfulCountSpecified = $true,
+        $CurrentMaxTransferRate,
+        $CurrentMaxTransferRateSpecified = $false,
+        $CurrentOperationId,
+        $CurrentTransferError,
+        $CurrentTransferPriority,
+        $CurrentTransferType,
+        $DestinationCluster,
         $DestinationLocation = 'sm_test:dp_dest',
         $DestinationVolume = 'dp_dest',
         $DestinationVolumeNode = 'cluster02-01',
         $DestinationVserver = 'sm_test',
         $DestinationVserverUuid = 'dc11da2e-2a10-11e9-bb03-000c297a98ed',
-        $ExportedSnapshot = '',
-        $ExportedSnapshotTimestamp = '',
-        $ExportedSnapshotTimestampSpecified = 'False',
-        $FileRestoreFileCount = '',
-        $FileRestoreFileCountSpecified = 'False',
-        $FileRestoreFileList = '',
-        $IdentityPreserve = '',
-        $IdentityPreserveSpecified = 'False',
-        $IsAutoExpandEnabled = '',
-        $IsAutoExpandEnabledSpecified = 'False',
-        $IsConstituent = 'False',
-        $IsConstituentSpecified = 'True',
-        $IsHealthy = 'True',
-        $IsHealthySpecified = 'True',
-        $LagTime = '',
-        $LagTimeSpecified = 'False',
-        $LastTransferDuration = '',
-        $LastTransferDurationSpecified = 'False',
-        $LastTransferEndTimestamp = '',
-        $LastTransferEndTimestampSpecified = 'False',
-        $LastTransferError = '',
-        $LastTransferErrorCodes = '',
-        $LastTransferErrorCodesSpecified = 'False',
-        $LastTransferFrom = '',
-        $LastTransferNetworkCompressionRatio = '',
-        $LastTransferSize = '',
-        $LastTransferSizeSpecified = 'False',
-        $LastTransferType = '',
+        $ExportedSnapshot,
+        $ExportedSnapshotTimestamp,
+        $ExportedSnapshotTimestampSpecified = $false,
+        $FileRestoreFileCount,
+        $FileRestoreFileCountSpecified = $false,
+        $FileRestoreFileList,
+        $IdentityPreserve,
+        $IdentityPreserveSpecified = $false,
+        $IsAutoExpandEnabled,
+        $IsAutoExpandEnabledSpecified = $false,
+        $IsConstituent = $false,
+        $IsConstituentSpecified = $true,
+        $IsHealthy = $true,
+        $IsHealthySpecified = $true,
+        $LagTime,
+        $LagTimeSpecified = $false,
+        $LastTransferDuration,
+        $LastTransferDurationSpecified = $false,
+        $LastTransferEndTimestamp,
+        $LastTransferEndTimestampSpecified = $false,
+        $LastTransferError,
+        $LastTransferErrorCodes,
+        $LastTransferErrorCodesSpecified = $false,
+        $LastTransferFrom,
+        $LastTransferNetworkCompressionRatio,
+        $LastTransferSize,
+        $LastTransferSizeSpecified = $false,
+        $LastTransferType,
         $MaxTransferRate = '0',
-        $MaxTransferRateSpecified = 'True',
+        $MaxTransferRateSpecified = $true,
         $MirrorState = 'uninitialized',
         $NcController = '172.16.32.20',
-        $NetworkCompressionRatio = '',
-        $NewestSnapshot = '',
-        $NewestSnapshotTimestamp = '',
-        $NewestSnapshotTimestampSpecified = 'False',
+        $NetworkCompressionRatio,
+        $NewestSnapshot,
+        $NewestSnapshotTimestamp,
+        $NewestSnapshotTimestampSpecified = $false,
         $Opmask = '18446744073709551615',
-        $OpmaskSpecified = 'True',
+        $OpmaskSpecified = $true,
         $Policy = 'MirrorAndVault',
         $PolicyType = 'mirror_vault',
-        $ProgressLastUpdated = '',
-        $ProgressLastUpdatedSpecified = 'False',
-        $PseudoCommonSnapFailedCount = '',
-        $PseudoCommonSnapFailedCountSpecified = 'False',
-        $PseudoCommonSnapSuccessCount = '',
-        $PseudoCommonSnapSuccessCountSpecified = 'False',
+        $ProgressLastUpdated,
+        $ProgressLastUpdatedSpecified = $false,
+        $PseudoCommonSnapFailedCount,
+        $PseudoCommonSnapFailedCountSpecified = $false,
+        $PseudoCommonSnapSuccessCount,
+        $PseudoCommonSnapSuccessCountSpecified = $false,
         $RelationshipControlPlane = 'v2',
         $RelationshipGroupType = 'none',
         $RelationshipId = '8400356d-2a13-11e9-bb03-000c297a98ed',
-        $RelationshipProgress = '',
-        $RelationshipProgressSpecified = 'False',
+        $RelationshipProgress,
+        $RelationshipProgressSpecified = $false,
         $RelationshipStatus = 'idle',
         $RelationshipType = 'extended_data_protection',
-        $ResyncAvgTimeSyncCg = '',
-        $ResyncAvgTimeSyncCgSpecified = 'False',
+        $ResyncAvgTimeSyncCg,
+        $ResyncAvgTimeSyncCgSpecified = $false,
         $ResyncFailedCount = '0',
-        $ResyncFailedCountSpecified = 'True',
+        $ResyncFailedCountSpecified = $true,
         $ResyncSuccessfulCount = '0',
-        $ResyncSuccessfulCountSpecified = 'True',
-        $Schedule = '',
-        $SnapshotCheckpoint = '',
-        $SnapshotCheckpointSpecified = 'False',
-        $SnapshotProgress = '',
-        $SnapshotProgressSpecified = 'False',
-        $SourceCluster = '',
+        $ResyncSuccessfulCountSpecified = $true,
+        $Schedule,
+        $SnapshotCheckpoint,
+        $SnapshotCheckpointSpecified = $false,
+        $SnapshotProgress,
+        $SnapshotProgressSpecified = $false,
+        $SourceCluster,
         $SourceLocation = 'TestSVM:rw_source',
         $SourceVolume = 'rw_source',
         $SourceVserver = 'TestSVM',
         $SourceVserverUuid = '081d5662-cf0e-11e8-b29d-000c2991c0e1',
         $TotalTransferBytes = '0',
-        $TotalTransferBytesSpecified = 'True',
+        $TotalTransferBytesSpecified = $true,
         $TotalTransferTimeSecs = '0',
-        $TotalTransferTimeSecsSpecified = 'True',
-        $TransferSnapshot = '',
-        $Tries = '',
-        $TriesSpecified = 'False',
-        $UnhealthyReason = '',
+        $TotalTransferTimeSecsSpecified = $true,
+        $TransferSnapshot,
+        $Tries,
+        $TriesSpecified = $false,
+        $UnhealthyReason,
         $UpdateFailedCount = '0',
-        $UpdateFailedCountSpecified = 'True',
+        $UpdateFailedCountSpecified = $true,
         $UpdateSuccessfulCount = '0',
-        $UpdateSuccessfulCountSpecified = 'True',
+        $UpdateSuccessfulCountSpecified = $true,
         $Vserver = 'sm_test',
         $Query,
         $VserverContext
@@ -208,10 +208,10 @@ function New-MockNcSnapMirror
 function New-MockNcSnapMirrorJobStart
 {
     param(
-        $ErrorCode = '',
-        $ErrorMessage = '',
-        $JobId = '',
-        $JobVserver = '',
+        $ErrorCode,
+        $ErrorMessage,
+        $JobId,
+        $JobVserver,
         $NcController = '172.16.32.20',
         $ResultOperationId = '257d118d-2a32-11e9-bb03-000c297a98ed',
         $Status = 'succeeded'
@@ -229,10 +229,10 @@ function New-MockNcSnapMirrorJobStart
 function New-MockNcSnapmirrorVolume
 {
     param(
-        $IsDestination = 'False',
-        $IsSource = 'False',
-        $IsTransferBroken = 'False',
-        $IsTransferInProgress = 'False',
+        $IsDestination = $false,
+        $IsSource = $false,
+        $IsTransferBroken = $false,
+        $IsTransferInProgress = $false,
         $NcController = '172.16.32.20',
         $Volume = 'dp_dest',
         $Vserver = 'sm_test'
@@ -486,7 +486,6 @@ function Remove-NcSnapMirror
     
     return
 }
-
 function Test-NcSnapmirrorVolume
 {
     [CmdletBinding()]
@@ -509,7 +508,6 @@ function Test-NcSnapmirrorVolume
     }
     New-MockNcSnapmirrorVolume @_PSBoundParameters
 }
-
 function Invoke-NcSnapMirrorInitialize
 {
     [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
@@ -585,7 +583,6 @@ function Invoke-NcSnapMirrorInitialize
         New-MockNcSnapMirrorJobStart
     }
 }
-
 function Invoke-NcSnapMirrorAbort
 {
     [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
@@ -713,7 +710,6 @@ function Invoke-NcSnapMirrorBreak
         New-MockNcSnapmirrorVolume @_PSBoundParameters
     }
 }
-
 function Invoke-NcSnapMirrorUpdate
 {
     [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
@@ -971,4 +967,46 @@ function Invoke-NcSnapmirrorResync
     {
         New-MockNcSnapMirrorJobStart
     }
+}
+function Invoke-NcSnapmirrorRelease
+{
+    [CmdletBinding( DefaultParameterSetName = 'ByPathElement', SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.PowerShell.SDK.Cmdlets.TableModifyResult] )]
+    param(
+        [Parameter( ParameterSetName = 'ByPath', Mandatory )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$DestinationCluster,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByPathElement', Mandatory )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceCluster,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [string]$RelationshipId,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [switch]$RelationshipInfoOnly,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorDestinationInfo]$Query,
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [switch]$ContinueOnFailure,
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [System.Nullable[int]]$MaxFailureCount,
+        [Parameter( ParameterSetName = 'ByPathElement' )]
+        [Parameter( ParameterSetName = 'ByPath' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
+    )
+    $return = [DataONTAP.C.PowerShell.SDK.Cmdlets.TableModifyResult]::new()
+    $return.NcController = $Controller
+    $return.SuccessCount = 1
 }
