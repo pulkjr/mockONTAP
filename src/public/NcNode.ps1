@@ -131,7 +131,6 @@ function New-MockNcNode
         $NodeSystemId = '4082368507',
         $NodeUptime = '244755',
         $NodeUptimeSpecified = $true,
-        $NodeUptimeTS,
         $NodeUuid = '2ba5e026-bb4d-11e8-93b6-000c2991c0e1',
         $NodeVendor = 'NetApp',
         $NvramBatteryStatus = 'battery_ok',
@@ -180,7 +179,6 @@ function New-MockNcNode
     $returnObj.NodeSystemId = $NodeSystemId
     $returnObj.NodeUptime = $NodeUptime
     $returnObj.NodeUptimeSpecified = $NodeUptimeSpecified
-    $returnObj.NodeUptimeTS = $NodeUptimeTS
     $returnObj.NodeUuid = $NodeUuid
     $returnObj.NodeVendor = $NodeVendor
     $returnObj.NvramBatteryStatus = $NvramBatteryStatus
