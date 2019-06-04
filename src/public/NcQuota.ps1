@@ -3,9 +3,9 @@ function New-MockNcQuota
     param(
         $DiskLimit = '204800',
         $FileLimit = '10000',
-        $NcController = 'cluster01',
+        $NcController,
         $PerformUserMapping,
-        $PerformUserMappingSpecified = 'False',
+        $PerformUserMappingSpecified = $false,
         $Policy = 'default',
         $Qtree,
         $QuotaError,
@@ -38,9 +38,9 @@ function New-MockNcQuota
 function New-MockNcQuotaStatus
 {
     param(
-        $NcController = 'cluster01',
+        $NcController,
         $PercentComplete,
-        $PercentCompleteSpecified = 'False',
+        $PercentCompleteSpecified = $false,
         $QuotaErrorMsgs,
         $Reason,
         $Status = 'on',

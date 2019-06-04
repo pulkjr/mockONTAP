@@ -48,7 +48,7 @@ function New-MockNcVserver
         $MaxVolumes = 'unlimited',
         $NisDomain = 'nis.netapp.com',
         $OperationalState = 'running',
-        $QosPolicyGroup = '',
+        $QosPolicyGroup,
         $UUID = 'f38f651a-ca22-11e5-9a1e-00a09830cb90',
         $VolumeDeleteRetentionHours = 12,
         $VserverType = 'data',

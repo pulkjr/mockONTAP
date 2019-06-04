@@ -49,7 +49,7 @@ function New-MockNcSnapMirror
         $MaxTransferRate = '0',
         $MaxTransferRateSpecified = $true,
         $MirrorState = 'uninitialized',
-        $NcController = '172.16.32.20',
+        $NcController,
         $NetworkCompressionRatio,
         $NewestSnapshot,
         $NewestSnapshotTimestamp,
@@ -212,7 +212,7 @@ function New-MockNcSnapMirrorJobStart
         $ErrorMessage,
         $JobId,
         $JobVserver,
-        $NcController = '172.16.32.20',
+        $NcController,
         $ResultOperationId = '257d118d-2a32-11e9-bb03-000c297a98ed',
         $Status = 'succeeded'
     )
@@ -233,7 +233,7 @@ function New-MockNcSnapmirrorVolume
         $IsSource = $false,
         $IsTransferBroken = $false,
         $IsTransferInProgress = $false,
-        $NcController = '172.16.32.20',
+        $NcController,
         $Volume = 'dp_dest',
         $Vserver = 'sm_test'
     )

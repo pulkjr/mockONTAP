@@ -2,7 +2,7 @@ function New-MockNcPortset
 {
     param(
         $InitiatorGroupInfo = 'SanSVMiGroup',
-        $NcController = '172.16.32.10',
+        $NcController,
         $PortsetName = 'SanSVMPortgroup',
         $PortsetPortInfo = @( 'iscsi1', 'iscsi2' ),
         $PortsetPortTotal = '2',

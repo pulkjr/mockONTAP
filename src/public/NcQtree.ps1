@@ -6,7 +6,7 @@ function New-MockNcQtree
         $IsExportPolicyInherited = $True,
         $IsExportPolicyInheritedSpecified = $True,
         $Mode = '755',
-        $NcController = '172.16.32.10',
+        $NcController,
         $Oplocks = 'enabled',
         $Qtree = 'TestQtree',
         $SecurityStyle = 'unix',
