@@ -89,3 +89,22 @@ function Get-NcJob
     
     New-MockNcJob -JobId $id -JobVserver $VserverContext -NcController $Controller
 }
+function New-MockNcJobStartResults
+{
+    param(
+        $ErrorCode,
+        $ErrorMessage,
+        $JobId,
+        $JobVserver,
+        $NcController,
+        $Status
+    )
+    $returnObj = [DataONTAP.C.PowerShell.SDK.Cmdlets.JobStartResult]::New()
+    $returnObj.ErrorCode = $ErrorCode
+    $returnObj.ErrorMessage = $ErrorMessage
+    $returnObj.JobId = $JobId
+    $returnObj.JobVserver = $JobVserver
+    $returnObj.NcController = $NcController
+    $returnObj.Status = $Status
+    return $returnObj
+}

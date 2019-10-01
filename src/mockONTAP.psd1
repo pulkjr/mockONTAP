@@ -23,6 +23,7 @@
         'Disable-NcQuota'
         'Disable-NcFcp'
         'Disable-NcFcpAdapter'
+        'Dismount-NcVol'
         'Enable-NcQuota'
         'Enable-NcFcp'
         'Enable-NcFcpAdapter'
@@ -56,6 +57,7 @@
         'Get-NcQuota'
         'Get-NcQuotaStatus'
         'Get-NcSnapMirror'
+        'Get-NcVol'
         'Get-NcVserver'
         'Invoke-NcSnapMirrorAbort'
         'Invoke-NcSnapMirrorBreak'
@@ -65,6 +67,7 @@
         'Invoke-NcSnapmirrorRelease'
         'Invoke-NcSnapmirrorResume'
         'Invoke-NcSnapmirrorResync'
+        'Mount-NcVol'
         'New-NcIgroup'
         'New-NcPortset'
         'New-NcQtree'
@@ -87,6 +90,7 @@
         'New-MockNcFcpService'
         'New-MockNcIgroup'
         'New-MockNcJob'
+        'New-MockNcJobStartResults'
         'New-MockNcNetInterface'
         'New-MockNcNode'
         'New-MockNcNodeInfo'
@@ -113,8 +117,10 @@
         'Remove-NcQtree'
         'Remove-NcQuota'
         'Remove-NcSnapMirror'
+        'Remove-NcVol'
         'Remove-NcVserver'
         'Rename-NcQtree'
+        'Rename-NcVol'
         'Set-NcCifsShare'
         'Set-NcCifsShareAcl'
         'Set-NcFcpAdapterSpeed'
@@ -124,6 +130,7 @@
         'Set-NcIgroup'
         'Set-NcQtree'
         'Set-NcQuota'
+        'Set-NcVol'
         'Start-NcQuotaResize'
         'Set-NcSnapMirror'
         'Stop-NcVserver'
@@ -148,7 +155,7 @@
             )
             LicenseUri                 = 'https://github.com/pulkjr/mockONTAP/blob/master/LICENSE'
             ProjectUri                 = 'https://github.com/pulkjr/mockONTAP'
-            ExternalModuleDependencies = @('DataONTAP')
+            ExternalModuleDependencies = @( 'DataONTAP' )
 
         } # End of PSData hashtable
 
