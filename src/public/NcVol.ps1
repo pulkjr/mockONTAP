@@ -9,6 +9,7 @@ function New-MockNcVol
         $VolumeVmAlignAttributes,
         $VolumeVserverDrProtectionAttributes,
         $Vserver = 'TestSVM',
+        $VserverContext,
         $Aggregate = 'cluster01_01_aggr0',
         $Available = '1594777600',
         $Dedupe = 'True',
@@ -55,7 +56,7 @@ function New-MockNcVol
         $AggrList,
         $Comment,
         $ConstituentRole,
-        $ContainingAggregateName = 'VICE08_aggr1',
+        $ContainingAggregateName,
         $ContainingAggregateUuid = 'df7b4181-0bb9-4871-8f5a-c7932ae7c76e',
         $CreationTime = 1471462538,
         $Dsid = 1717,
@@ -70,7 +71,7 @@ function New-MockNcVol
         $NameOrdinal = 'base',
         $Node = 'VICE-08',
         $Nodes,
-        $OwningVserverName = 'Exists',
+        $OwningVserverName,
         $OwningVserverUuid = 'c452ace5-64b1-11e6-ab82-00a0986e758d',
         $ProvenanceUuid = '57fa9d31-775c-4c2b-8b84-ddfce0b1f6e3',
         $Style = 'flex',
@@ -257,6 +258,18 @@ function New-MockNcVol
     )
     [CmdletBinding()]
     $returnObj = [DataONTAP.C.Types.Volume.VolumeAttributes]::new()
+    if ( $VserverContext )
+    {
+        $Vserver = $VserverContext
+    }
+    if ( -not $OwningVserverName )
+    {
+        $OwningVserverName = $vserver
+    }
+    if ( -not $ContainingAggregateName )
+    {
+        $ContainingAggregateName = $Aggregate
+    }
     if ( $empty )
     {
         # this is needed to mock the query objects
@@ -565,7 +578,7 @@ function New-MockNcVol
         $VolumeTransitionAttributes.IsTransitionedSpecified = $IsTransitionedSpecified
 
         $returnObj = [DataONTAP.C.Types.Volume.VolumeAttributes]::new()
-        $returnObj.Name = 'Exists_root'
+        $returnObj.Name = $Name
         $returnObj.NcController = $NcController
         $returnObj.VolumeAntivirusAttributes = $VolumeAntivirusAttributes
         $returnObj.VolumeAutobalanceAttributes = $VolumeAutobalanceAttributes
