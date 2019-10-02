@@ -1,4 +1,21 @@
 # Release History
+### [0.5.0 - Released]
+
+#### Major Features
+
+- NcVol Functions
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- None.
+
+#### Internal Changes
+
+- None.
 
 ### [0.4.0 - UnReleased]
 
