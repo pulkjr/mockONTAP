@@ -164,7 +164,7 @@ function Get-NcVserver
 {
     [CmdletBinding()]
     Param(
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
+        [Parameter( ParameterSetName = 'one' )]
         [string]
         $Name,
         [Parameter( ParameterSetName = 'one' )]

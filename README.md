@@ -43,7 +43,7 @@ Install-Module mockONTAP -AllowClobber
 Once the module is installed to an appropriate location you can import the module with the following command:
 
 ```powershell
-PS C:> Import-Module -Name dscONTAP
+PS C:> Import-Module -Name mockONTAP
 ```
 
 Create your pester tests.ps1 file.
