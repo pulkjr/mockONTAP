@@ -64,7 +64,8 @@ function New-MockNcVserver
     {
         $name = $VserverContext
     }
-    if( -Not $Controller ){
+    if ( -Not $Controller )
+    {
         $Controller = New-MockNcController
     }
     if ( $InputObject )
@@ -164,7 +165,7 @@ function Get-NcVserver
     [CmdletBinding()]
     Param(
         [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string[]]
+        [string]
         $Name,
         [Parameter( ParameterSetName = 'one' )]
         [Parameter( ParameterSetName = 'two' )]
@@ -193,7 +194,7 @@ function Remove-NcVserver
     [CmdletBinding()]
     Param(
         [Parameter( Mandatory )]
-        [string[]]
+        [string]
         $Name,
         [switch]
         $Async,
@@ -207,7 +208,7 @@ function Stop-NcVserver
     [CmdletBinding()]
     Param(
         [Parameter( Mandatory )]
-        [string[]]
+        [string]
         $Name,
         $Controller
     )
@@ -219,7 +220,7 @@ function Start-NcVserver
     [CmdletBinding()]
     Param(
         [Parameter( Mandatory )]
-        [string[]]
+        [string]
         $Name,
         $Controller,
         [switch]
