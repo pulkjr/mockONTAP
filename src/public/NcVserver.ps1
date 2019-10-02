@@ -182,11 +182,7 @@ function Get-NcVserver
         $Controller
     )
 
-    foreach ( $_name in $name )
-    {
-        New-MockNcVserver @PSBoundParameters -Name $_Name
-
-    }
+    New-MockNcVserver @PSBoundParameters
 }
 
 function Remove-NcVserver
