@@ -112,7 +112,7 @@ function Remove-NcCifsShare
         [NetApp.Ontapi.Filer.C.NcController]
         $Controller
     )
-    If ( $PSCmdlet.ShouldProcess( "Removing Cifs Share $Name" ) ) { return }
+    if ( $PSCmdlet.ShouldProcess( "Removing Cifs Share $Name" ) ) { return }
 }
 function Add-NcCifsShare
 {

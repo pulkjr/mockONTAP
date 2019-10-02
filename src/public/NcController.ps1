@@ -1,4 +1,4 @@
-Function New-MockNcController
+function New-MockNcController
 {
     [CmdletBinding()]
     param(

@@ -1,7 +1,7 @@
 function New-MockNcVserver
 {
     [CmdletBinding()]
-    Param(
+    param (
         [string]
         $Name,
         [string]
@@ -114,10 +114,10 @@ function New-MockNcVserver
         return $_mockSVM
     }
 }
-Function New-NcVserver
+function New-NcVserver
 {
     [CmdletBinding()]
-    Param(
+    param (
         [Parameter( Mandatory )]
         [string]
         $Name,
@@ -163,7 +163,7 @@ Function New-NcVserver
 function Get-NcVserver
 {
     [CmdletBinding()]
-    Param(
+    param (
         [Parameter( ParameterSetName = 'one' )]
         [string]
         $Name,
@@ -188,7 +188,7 @@ function Get-NcVserver
 function Remove-NcVserver
 {
     [CmdletBinding()]
-    Param(
+    param (
         [Parameter( Mandatory )]
         [string]
         $Name,
@@ -202,7 +202,7 @@ function Remove-NcVserver
 function Stop-NcVserver
 {
     [CmdletBinding()]
-    Param(
+    param (
         [Parameter( Mandatory )]
         [string]
         $Name,
@@ -214,7 +214,7 @@ function Stop-NcVserver
 function Start-NcVserver
 {
     [CmdletBinding()]
-    Param(
+    param (
         [Parameter( Mandatory )]
         [string]
         $Name,

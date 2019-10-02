@@ -1,7 +1,7 @@
-Function New-MockNcAggr
+function New-MockNcAggr
 {
     [CmdletBinding()]
-    Param(
+    param (
         $Name = 'VICE07_aggr1',
         $Attributes,
         $Controller,
@@ -121,7 +121,7 @@ Function New-MockNcAggr
                 RecomputingParityPercentageSpecified = $True
                 ReconstructionPercentageSpecified    = $True
             }
-            $RaidgroupAttributes = ( $RG0, $RG1| % {new-object DataONTAP.C.Types.Aggr.RaidgroupAttributes -Property $_} )
+            $RaidgroupAttributes = ( $RG0, $RG1 | % { new-object DataONTAP.C.Types.Aggr.RaidgroupAttributes -Property $_ } )
             $PlexAttributes = [DataONTAP.C.Types.Aggr.PlexAttributes]::new()
             $PlexAttributes.IsOnline = $True
             $PlexAttributes.IsResyncing = $False
@@ -301,7 +301,7 @@ Function New-MockNcAggr
 function Get-NcAggr
 {
     [CmdletBinding()]
-    Param(
+    param (
         $Name,
         $Attributes,
         $Controller,
@@ -315,7 +315,7 @@ function Get-NcAggr
 function New-MockNcAggrSpace
 {
     [CmdletBinding()]
-    Param(
+    param (
         $Name,
         $Attributes,
         $Controller,
