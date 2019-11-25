@@ -207,7 +207,10 @@ function Get-NcVserver
         [Parameter( ParameterSetName = 'ByQuery' )]
         [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
-    New-MockNcVserver -Name $Name -VserverContext $VserverContext -Controller $Controller
+    foreach ( $_name in $name )
+    {
+        New-MockNcVserver -Name $_name -VserverContext $VserverContext -Controller $Controller
+    }
 }
 
 function Remove-NcVserver
