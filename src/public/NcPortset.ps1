@@ -57,7 +57,7 @@ function New-NcPortset
         [Parameter( ParameterSetName = '__AllParameterSets' )]
         [NetApp.Ontapi.Filer.C.NcController[]]$Controller
     )
-    New-MockNcPortset -PortsetName $Name -Protocol $Protocol
+    New-MockNcPortset -PortsetName $Name -Protocol $Protocol -Vserver $VserverContext
 }
 function Remove-NcPortset
 {
