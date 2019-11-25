@@ -1,4 +1,22 @@
 # Release History
+### [0.5.1 - Released]
+
+#### Major Features
+
+- None
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- NcPortset bug
+- NcVserver Corrected PSShould Process and Params
+
+#### Internal Changes
+
+- None.
 ### [0.5.0 - Released]
 
 #### Major Features
