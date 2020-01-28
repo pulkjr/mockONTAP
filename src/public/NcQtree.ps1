@@ -12,8 +12,21 @@ function New-MockNcQtree
         $SecurityStyle = 'unix',
         $Status = 'normal',
         $Volume = 'TestVol',
-        $Vserver = 'TestSVM'
+        $Vserver = 'TestSVM',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Qtree.QtreeInfo]::New()
     $returnObj.ExportPolicy = $ExportPolicy
     $returnObj.Id = $Id

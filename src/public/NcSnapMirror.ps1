@@ -101,8 +101,21 @@ function New-MockNcSnapMirror
         $UpdateSuccessfulCountSpecified = $true,
         $Vserver = 'sm_test',
         $Query,
-        $VserverContext
+        $VserverContext,
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]::New()
     $returnObj.Status = $Status
     $returnObj.BreakFailedCount = $BreakFailedCount
@@ -214,8 +227,21 @@ function New-MockNcSnapMirrorJobStart
         $JobVserver,
         $NcController,
         $ResultOperationId = '257d118d-2a32-11e9-bb03-000c297a98ed',
-        $Status = 'succeeded'
+        $Status = 'succeeded',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Snapmirror.SnapmirrorJobStartResult]::New()
     $returnObj.ErrorCode = $ErrorCode
     $returnObj.ErrorMessage = $ErrorMessage
@@ -235,8 +261,21 @@ function New-MockNcSnapmirrorVolume
         $IsTransferInProgress = $false,
         $NcController,
         $Volume = 'dp_dest',
-        $Vserver = 'sm_test'
+        $Vserver = 'sm_test',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Snapmirror.VolSnapmirrorStatus]::New()
     $returnObj.IsDestination = $IsDestination
     $returnObj.IsSource = $IsSource
@@ -1009,4 +1048,101 @@ function Invoke-NcSnapmirrorRelease
     $return = [DataONTAP.C.PowerShell.SDK.Cmdlets.TableModifyResult]::new()
     $return.NcController = $Controller
     $return.SuccessCount = 1
+}
+function New-MockNcSnapMirrorDestination
+{
+    param(
+        $DestinationLocation = 'svm01:vsm_NetApp',
+        $DestinationVolume = 'vsm_NetApp',
+        $DestinationVserver = 'svm01',
+        $IsConstituent = 'False',
+        $IsConstituentSpecified = 'True',
+        $NcController = 'cluster01',
+        $PolicyType = 'async_mirror',
+        $ProgressLastUpdated = '',
+        $ProgressLastUpdatedSpecified = 'False',
+        $RelationshipGroupType = 'none',
+        $RelationshipId = '8a2db0b5-0bc6-11ea-9497-00a0983d8d1e',
+        $RelationshipStatus = 'idle',
+        $RelationshipType = 'data_protection',
+        $SourceLocation = 'svm01:NetApp',
+        $SourceVolume = 'NetApp',
+        $SourceVolumeNode = 'cluster01-01',
+        $SourceVserver = 'svm01',
+        $TransferProgress = '',
+        $TransferProgressSpecified = 'False',
+        $Controller
+    )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
+    $returnObj = [DataONTAP.C.Types.Snapmirror.SnapmirrorDestinationInfo]::New()
+    $returnObj.DestinationLocation = $DestinationLocation
+    $returnObj.DestinationVolume = $DestinationVolume
+    $returnObj.DestinationVserver = $DestinationVserver
+    $returnObj.IsConstituent = $IsConstituent
+    $returnObj.IsConstituentSpecified = $IsConstituentSpecified
+    $returnObj.NcController = $NcController
+    $returnObj.PolicyType = $PolicyType
+    $returnObj.ProgressLastUpdated = $ProgressLastUpdated
+    $returnObj.ProgressLastUpdatedSpecified = $ProgressLastUpdatedSpecified
+    $returnObj.RelationshipGroupType = $RelationshipGroupType
+    $returnObj.RelationshipId = $RelationshipId
+    $returnObj.RelationshipStatus = $RelationshipStatus
+    $returnObj.RelationshipType = $RelationshipType
+    $returnObj.SourceLocation = $SourceLocation
+    $returnObj.SourceVolume = $SourceVolume
+    $returnObj.SourceVolumeNode = $SourceVolumeNode
+    $returnObj.SourceVserver = $SourceVserver
+    $returnObj.TransferProgress = $TransferProgress
+    $returnObj.TransferProgressSpecified = $TransferProgressSpecified
+    return $returnObj
+}
+function Get-NcSnapmirrorDestination
+{
+    [CmdletBinding( DefaultParameterSetName = 'ByName' )]
+    [OutputType( [DataONTAP.C.Types.Snapmirror.SnapmirrorDestinationInfo] )]
+    param(
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Source,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$SourceVolume,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$SourceVserver,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Destination,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$DestinationVolume,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$DestinationVserver,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [switch]$Expand,
+        [Parameter( ParameterSetName = 'Template', Mandatory )]
+        [switch]$Template,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorDestinationInfo]$Query,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [DataONTAP.C.Types.Snapmirror.SnapmirrorDestinationInfo]$Attributes,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
+    )
+    New-MockNcSnapMirrorDestination -DestinationLocation $Destination -DestinationVolume $DestinationVolume -DestinationVserver $DestinationVserver -SourceLocation $Source -NcController $Controller -SourceVolume $SourceVolume -SourceVserver $SourceVserver
 }

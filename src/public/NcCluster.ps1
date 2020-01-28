@@ -4,6 +4,7 @@ function New-MockNcStorageFailoverInfo
         $AutoGivebackEnabled = $true,
         $GivebackState = 'nothing_to_gb',
         $NcController,
+        $Controller,
         $Node = 'cluster01-01',
         $NodeState = 'connected',
         $PartnerName = 'cluster01-02',
@@ -16,6 +17,14 @@ function New-MockNcStorageFailoverInfo
         $TakeoverEnabled = $true,
         $TakeoverState = 'not_in_takeover'
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Cf.StorageFailoverInfo]::New()
     $returnObj.AutoGivebackEnabled = $AutoGivebackEnabled
     $returnObj.GivebackState = $GivebackState

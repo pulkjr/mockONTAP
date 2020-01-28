@@ -2,22 +2,39 @@ function New-MockNcPortset
 {
     param(
         $InitiatorGroupInfo = 'SanSVMiGroup',
-        $NcController,
         $PortsetName = 'SanSVMPortgroup',
         $PortsetPortInfo = @( 'iscsi1', 'iscsi2' ),
         $PortsetPortTotal = '2',
         $PortsetType = 'iscsi',
-        $Vserver = 'TestSVM'
+        $Vserver = 'TestSVM',
+        $NcController,
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Portset.PortsetInfo]::New()
     $returnObj.InitiatorGroupInfo = $InitiatorGroupInfo
-    $returnObj.NcController = $NcController
     $returnObj.PortsetName = $PortsetName
     $returnObj.PortsetPortInfo = $PortsetPortInfo
     $returnObj.PortsetPortTotal = $PortsetPortTotal
     $returnObj.PortsetType = $PortsetType
     $returnObj.Vserver = $Vserver
-    return $returnObj
+
+    foreach ( $Controller in $NcController )
+    {
+        $returnObj.NcController = $Controller
+        $returnObj
+    }
 }
 function Get-NcPortset
 {
@@ -38,7 +55,7 @@ function Get-NcPortset
         [Parameter( ParameterSetName = 'ByName' )]
         [Parameter( ParameterSetName = 'Template' )]
         [Parameter( ParameterSetName = 'ByQuery' )]
-        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     New-MockNcPortset -PortsetName $Name -Vserver $Vserver
 }
@@ -55,7 +72,7 @@ function New-NcPortset
         [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
         [string]$VserverContext,
         [Parameter( ParameterSetName = '__AllParameterSets' )]
-        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     New-MockNcPortset -PortsetName $Name -Protocol $Protocol -Vserver $VserverContext
 }
@@ -70,7 +87,7 @@ function Remove-NcPortset
         [Parameter( ParameterSetName = '__AllParameterSets' )]
         [string]$VserverContext,
         [Parameter( ParameterSetName = '__AllParameterSets' )]
-        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     return
 }
@@ -86,7 +103,7 @@ function Add-NcPortsetPort
         [Parameter( ParameterSetName = '__AllParameterSets' )]
         [string]$VserverContext,
         [Parameter( ParameterSetName = '__AllParameterSets' )]
-        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     New-MockNcPortset -PortsetName $Name -Port $Port -Vserver $VserverContext
 }
@@ -102,7 +119,7 @@ function Remove-NcPortsetPort
         [Parameter( ParameterSetName = '__AllParameterSets' )]
         [string]$VserverContext,
         [Parameter( ParameterSetName = '__AllParameterSets' )]
-        [NetApp.Ontapi.Filer.C.NcController[]]$Controller
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
     New-MockNcPortset -PortsetName $Name -Port $Port -Vserver $VserverContext
 }

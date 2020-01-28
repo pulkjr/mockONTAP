@@ -48,6 +48,10 @@ function New-MockNcCifsShare
     {
         $NcController = $Controller
     }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Cifs.CifsShare]::New()
     $returnObj.Acl = $Acl
     $returnObj.AttributeCacheTtl = $AttributeCacheTtl

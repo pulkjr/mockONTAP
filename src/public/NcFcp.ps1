@@ -66,8 +66,17 @@ function New-MockNcFcpAdapter {
         $StatusExtended,
         $SwitchPort = 'mo-b48000-top:266',
         $VlanId,
-        $VlanIdSpecified = $false
+        $VlanIdSpecified = $false,
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Fcp.FcpConfigAdapterInfo]::New()
     $returnObj.Adapter = $Adapter
     $returnObj.CacheLineSize = $CacheLineSize
@@ -184,8 +193,17 @@ function New-MockNcFcpAdapterStatsInfo {
         $SfpWavelengthSpecified = $true,
         $SpuriousInterrupts = '0',
         $TotalLogins = '1119',
-        $TotalLogouts = '1040'
+        $TotalLogouts = '1040',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Fcp.FcpAdapterStatsInfo]::New()
     $returnObj.Adapter = $Adapter
     $returnObj.AdapterResets = $AdapterResets
@@ -240,8 +258,17 @@ function New-MockNcFcpService {
         $IsAvailableSpecified = $true,
         $NcController,
         $NodeName = '20:00:00:a0:98:bf:3e:9b',
-        $Vserver = 'Svm01'
+        $Vserver = 'Svm01',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Fcp.FcpServiceInfo]::New()
     $returnObj.IsAvailable = $IsAvailable
     $returnObj.IsAvailableSpecified = $IsAvailableSpecified
@@ -262,8 +289,17 @@ function New-MockNcFcpInterfaceInfo {
         $PortName = '24:01:00:a0:98:11:70:01',
         $RelativePortId = '1',
         $RelativePortIdSpecified = $true,
-        $Vserver = 'svm01'
+        $Vserver = 'svm01',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Fcp.FcpInterfaceInfo]::New()
     $returnObj.CurrentNode = $CurrentNode
     $returnObj.CurrentPort = $CurrentPort
@@ -282,8 +318,17 @@ function New-MockNcFcpAdapterInitiatorsInfo {
         $Adapter = 'fc01',
         $FcpConnectedInitiators,
         $NcController,
-        $Vserver = 'svm01'
+        $Vserver = 'svm01',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Fcp.FcpAdapterInitiatorsInfo]::New()
     $returnObj.Adapter = $Adapter
     $returnObj.FcpConnectedInitiators = [DataONTAP.C.Types.Fcp.FcpConnectedInitiatorInfo]::New()
@@ -294,8 +339,17 @@ function New-MockNcFcpAdapterInitiatorsInfo {
 function New-MockNcFcpNodeName {
     param(
         $Name = '20:01:00:a0:98:bf:3e:9b',
-        $NcController
+        $NcController,
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Fcp.NodeName]::New()
     $returnObj.Name = $Name
     $returnObj.NcController = $NcController
@@ -311,8 +365,17 @@ function New-MockNcFcpPingIgroupStatusInfo {
         $Portset = 'fcpPortset01',
         $Status = 'reachable',
         $Vserver = 'svm01',
-        $Wwpn = '10:00:00:90:fa:37:14:38'
+        $Wwpn = '10:00:00:90:fa:37:14:38',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Fcp.FcpPingIgroupStatusInfo]::New()
     $returnObj.ExtStatus = $ExtStatus
     $returnObj.Igroup = $Igroup
@@ -333,8 +396,17 @@ function New-MockNcFcpPingStatusInfo {
         $Node = 'cluster01-01',
         $Status = 'reachable',
         $Vserver = 'svm01',
-        $Wwpn = '10:00:00:90:fa:37:14:38'
+        $Wwpn = '10:00:00:90:fa:37:14:38',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Fcp.FcpPingStatusInfo]::New()
     $returnObj.ExtStatus = $ExtStatus
     $returnObj.Lif = $Lif

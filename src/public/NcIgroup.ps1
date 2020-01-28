@@ -17,6 +17,14 @@ function New-MockNcIgroup
         $Portset,
         $Protocol
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
 
     if ( $query.Name -and [string]::IsNullOrEmpty( $Name ) )
     {
@@ -51,7 +59,7 @@ function New-MockNcIgroup
     $_mockIgroup.InitiatorGroupVsaEnabled = $false
     $_mockIgroup.InitiatorGroupVsaEnabledSpecified = $true
     $_mockIgroup.LunIdSpecified = $false
-    $_mockIgroup.NcController = $Controller
+    $_mockIgroup.NcController = $NcController
     $_mockIgroup.Vserver = $Vserver
 
     if ( -not $Initiator )
@@ -65,7 +73,7 @@ function New-MockNcIgroup
         {
             $_initiator = [DataONTAP.C.Types.Igroup.InitiatorInfo]::New()
             $_initiator.InitiatorName = $i
-            $_initiator.NcController = $Controller
+            $_initiator.NcController = $NcController
             $_mockIgroup.Initiators += $_initiator
         }
     }

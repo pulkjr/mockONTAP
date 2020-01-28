@@ -30,8 +30,17 @@ function New-MockNcJob
         $JobUsername = 'admin',
         $JobUuid = '4275557f-e1fd-11e8-a9c9-000c2991c0e1',
         $JobVserver = 'TestSVM',
-        $NcController
+        $NcController,
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Job.JobInfo]::New()
     $returnObj.IsRestarted = $IsRestarted
     $returnObj.IsRestartedSpecified = $IsRestartedSpecified
@@ -97,8 +106,17 @@ function New-MockNcJobStartResults
         $JobId,
         $JobVserver,
         $NcController,
-        $Status
+        $Status,
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.PowerShell.SDK.Cmdlets.JobStartResult]::New()
     $returnObj.ErrorCode = $ErrorCode
     $returnObj.ErrorMessage = $ErrorMessage

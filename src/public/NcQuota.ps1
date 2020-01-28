@@ -15,8 +15,21 @@ function New-MockNcQuota
         $SoftFileLimit = '5000',
         $Threshold = '10240',
         $Volume = 'CifsVol',
-        $Vserver = 'TestSVM'
+        $Vserver = 'TestSVM',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Quota.QuotaEntry]::New()
     $returnObj.DiskLimit = $DiskLimit
     $returnObj.FileLimit = $FileLimit
@@ -46,8 +59,21 @@ function New-MockNcQuotaStatus
         $Status = 'on',
         $Substatus = 'none',
         $Volume = 'CifsVol',
-        $Vserver = 'TestSVM'
+        $Vserver = 'TestSVM',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Quota.QuotaStatusAttributes]::New()
     $returnObj.NcController = $NcController
     $returnObj.PercentComplete = $PercentComplete

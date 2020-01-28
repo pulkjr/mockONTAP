@@ -39,8 +39,21 @@ function New-MockNcNodeInfo
         $SystemRevision,
         $SystemSerialNumber = '4082368-50-7',
         $VendorData1,
-        $VendorId = 'NetApp'
+        $VendorId = 'NetApp',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     if ( $name )
     {
         $SystemName = $Name
@@ -134,9 +147,21 @@ function New-MockNcNode
         $NodeUuid = '2ba5e026-bb4d-11e8-93b6-000c2991c0e1',
         $NodeVendor = 'NetApp',
         $NvramBatteryStatus = 'battery_ok',
-        $ProductVersion = 'NetApp Release 9.4: Fri Jun 08 22:50:12 UTC 2018'
-
+        $ProductVersion = 'NetApp Release 9.4: Fri Jun 08 22:50:12 UTC 2018',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.System.NodeDetailsInfo]::New()
     $returnObj.CpuBusytime = $CpuBusytime
     $returnObj.CpuBusytimeSpecified = $CpuBusytimeSpecified

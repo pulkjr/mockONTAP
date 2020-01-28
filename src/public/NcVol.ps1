@@ -279,7 +279,14 @@ function New-MockNcVol
     }
     else
     {
-        $NcController = New-MockNcController
+        if ( $Controller )
+        {
+            $NcController = $Controller
+        }
+        else
+        {
+            $NcController = New-MockNcController
+        }
         $VolumeAntivirusAttributes = [DataONTAP.C.Types.Volume.VolumeAntivirusAttributes]::new()
         $VolumeAntivirusAttributes.NcController = $NcController
         $VolumeAntivirusAttributes.OnAccessPolicy = $OnAccessPolicy
@@ -422,6 +429,11 @@ function New-MockNcVol
         $VolumeSecurityAttributes = [DataONTAP.C.Types.Volume.VolumeSecurityAttributes]::new()
         $VolumeSecurityAttributes.NcController = $NcController
         $VolumeSecurityAttributes.Style = $Style
+        $VolumeSecurityAttributes.VolumeSecurityUnixAttributes = [DataONTAP.C.Types.Volume.VolumeSecurityUnixAttributes]::new()
+        $VolumeSecurityAttributes.VolumeSecurityUnixAttributes.Permissions = 755
+        $VolumeSecurityAttributes.VolumeSecurityUnixAttributes.UserId = 0
+        $VolumeSecurityAttributes.VolumeSecurityUnixAttributes.GroupId = 0
+        $VolumeSecurityAttributes.VolumeSecurityUnixAttributes.NcController = $NcController
 
         $VolumeSisAttributes = [DataONTAP.C.Types.Volume.VolumeSisAttributes]::new()
         $VolumeSisAttributes.CompressionSpaceSaved = $CompressionSpaceSaved

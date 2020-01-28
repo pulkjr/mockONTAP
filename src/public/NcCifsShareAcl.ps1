@@ -2,6 +2,7 @@ function New-MockNcCifsShareAcl
 {
     param(
         $NcController,
+        $Controller,
         $Permission = 'full_control',
         $Share = 'c$',
         $Unixid,
@@ -11,6 +12,14 @@ function New-MockNcCifsShareAcl
         $Vserver = 'daeachlknz120',
         $Winsid = 'S-1-5-32-544'
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Cifs.CifsShareAccessControl]::New()
     $returnObj.NcController = $NcController
     $returnObj.Permission = $Permission

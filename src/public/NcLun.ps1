@@ -61,8 +61,21 @@ function New-MockNcLun
         $Vserver = 'vmwaresvm',
         $Thin = $true,
         [DataONTAP.C.Types.Lun.LunInfo]$Query,
-        [DataONTAP.C.Types.Lun.LunInfo]$Attributes
+        [DataONTAP.C.Types.Lun.LunInfo]$Attributes,
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Lun.LunInfo]::New()
     $returnObj.Protocol = $Protocol
     $returnObj.Alignment = $Alignment

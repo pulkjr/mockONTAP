@@ -16,6 +16,7 @@ function New-MockNcDisk
         [string]$DiskName,
         [string]$DiskUid = '4E455441:50502020:56442D31:3030304D:422D465A:2D353230:30373831:34343030:00000000:00000000',
         $NcController,
+        $Controller,
         [DataONTAP.C.Types.StorageInitiator.DiskPathInfo[]]$DiskPaths,
         [string]$DiskClass = 'performance',
         [string]$DiskType = 'SAS'
@@ -34,6 +35,14 @@ function New-MockNcDisk
         }
         else
         {
+            if ( $Controller )
+            {
+                $NcController = $Controller
+            }
+            else
+            {
+                $NcController = New-MockNcController
+            }
             $mock = [DataONTAP.C.Types.StorageDisk.StorageDiskInfo]::new()
             $mock.Bay = $Bay
             $mock.Shelf = $Shelf

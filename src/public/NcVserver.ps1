@@ -59,14 +59,22 @@ function New-MockNcVserver
         [Object[]]
         $InputObject
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
 
     if ( $VserverContext -and ( -not $Name ) )
     {
         $name = $VserverContext
-    }
-    if ( -Not $Controller )
-    {
-        $Controller = New-MockNcController
     }
     if ( $InputObject )
     {

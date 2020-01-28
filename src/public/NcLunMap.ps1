@@ -1,4 +1,5 @@
-function New-MockNcLunMap {
+function New-MockNcLunMap
+{
     [CmdletBinding()]
     [OutputType( 'DataONTAP.C.Types.Lun.LunMapInfo' )]
     param (
@@ -30,28 +31,46 @@ function New-MockNcLunMap {
         [Parameter()]
         $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
 
-    if ( $Query.Path -and [string]::IsNullOrEmpty( $Path ) ) {
+    if ( $Query.Path -and [string]::IsNullOrEmpty( $Path ) )
+    {
         $Path = $Query.Path
     }
 
-    if ( $Query.Vserver -and [string]::IsNullOrEmpty( $Vserver ) ) {
+    if ( $Query.Vserver -and [string]::IsNullOrEmpty( $Vserver ) )
+    {
         $Vserver = $Query.Vserver
     }
 
-    if ( $Query.InitiatorGroup -and [string]::IsNullOrEmpty( $InitiatorGroup ) ) {
+    if ( $Query.InitiatorGroup -and [string]::IsNullOrEmpty( $InitiatorGroup ) )
+    {
         $InitiatorGroup = $Query.InitiatorGroup
     }
 
-    if ( $Query.LunId -and [string]::IsNullOrEmpty( $LunId ) ) {
+    if ( $Query.LunId -and [string]::IsNullOrEmpty( $LunId ) )
+    {
         $LunId = $Query.LunId
     }
 
-    if ( $VserverContext -and [string]::IsNullOrEmpty( $Vserver ) ) {
+    if ( $VserverContext -and [string]::IsNullOrEmpty( $Vserver ) )
+    {
         $Vserver = $VserverContext
     }
 
-    if ( -not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey( 'LunId' ) ) {
+    if ( -not $PSCmdlet.MyInvocation.BoundParameters.ContainsKey( 'LunId' ) )
+    {
         $LunId = 0
     }
 
@@ -60,7 +79,7 @@ function New-MockNcLunMap {
     $_mockNcLunMap.InitiatorGroupUuid = [guid]::NewGuid().ToString()
     $_mockNcLunMap.LunId = $LunId
     $_mockNcLunMap.LunUuid = [guid]::NewGuid().ToString()
-    $_mockNcLunMap.NcController = $Controller
+    $_mockNcLunMap.NcController = $NcController
     $_mockNcLunMap.Node = $Node
     $_mockNcLunMap.Path = $Path
     #ReportingNodes
@@ -69,7 +88,8 @@ function New-MockNcLunMap {
     return $_mockNcLunMap
 }
 
-function Add-NcLunMap {
+function Add-NcLunMap
+{
     [CmdletBinding()]
     [OutputType( 'DataONTAP.C.Types.Lun.LunMapInfo' )]
     param (
@@ -95,7 +115,8 @@ function Add-NcLunMap {
     New-MockNcLunMap @PSBoundParameters
 }
 
-function Get-NcLunMap {
+function Get-NcLunMap
+{
     [CmdletBinding()]
     [OutputType( 'DataONTAP.C.Types.Lun.LunMapInfo' )]
     param(
@@ -118,24 +139,30 @@ function Get-NcLunMap {
         $Controller
     )
 
-    if ( $Query ) {
-        if ( $Query.Path ) {
+    if ( $Query )
+    {
+        if ( $Query.Path )
+        {
             $Path = $Query.Path
         }
 
-        if ( $Query.Vserver ) {
+        if ( $Query.Vserver )
+        {
             $Vserver = $Query.Vserver
         }
 
-        if ( $Query.InitiatorGroup ) {
+        if ( $Query.InitiatorGroup )
+        {
             $InitiatorGroup = $Query.InitiatorGroup
         }
 
-        if ( $Query.LunId ) {
+        if ( $Query.LunId )
+        {
             $lunId = $Query.LunId
         }
 
-        if ( $Query.Node ) {
+        if ( $Query.Node )
+        {
             $node = $Query.Node
         }
     }
@@ -152,7 +179,8 @@ function Get-NcLunMap {
     New-MockNcLunMap @params
 }
 
-function Remove-NcLunMap {
+function Remove-NcLunMap
+{
     [CmdletBinding()]
     [OutputType( [System.Void] )]
     param(
