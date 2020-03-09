@@ -263,3 +263,59 @@ function Start-NcVserver
 
     New-MockNcVserver @PSBoundParameters -State 'running'
 }
+function New-MockNcVserverPeer
+{
+    param(
+        $Applications = 'snapmirror',
+        $NcController,
+        $PeerCluster = 'remote01',
+        $PeerState = 'peered',
+        $PeerVserver = 'remoteSVM',
+        $PeerVserverUuid = '93edb919-3ea6-11e9-9497-00a0983d8d1f',
+        $RemoteVserverName = 'fcpSVM',
+        $Vserver = 'localSVM',
+        $VserverUuid = '44926be1-47ad-11e8-ae96-00a098bf3e9d'
+    )
+    $returnObj = [DataONTAP.C.Types.VserverPeer.VserverPeerInfo]::New()
+    $returnObj.Applications = $Applications
+    $returnObj.NcController = $NcController
+    $returnObj.PeerCluster = $PeerCluster
+    $returnObj.PeerState = $PeerState
+    $returnObj.PeerVserver = $PeerVserver
+    $returnObj.PeerVserverUuid = $PeerVserverUuid
+    $returnObj.RemoteVserverName = $RemoteVserverName
+    $returnObj.Vserver = $Vserver
+    $returnObj.VserverUuid = $VserverUuid
+    return $returnObj
+}
+function Get-NcVserverPeer
+{
+    [CmdletBinding( DefaultParameterSetName = 'ByName' )]
+    [OutputType( [DataONTAP.C.Types.VserverPeer.VserverPeerInfo] )]
+    param(
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Vserver,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$PeerVserver,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$PeerState,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Application,
+        [Parameter( ParameterSetName = 'Template', Mandatory )]
+        [switch]$Template,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.VserverPeer.VserverPeerInfo]$Query,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [DataONTAP.C.Types.VserverPeer.VserverPeerInfo]$Attributes,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
+    )
+    New-MockNcVserverPeer -Vserver $VserverContext -NcController $Controller -Applications $Application -PeerVserver $PeerVserver -PeerState $PeerState
+}

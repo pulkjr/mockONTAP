@@ -57,3 +57,34 @@ function Get-NcClusterHaInfo
     )
     New-MockNcStorageFailoverInfo
 }
+function New-MockNcCluster
+{
+    param(
+        $ClusterContact = '',
+        $ClusterLocation = 'Hungry',
+        $ClusterName = 'cluster01',
+        $ClusterSerialNumber = '1-80-123456',
+        $ClusterUuid = '8887b75b-4794-11e8-ae95-00a098bf3e9a',
+        $NcController,
+        $RdbUuid = '8887f259-4794-11e8-ae95-00a098bf3e9d'
+    )
+    $returnObj = [DataONTAP.C.Types.Cluster.ClusterIdentityInfo]::New()
+    $returnObj.ClusterContact = $ClusterContact
+    $returnObj.ClusterLocation = $ClusterLocation
+    $returnObj.ClusterName = $ClusterName
+    $returnObj.ClusterSerialNumber = $ClusterSerialNumber
+    $returnObj.ClusterUuid = $ClusterUuid
+    $returnObj.NcController = $NcController
+    $returnObj.RdbUuid = $RdbUuid
+    return $returnObj
+}
+function Get-NcCluster
+{
+    [CmdletBinding()]
+    [OutputType( [DataONTAP.C.Types.Cluster.ClusterIdentityInfo] )]
+    param(
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController] $Controller
+    )
+    New-MockNcCluster -NcController $Controller
+}
