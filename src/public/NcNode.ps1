@@ -1,46 +1,59 @@
 function New-MockNcNodeInfo
 {
     param(
-        $BackplanePartNumber = '',
-        $BackplaneRevision = '',
-        $BackplaneSerialNumber = '',
+        $BackplanePartNumber,
+        $BackplaneRevision,
+        $BackplaneSerialNumber,
         $BoardSpeed = '2591',
         $BoardType = 'NetApp VSim',
-        $ControllerAddress = '',
-        $CpuCiobRevisionId = '',
-        $CpuFirmwareRelease = '',
+        $ControllerAddress,
+        $CpuCiobRevisionId,
+        $CpuFirmwareRelease,
         $CpuMicrocodeVersion = '150',
-        $CpuPartNumber = '',
+        $CpuPartNumber,
         $CpuProcessorId = '0x906ea',
-        $CpuProcessorType = '',
-        $CpuRevision = '',
+        $CpuProcessorType,
+        $CpuRevision,
         $CpuSerialNumber = '999999',
-        $MaximumAggregateSize = '',
-        $MaximumAggregateSizeSpecified = 'False',
-        $MaximumFlexibleVolumeCount = '',
-        $MaximumFlexibleVolumeCountSpecified = 'False',
-        $MaximumFlexibleVolumeSize = '',
-        $MaximumFlexibleVolumeSizeSpecified = 'False',
+        $MaximumAggregateSize,
+        $MaximumAggregateSizeSpecified = $false,
+        $MaximumFlexibleVolumeCount,
+        $MaximumFlexibleVolumeCountSpecified = $false,
+        $MaximumFlexibleVolumeSize,
+        $MaximumFlexibleVolumeSizeSpecified = $false,
         $MemorySize = '5248',
-        $NcController = '172.16.32.10',
+        $NcController,
         $NumberOfProcessors = '2',
-        $PartnerSystemId = '',
-        $PartnerSystemName = '',
-        $PartnerSystemSerialNumber = '',
+        $PartnerSystemId,
+        $PartnerSystemName,
+        $PartnerSystemSerialNumber,
         $ProdType = 'FAS',
-        $StorageConfiguration = '',
-        $SupportsRaidArray = 'True',
-        $SupportsRaidArraySpecified = 'True',
+        $StorageConfiguration,
+        $SupportsRaidArray = $true,
+        $SupportsRaidArraySpecified = $true,
         $SystemId = '4082368507',
         $SystemMachineType = 'SIMBOX',
         $SystemModel = 'SIMBOX',
         $SystemName = 'cluster01-01',
         $Name,
-        $SystemRevision = '',
+        $SystemRevision,
         $SystemSerialNumber = '4082368-50-7',
-        $VendorData1 = '',
-        $VendorId = 'NetApp'
+        $VendorData1,
+        $VendorId = 'NetApp',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     if ( $name )
     {
         $SystemName = $Name
@@ -91,53 +104,64 @@ function New-MockNcNode
 {
     param(
         $CpuBusytime = '7944',
-        $CpuBusytimeSpecified = 'True',
-        $CpuFirmwareRelease = '',
+        $CpuBusytimeSpecified = $true,
+        $CpuFirmwareRelease,
         $EnvFailedFanCount = '0',
-        $EnvFailedFanCountSpecified = 'True',
+        $EnvFailedFanCountSpecified = $true,
         $EnvFailedFanMessage = 'There are no failed fans.',
         $EnvFailedPowerSupplyCount = '0',
-        $EnvFailedPowerSupplyCountSpecified = 'True',
+        $EnvFailedPowerSupplyCountSpecified = $true,
         $EnvFailedPowerSupplyMessage = 'There are no failed power supplies.',
-        $EnvOverTemperature = 'False',
-        $EnvOverTemperatureSpecified = 'True',
-        $IsAllFlashOptimized = 'False',
-        $IsAllFlashOptimizedSpecified = 'True',
-        $IsCloudOptimized = 'False',
-        $IsCloudOptimizedSpecified = 'True',
-        $IsDiffSvcs = 'False',
-        $IsDiffSvcsSpecified = 'True',
-        $IsEpsilonNode = 'True',
-        $IsEpsilonNodeSpecified = 'True',
-        $IsNodeClusterEligible = 'True',
-        $IsNodeClusterEligibleSpecified = 'True',
-        $IsNodeHealthy = 'True',
-        $IsNodeHealthySpecified = 'True',
+        $EnvOverTemperature = $false,
+        $EnvOverTemperatureSpecified = $true,
+        $IsAllFlashOptimized = $false,
+        $IsAllFlashOptimizedSpecified = $true,
+        $IsCloudOptimized = $false,
+        $IsCloudOptimizedSpecified = $true,
+        $IsDiffSvcs = $false,
+        $IsDiffSvcsSpecified = $true,
+        $IsEpsilonNode = $true,
+        $IsEpsilonNodeSpecified = $true,
+        $IsNodeClusterEligible = $true,
+        $IsNodeClusterEligibleSpecified = $true,
+        $IsNodeHealthy = $true,
+        $IsNodeHealthySpecified = $true,
         $MaximumAggregateSize = '879609302220800',
         $MaximumNumberOfVolumes = '500',
-        $MaximumNumberOfVolumesSpecified = 'True',
+        $MaximumNumberOfVolumesSpecified = $true,
         $MaximumVolumeSize = '17592186044416',
-        $MaximumVolumeSizeSpecified = 'True',
-        $NcController = '172.16.32.10',
-        $Node = 'cluster01-01',
-        $NodeAssetTag = '',
+        $MaximumVolumeSizeSpecified = $true,
+        $NcController,
+        $node = 'cluster01-01',
+        $NodeAssetTag,
         $NodeLocation = 'VA',
         $NodeModel = 'SIMBOX',
         $NodeNvramId = '4082368507',
-        $NodeNvramIdSpecified = 'True',
-        $NodeOwner = '',
+        $NodeNvramIdSpecified = $true,
+        $NodeOwner,
         $NodeSerialNumber = '4082368-50-7',
         $NodeStorageConfiguration = 'unknown',
         $NodeSystemId = '4082368507',
         $NodeUptime = '244755',
-        $NodeUptimeSpecified = 'True',
-        $NodeUptimeTS = '2.19:59:15',
+        $NodeUptimeSpecified = $true,
         $NodeUuid = '2ba5e026-bb4d-11e8-93b6-000c2991c0e1',
         $NodeVendor = 'NetApp',
         $NvramBatteryStatus = 'battery_ok',
-        $ProductVersion = 'NetApp Release 9.4: Fri Jun 08 22:50:12 UTC 2018'
-
+        $ProductVersion = 'NetApp Release 9.4: Fri Jun 08 22:50:12 UTC 2018',
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.System.NodeDetailsInfo]::New()
     $returnObj.CpuBusytime = $CpuBusytime
     $returnObj.CpuBusytimeSpecified = $CpuBusytimeSpecified
@@ -180,7 +204,6 @@ function New-MockNcNode
     $returnObj.NodeSystemId = $NodeSystemId
     $returnObj.NodeUptime = $NodeUptime
     $returnObj.NodeUptimeSpecified = $NodeUptimeSpecified
-    $returnObj.NodeUptimeTS = $NodeUptimeTS
     $returnObj.NodeUuid = $NodeUuid
     $returnObj.NodeVendor = $NodeVendor
     $returnObj.NvramBatteryStatus = $NvramBatteryStatus

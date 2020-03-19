@@ -1,6 +1,97 @@
 # Release History
+### [0.6.0 - Released]
 
-### [0.3.0 - UnReleased]
+#### Major Features
+
+- Added Cluster Peer Functions
+- Added Volume Move Functions
+
+#### Enhancements
+
+- None
+
+#### Fixes
+
+- None
+
+#### Internal Changes
+
+- None.
+### [0.5.0 - Released]
+
+#### Major Features
+
+- NcVol Functions
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- None.
+
+#### Internal Changes
+
+- None.
+
+### [0.5.1 - Released]
+
+#### Major Features
+
+- None
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- NcPortset bug
+- NcVserver Corrected PSShould Process and Params
+
+#### Internal Changes
+
+- None.
+### [0.5.0 - Released]
+
+#### Major Features
+
+- NcVol Functions
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- None.
+
+#### Internal Changes
+
+- None.
+
+### [0.4.0 - UnReleased]
+
+#### Major Features
+
+- NcJob Functions
+- NcQuota Functions
+- NcQtree Functions
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- None.
+
+#### Internal Changes
+
+- None.
+
+### [0.3.0 - Released]
 
 #### Major Features
 
@@ -18,7 +109,7 @@
 
 - None.
 
-### [0.2.0 - UnReleased]
+### [0.2.0 - Released]
 
 #### Major Features
 

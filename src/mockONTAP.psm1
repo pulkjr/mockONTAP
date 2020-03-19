@@ -1,6 +1,6 @@
 try
 {
-    (Test-ModuleManifest -Path "$( $MyInvocation.MyCommand.Path -replace '.psm1', '.psd1' )" -ErrorAction Ignore).FileList | Where-Object { $_ -match '(?:Public|Private).+[.]ps1$' } | ForEach-Object { . $_ }
+    Get-ChildItem -Path $PSScriptRoot -Filter *.ps1 -Recurse | ForEach-Object { . $_.FullName }
 }
 catch
 {

@@ -2,18 +2,18 @@ function New-MockNcCifsShare
 {
     param(
         $Acl = 'Everyone / Full Control',
-        $AttributeCacheTtl = '',
+        $AttributeCacheTtl,
         $AttributeCacheTtlSpecified = $False,
         $CifsServer = 'CifsServer01',
         $Comment = 'A CIFS Share for people',
-        $DirUmask = '',
+        $DirUmask,
         $DirUmaskSpecified = $False,
-        $FileUmask = '',
+        $FileUmask,
         $FileUmaskSpecified = $False,
-        $ForceGroupForCreate = '',
+        $ForceGroupForCreate,
         $MaxConnectionsPerShare = '4294967295',
         $MaxConnectionsPerShareSpecified = $True,
-        $NcController = 'Cluster01',
+        $NcController,
         $OfflineFilesMode = 'programs',
         $Path = '/vol0',
         $ShareName = 'Share01$',
@@ -47,6 +47,10 @@ function New-MockNcCifsShare
     if ( $Controller )
     {
         $NcController = $Controller
+    }
+    else
+    {
+        $NcController = New-MockNcController
     }
     $returnObj = [DataONTAP.C.Types.Cifs.CifsShare]::New()
     $returnObj.Acl = $Acl
@@ -112,7 +116,7 @@ function Remove-NcCifsShare
         [NetApp.Ontapi.Filer.C.NcController]
         $Controller
     )
-    If ( $PSCmdlet.ShouldProcess( "Removing Cifs Share $Name" ) ) { return }
+    if ( $PSCmdlet.ShouldProcess( "Removing Cifs Share $Name" ) ) { return }
 }
 function Add-NcCifsShare
 {

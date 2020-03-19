@@ -1,7 +1,7 @@
 function New-MockNcVserver
 {
     [CmdletBinding()]
-    Param(
+    param (
         [string]
         $Name,
         [string]
@@ -48,7 +48,7 @@ function New-MockNcVserver
         $MaxVolumes = 'unlimited',
         $NisDomain = 'nis.netapp.com',
         $OperationalState = 'running',
-        $QosPolicyGroup = '',
+        $QosPolicyGroup,
         $UUID = 'f38f651a-ca22-11e5-9a1e-00a09830cb90',
         $VolumeDeleteRetentionHours = 12,
         $VserverType = 'data',
@@ -59,13 +59,22 @@ function New-MockNcVserver
         [Object[]]
         $InputObject
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
 
     if ( $VserverContext -and ( -not $Name ) )
     {
         $name = $VserverContext
-    }
-    if( -Not $Controller ){
-        $Controller = New-MockNcController
     }
     if ( $InputObject )
     {
@@ -113,118 +122,200 @@ function New-MockNcVserver
         return $_mockSVM
     }
 }
-Function New-NcVserver
+function New-NcVserver
 {
-    [CmdletBinding()]
-    Param(
-        [Parameter( Mandatory )]
-        [string]
-        $Name,
-        [string]
-        $RootVolume,
-        [string]
-        $RootVolumeAggregate,
-        [string[]]
-        $NameServerSwitch,
+    [CmdletBinding( SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.Types.Vserver.VserverInfo] )]
+    param(
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Name,
+
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$RootVolume,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$RootVolumeAggregate,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string[]]$NameServerSwitch,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
         [ValidateSet( 'unix', 'ntfs', 'mixed' )]
-        [string]
-        $RootVolumeSecurity,
-        [string]
-        $AntivirusOnAccessPolicy,
-        [string]
-        $Comment,
+        [string]$RootVolumeSecurityStyle,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$AntivirusOnAccessPolicy,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$Comment,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
         [ValidateSet( 'C', 'ar', 'cs', 'da', 'de', 'en', 'en_US', 'es', 'fi', 'fr', 'he', 'hr', 'hu', 'it', 'ja', 'ja_v1', 'ja_JP.PCK', 'ja_JP.932', 'ja_JP.PCK_v2', 'ko', 'no', 'nl', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'sv', 'tr', 'zh', 'zh.GBK', 'zh_TW', 'zh_TW.BIG5' )]
-        [string]
-        $Language,
+        [string]$Language,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
         [ValidateSet( 'file', 'ldap' )]
-        [string[]]
-        $NameMappingSwitch,
-        [string]
-        $QuotaPolicy = 'default',
-        [string]
-        $SnapShotPolicy = 'default',
-        [string]
-        $RepositoryVserver,
-        [string]
-        $Ipspace,
-        [string]
-        $Subtype,
-        [string]
-        $CachingPolicy,
-        [switch]
-        $Async,
-        [string]
-        $Controller
+        [string[]]$NameMappingSwitch,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$QuotaPolicy = 'default',
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$SnapshotPolicy = 'default',
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [switch]$RepositoryVserver,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$Ipspace,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$Subtype,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [string]$CachingPolicy,
+        
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [switch]$Async,
+
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [System.Nullable[bool]]$IsSpaceReportingLogical,
+
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [System.Nullable[bool]]$IsSpaceEnforcementLogical,
+
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
 
     New-MockNcVserver @PSBoundParameters
 }
 function Get-NcVserver
 {
-    [CmdletBinding()]
-    Param(
-        [Parameter( Mandatory, ParameterSetName = 'one' )]
-        [string[]]
-        $Name,
-        [Parameter( ParameterSetName = 'one' )]
-        [Parameter( ParameterSetName = 'two' )]
-        [Parameter( ParameterSetName = 'three' )]
-        [string]
-        $VserverContext,
-        [Parameter( ParameterSetName = 'one' )]
-        [Parameter( ParameterSetName = 'three' )]
-        $Attributes,
-        [Parameter( ParameterSetName = 'two' )]
-        $Template,
-        [Parameter( ParameterSetName = 'three' )]
-        $Query,
-        $Controller
+    [CmdletBinding( DefaultParameterSetName = 'ByName' )]
+    [OutputType( [DataONTAP.C.Types.Vserver.VserverInfo] )]
+    param(
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string[]]$Name,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = 'Template', Mandatory )]
+        [switch]$Template,
+        [Parameter( ParameterSetName = 'Template' )]
+        [switch]$Fill,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.Vserver.VserverInfo]$Query,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [DataONTAP.C.Types.Vserver.VserverInfo]$Attributes,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
-
     foreach ( $_name in $name )
     {
-        New-MockNcVserver @PSBoundParameters -Name $_Name
-
+        New-MockNcVserver -Name $_name -VserverContext $VserverContext -Controller $Controller
     }
 }
 
 function Remove-NcVserver
 {
-    [CmdletBinding()]
-    Param(
-        [Parameter( Mandatory )]
-        [string[]]
-        $Name,
-        [switch]
-        $Async,
-        $Controller
+    [CmdletBinding( SupportsShouldProcess = $true )]
+    param(
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Name,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [switch]$Async,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
 
     return $null
 }
 function Stop-NcVserver
 {
-    [CmdletBinding()]
-    Param(
-        [Parameter( Mandatory )]
-        [string[]]
-        $Name,
-        $Controller
+    [CmdletBinding( SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.Types.Vserver.VserverInfo] )]
+    param(
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Name,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
 
     New-MockNcVserver @PSBoundParameters -State 'stopped'
 }
 function Start-NcVserver
 {
-    [CmdletBinding()]
-    Param(
-        [Parameter( Mandatory )]
-        [string[]]
-        $Name,
-        $Controller,
-        [switch]
-        $Force
+    [CmdletBinding( SupportsShouldProcess = $true )]
+    [OutputType( [DataONTAP.C.Types.Vserver.VserverInfo] )]
+    param(
+        [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
+        [string]$Name,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [switch]$Force,
+        [Parameter( ParameterSetName = '__AllParameterSets' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
     )
 
     New-MockNcVserver @PSBoundParameters -State 'running'
+}
+function New-MockNcVserverPeer
+{
+    param(
+        $Applications = 'snapmirror',
+        $NcController,
+        $PeerCluster = 'remote01',
+        $PeerState = 'peered',
+        $PeerVserver = 'remoteSVM',
+        $PeerVserverUuid = '93edb919-3ea6-11e9-9497-00a0983d8d1f',
+        $RemoteVserverName = 'fcpSVM',
+        $Vserver = 'localSVM',
+        $VserverUuid = '44926be1-47ad-11e8-ae96-00a098bf3e9d'
+    )
+    $returnObj = [DataONTAP.C.Types.VserverPeer.VserverPeerInfo]::New()
+    $returnObj.Applications = $Applications
+    $returnObj.NcController = $NcController
+    $returnObj.PeerCluster = $PeerCluster
+    $returnObj.PeerState = $PeerState
+    $returnObj.PeerVserver = $PeerVserver
+    $returnObj.PeerVserverUuid = $PeerVserverUuid
+    $returnObj.RemoteVserverName = $RemoteVserverName
+    $returnObj.Vserver = $Vserver
+    $returnObj.VserverUuid = $VserverUuid
+    return $returnObj
+}
+function Get-NcVserverPeer
+{
+    [CmdletBinding( DefaultParameterSetName = 'ByName' )]
+    [OutputType( [DataONTAP.C.Types.VserverPeer.VserverPeerInfo] )]
+    param(
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Vserver,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$PeerVserver,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$PeerState,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Application,
+        [Parameter( ParameterSetName = 'Template', Mandatory )]
+        [switch]$Template,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.VserverPeer.VserverPeerInfo]$Query,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [DataONTAP.C.Types.VserverPeer.VserverPeerInfo]$Attributes,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [string]$VserverContext,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
+    )
+    New-MockNcVserverPeer -Vserver $VserverContext -NcController $Controller -Applications $Application -PeerVserver $PeerVserver -PeerState $PeerState
 }

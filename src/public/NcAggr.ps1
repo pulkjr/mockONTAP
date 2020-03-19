@@ -1,7 +1,7 @@
-Function New-MockNcAggr
+function New-MockNcAggr
 {
     [CmdletBinding()]
-    Param(
+    param (
         $Name = 'VICE07_aggr1',
         $Attributes,
         $Controller,
@@ -43,13 +43,21 @@ Function New-MockNcAggr
         }
         else
         {
+            if ( $Controller )
+            {
+                $NcController = $Controller
+            }
+            else
+            {
+                $NcController = New-MockNcController
+            }
             $_mockAggr = [DataONTAP.C.Types.Aggr.AggrAttributes]::new()
 
             $Aggr64bitUpgradeAttributes = [DataONTAP.C.Types.Aggr.Aggr64bitUpgradeAttributes]::new()
             $AggrFsAttributes = [DataONTAP.C.Types.Aggr.AggrFsAttributes]::new()
             $AggrFsAttributes.BlockType = $BlockType
             $AggrFsAttributes.Fsid = '1741636997'
-            $AggrFsAttributes.NcController = New-MockNcController
+            $AggrFsAttributes.NcController = $NcController
             $AggrFsAttributes.Type = 'aggr'
             $AggrFsAttributes.FsidSpecified = $true
             $AggrInodeAttributes = [DataONTAP.C.Types.Aggr.AggrInodeAttributes]::new()
@@ -62,7 +70,7 @@ Function New-MockNcAggr
             $AggrInodeAttributes.MaxfilesAvailable = 31149
             $AggrInodeAttributes.MaxfilesPossible = 2040109451
             $AggrInodeAttributes.MaxfilesUsed = 96
-            $AggrInodeAttributes.NcController = New-MockNcController
+            $AggrInodeAttributes.NcController = $NcController
             $AggrInodeAttributes.PercentInodeUsedCapacity = 0
             $AggrInodeAttributes.FilesPrivateUsedSpecified = $True
             $AggrInodeAttributes.FilesTotalSpecified = $True
@@ -80,7 +88,7 @@ Function New-MockNcAggr
             $AggrOwnershipAttributes.DrHomeName =
             $AggrOwnershipAttributes.HomeId = 536977440
             $AggrOwnershipAttributes.HomeName = 'VICE-07'
-            $AggrOwnershipAttributes.NcController = New-MockNcController
+            $AggrOwnershipAttributes.NcController = $NcController
             $AggrOwnershipAttributes.OwnerId = 536977440
             $AggrOwnershipAttributes.OwnerName = $OwnerName
             $AggrOwnershipAttributes.DrHomeIdSpecified = $False
@@ -89,7 +97,7 @@ Function New-MockNcAggr
             $AggrPerformanceAttributes = [DataONTAP.C.Types.Aggr.AggrPerformanceAttributes]::new()
             $AggrPerformanceAttributes.FreeSpaceRealloc = 'off'
             $AggrPerformanceAttributes.MaxWriteAllocBlocks = 0
-            $AggrPerformanceAttributes.NcController = New-MockNcController
+            $AggrPerformanceAttributes.NcController = $NcController
             $AggrPerformanceAttributes.MaxWriteAllocBlocksSpecified = $True
             $rg0 = @{
                 ChecksumStyle                        = 'block'
@@ -121,11 +129,11 @@ Function New-MockNcAggr
                 RecomputingParityPercentageSpecified = $True
                 ReconstructionPercentageSpecified    = $True
             }
-            $RaidgroupAttributes = ( $RG0, $RG1| % {new-object DataONTAP.C.Types.Aggr.RaidgroupAttributes -Property $_} )
+            $RaidgroupAttributes = ( $RG0, $RG1 | % { new-object DataONTAP.C.Types.Aggr.RaidgroupAttributes -Property $_ } )
             $PlexAttributes = [DataONTAP.C.Types.Aggr.PlexAttributes]::new()
             $PlexAttributes.IsOnline = $True
             $PlexAttributes.IsResyncing = $False
-            $PlexAttributes.NcController = New-MockNcController
+            $PlexAttributes.NcController = $NcController
             $PlexAttributes.PlexName = ' /VICE07_aggr1/plex0'
             $PlexAttributes.PlexStatus = 'normal,active'
             $PlexAttributes.Pool = 0
@@ -154,7 +162,7 @@ Function New-MockNcAggr
             $AggrRaidAttributes.IsRootAggregate = $IsRootAggregate
             $AggrRaidAttributes.MirrorStatus = 'unmirrored'
             $AggrRaidAttributes.MountState = 'online'
-            $AggrRaidAttributes.NcController = New-MockNcController
+            $AggrRaidAttributes.NcController = $NcController
             $AggrRaidAttributes.PlexCount = 1
             $AggrRaidAttributes.Plexes = $PlexAttributes
             $AggrRaidAttributes.RaidLostWriteState = 'on'
@@ -179,12 +187,12 @@ Function New-MockNcAggr
             $AggrRaidAttributes.UsesSharedDisksSpecified = $True
             $AggrSnaplockAttributes = [DataONTAP.C.Types.Aggr.AggrSnaplockAttributes]::new()
             $AggrSnaplockAttributes.IsSnaplock = $False
-            $AggrSnaplockAttributes.NcController = New-MockNcController
+            $AggrSnaplockAttributes.NcController = $NcController
             $AggrSnaplockAttributes.SnaplockType = 'non_snaplock'
             $AggrSnaplockAttributes.IsSnaplockSpecified = $True
             $AggrSnapmirrorAttributes = [DataONTAP.C.Types.Aggr.AggrSnapmirrorAttributes]::new()
             $AggrSnapmirrorAttributes.DpSnapmirrorDestinations = 1
-            $AggrSnapmirrorAttributes.NcController = New-MockNcController
+            $AggrSnapmirrorAttributes.NcController = $NcController
             $AggrSnapmirrorAttributes.DpSnapmirrorDestinationsSpecified = $True
             $AggrSnapmirrorAttributes.LsSnapmirrorDestinationsSpecified = $False
             $AggrSnapmirrorAttributes.MvSnapmirrorDestinationsSpecified = $False
@@ -196,7 +204,7 @@ Function New-MockNcAggr
             $AggrSnapshotAttributes.MaxfilesAvailable = 0
             $AggrSnapshotAttributes.MaxfilesPossible = 0
             $AggrSnapshotAttributes.MaxfilesUsed = 0
-            $AggrSnapshotAttributes.NcController = New-MockNcController
+            $AggrSnapshotAttributes.NcController = $NcController
             $AggrSnapshotAttributes.PercentInodeUsedCapacity = 0
             $AggrSnapshotAttributes.PercentUsedCapacity = $PercentUsedCapacity
             $AggrSnapshotAttributes.SizeAvailable = $( $SnapShotSizeTotal - $SnapShotSizeUsed )
@@ -222,7 +230,7 @@ Function New-MockNcAggr
             $AggrSpaceAttributes.DataCompactionSpaceSaved = 0
             $AggrSpaceAttributes.DataCompactionSpaceSavedPercent = 0
             $AggrSpaceAttributes.HybridCacheSizeTotal = 399684665344
-            $AggrSpaceAttributes.NcController = New-MockNcController
+            $AggrSpaceAttributes.NcController = $NcController
             $AggrSpaceAttributes.PercentUsedCapacity = 44
             $AggrSpaceAttributes.PhysicalUsed = $PhysicalUsed
             if ( $SizeTotal -and -not $PhysicalUsedPercent -and $PhysicalUsed )
@@ -254,7 +262,7 @@ Function New-MockNcAggr
             $AggrStripingAttributes = [DataONTAP.C.Types.Aggr.AggrStripingAttributes]::new()
             $AggrVolumeCountAttributes = [DataONTAP.C.Types.Aggr.AggrVolumeCountAttributes]::new()
             $AggrVolumeCountAttributes.FlexvolCount = 25
-            $AggrVolumeCountAttributes.NcController = New-MockNcController
+            $AggrVolumeCountAttributes.NcController = $NcController
             $AggrVolumeCountAttributes.FlexvolCountCollectiveSpecified = $False
             $AggrVolumeCountAttributes.FlexvolCountNotOnlineSpecified = $False
             $AggrVolumeCountAttributes.FlexvolCountQuiescedSpecified = $False
@@ -301,7 +309,7 @@ Function New-MockNcAggr
 function Get-NcAggr
 {
     [CmdletBinding()]
-    Param(
+    param (
         $Name,
         $Attributes,
         $Controller,
@@ -315,7 +323,7 @@ function Get-NcAggr
 function New-MockNcAggrSpace
 {
     [CmdletBinding()]
-    Param(
+    param (
         $Name,
         $Attributes,
         $Controller,

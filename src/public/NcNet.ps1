@@ -41,8 +41,21 @@ function New-MockNcNetInterface
         $IsIpv4LinkLocalSpecified = "False",
         $ListenForDnsQuerySpecified = "True",
         $NetmaskLengthSpecified = "True",
-        $OpStatus = "up"
+        $OpStatus = "up",
+        $Controller
     )
+    if ( $Controller )
+    {
+        $NcController = $Controller
+    }
+    elseif ( $NcController -is [string])
+    {
+        $NcController = New-MockNcController -Name $NcController
+    }
+    else
+    {
+        $NcController = New-MockNcController
+    }
     $returnObj = [DataONTAP.C.Types.Net.NetInterfaceInfo]::new()
     $returnObj.Address = $Address
     $returnObj.AddressFamily = $AddressFamily
