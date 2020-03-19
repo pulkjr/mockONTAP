@@ -1,4 +1,40 @@
 # Release History
+### [0.6.0 - Released]
+
+#### Major Features
+
+- Added Cluster Peer Functions
+- Added Volume Move Functions
+
+#### Enhancements
+
+- None
+
+#### Fixes
+
+- None
+
+#### Internal Changes
+
+- None.
+### [0.5.0 - Released]
+
+#### Major Features
+
+- NcVol Functions
+
+#### Enhancements
+
+- None.
+
+#### Fixes
+
+- None.
+
+#### Internal Changes
+
+- None.
+
 ### [0.5.1 - Released]
 
 #### Major Features
