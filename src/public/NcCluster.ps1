@@ -88,3 +88,91 @@ function Get-NcCluster
     )
     New-MockNcCluster -NcController $Controller
 }
+function New-MockNcClusterPeer
+{
+    param(
+        $ActiveAddresses,
+        $ActiveEncrypt,
+        $AddressFamily = 'ipv4',
+        $AuthStatusAdmin = 'use_authentication',
+        $AuthStatusOperational = 'ok',
+        $Availability = 'available',
+        $ClusterName = 'cluster01',
+        $ClusterUuid = '53dd0e0e-f950-11e2-9656-123478563412',
+        $DarkEncrypt,
+        $Encrypt = 'never',
+        $EncryptionProtocol,
+        $EncryptionProtocolProposed,
+        $IpspaceName = 'Default',
+        $IsClusterHealthy,
+        $IsClusterHealthySpecified = 'False',
+        $LastUpdated,
+        $NcController,
+        $PeerAddresses,
+        $RemoteClusterName = 'Cluster02',
+        $RemoteClusterNodes,
+        $RpcConnectTimeout = '10',
+        $RpcConnectTimeoutSpecified = 'True',
+        $SerialNumber = '1-80-000091',
+        $Timeout = '60',
+        $TimeoutSpecified = 'True',
+        $UnreachableLocalNodes,
+        $UpdatePingTimeout = '5',
+        $UpdatePingTimeoutSpecified = 'True'
+    )
+    $returnObj = [DataONTAP.C.Types.ClusterPeer.ClusterPeerInfo]::New()
+    $returnObj.ActiveAddresses = $ActiveAddresses
+    $returnObj.ActiveEncrypt = $ActiveEncrypt
+    $returnObj.AddressFamily = $AddressFamily
+    $returnObj.AuthStatusAdmin = $AuthStatusAdmin
+    $returnObj.AuthStatusOperational = $AuthStatusOperational
+    $returnObj.Availability = $Availability
+    $returnObj.ClusterName = $ClusterName
+    $returnObj.ClusterUuid = $ClusterUuid
+    $returnObj.DarkEncrypt = $DarkEncrypt
+    $returnObj.Encrypt = $Encrypt
+    $returnObj.EncryptionProtocol = $EncryptionProtocol
+    $returnObj.EncryptionProtocolProposed = $EncryptionProtocolProposed
+    $returnObj.IpspaceName = $IpspaceName
+    $returnObj.IsClusterHealthy = $IsClusterHealthy
+    $returnObj.IsClusterHealthySpecified = $IsClusterHealthySpecified
+    $returnObj.LastUpdated = $LastUpdated
+    $returnObj.NcController = $NcController
+    $returnObj.PeerAddresses = $PeerAddresses
+    $returnObj.RemoteClusterName = $RemoteClusterName
+    $returnObj.RemoteClusterNodes = $RemoteClusterNodes
+    $returnObj.RpcConnectTimeout = $RpcConnectTimeout
+    $returnObj.RpcConnectTimeoutSpecified = $RpcConnectTimeoutSpecified
+    $returnObj.SerialNumber = $SerialNumber
+    $returnObj.Timeout = $Timeout
+    $returnObj.TimeoutSpecified = $TimeoutSpecified
+    $returnObj.UnreachableLocalNodes = $UnreachableLocalNodes
+    $returnObj.UpdatePingTimeout = $UpdatePingTimeout
+    $returnObj.UpdatePingTimeoutSpecified = $UpdatePingTimeoutSpecified
+    return $returnObj
+}
+function Get-NcClusterPeer
+{
+    [CmdletBinding( DefaultParameterSetName = 'ByName' )]
+    [OutputType( [DataONTAP.C.Types.ClusterPeer.ClusterPeerInfo] )]
+    param(
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Name,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Address,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [string]$Availability,
+        [Parameter( ParameterSetName = 'Template', Mandatory )]
+        [switch]$Template,
+        [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
+        [DataONTAP.C.Types.ClusterPeer.ClusterPeerInfo]$Query,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [DataONTAP.C.Types.ClusterPeer.ClusterPeerInfo]$Attributes,
+        [Parameter( ParameterSetName = 'ByName' )]
+        [Parameter( ParameterSetName = 'Template' )]
+        [Parameter( ParameterSetName = 'ByQuery' )]
+        [NetApp.Ontapi.Filer.C.NcController]$Controller
+    )
+    New-MockNcClusterPeer -ClusterName $Name -PeerAddresses $Address -Availability $Availability
+}
