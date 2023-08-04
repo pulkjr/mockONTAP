@@ -46,7 +46,7 @@ function Get-NcPortset
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Vserver,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Portset.PortsetInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]

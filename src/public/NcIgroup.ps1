@@ -7,7 +7,6 @@ function New-MockNcIgroup
         $Vserver,
         [String[]]
         $Initiator,
-        [switch]
         $Template,
         $Query,
         $Attributes,
@@ -115,7 +114,6 @@ function Get-NcIgroup
         [String]
         $Initiator,
         [Parameter( ParameterSetName = 'two' )]
-        [switch]
         $Template,
         [Parameter( ParameterSetName = 'three' )]
         $Query,

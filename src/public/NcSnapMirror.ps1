@@ -312,7 +312,7 @@ function Get-NcSnapMirror
         [Parameter( ParameterSetName = 'ByQuery' )]
         [switch]$Expand,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Snapmirror.SnapmirrorInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -1129,7 +1129,7 @@ function Get-NcSnapmirrorDestination
         [Parameter( ParameterSetName = 'ByQuery' )]
         [switch]$Expand,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Snapmirror.SnapmirrorDestinationInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]

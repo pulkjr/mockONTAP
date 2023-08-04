@@ -202,7 +202,7 @@ function Get-NcVserver
         [Parameter( ParameterSetName = 'ByQuery' )]
         [string]$VserverContext,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'Template' )]
         [switch]$Fill,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
@@ -302,7 +302,7 @@ function Get-NcVserverPeer
         [Parameter( ParameterSetName = 'ByName' )]
         [string]$Application,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.VserverPeer.VserverPeerInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
