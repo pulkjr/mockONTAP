@@ -56,7 +56,7 @@ function Get-NcQtree
         [Parameter( ParameterSetName = 'ByQuery' )]
         [string]$VserverContext,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Qtree.QtreeInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]

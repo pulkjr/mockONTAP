@@ -44,7 +44,7 @@ function Get-NcClusterHaInfo
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Node,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Cf.StorageFailoverInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -163,7 +163,7 @@ function Get-NcClusterPeer
         [Parameter( ParameterSetName = 'ByName' )]
         [string]$Availability,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.ClusterPeer.ClusterPeerInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]

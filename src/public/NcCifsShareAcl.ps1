@@ -42,7 +42,7 @@ function Get-NcCifsShareAcl
         [Parameter( ParameterSetName = 'ByName' )]
         [string]$UserOrGroup,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Cifs.CifsShareAccessControl]$Query,
         [Parameter( ParameterSetName = 'ByName' )]

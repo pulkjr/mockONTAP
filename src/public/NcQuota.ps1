@@ -102,7 +102,7 @@ function Get-NcQuota
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Qtree,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Quota.QuotaEntry]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -375,7 +375,7 @@ function Get-NcQuotaStatus
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Vserver,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Quota.QuotaStatusAttributes]$Query,
         [Parameter( ParameterSetName = 'ByName' )]

@@ -403,7 +403,6 @@ function Get-NcAggrSpace
         $Attributes,
         $Controller,
         [Parameter( ParameterSetName = 'two' )]
-        [switch]
         $Template,
         [Parameter( ParameterSetName = 'three' )]
         $Query

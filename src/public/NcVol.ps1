@@ -642,7 +642,7 @@ function Get-NcVol
         [Parameter( ParameterSetName = 'ByName' )]
         [string]$Vserver,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'Template' )]
         [switch]$Fill,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]

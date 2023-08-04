@@ -1,4 +1,5 @@
-function New-MockNcFcpAdapter {
+function New-MockNcFcpAdapter
+{
     param(
         $Adapter = '0e',
         $CacheLineSize,
@@ -147,7 +148,8 @@ function New-MockNcFcpAdapter {
     $returnObj.VlanIdSpecified = $VlanIdSpecified
     return $returnObj
 }
-function New-MockNcFcpAdapterStatsInfo {
+function New-MockNcFcpAdapterStatsInfo
+{
     param(
         $Adapter = '0e',
         $AdapterResets = '0',
@@ -252,7 +254,8 @@ function New-MockNcFcpAdapterStatsInfo {
     $returnObj.TotalLogouts = $TotalLogouts
     return $returnObj
 }
-function New-MockNcFcpService {
+function New-MockNcFcpService
+{
     param(
         $IsAvailable = $true,
         $IsAvailableSpecified = $true,
@@ -278,7 +281,8 @@ function New-MockNcFcpService {
     return $returnObj
 }
 
-function New-MockNcFcpInterfaceInfo {
+function New-MockNcFcpInterfaceInfo
+{
     param(
         $CurrentNode = 'cluster01-01',
         $CurrentPort = '0e',
@@ -313,7 +317,8 @@ function New-MockNcFcpInterfaceInfo {
     $returnObj.Vserver = $Vserver
     return $returnObj
 }
-function New-MockNcFcpAdapterInitiatorsInfo {
+function New-MockNcFcpAdapterInitiatorsInfo
+{
     param(
         $Adapter = 'fc01',
         $FcpConnectedInitiators,
@@ -336,7 +341,8 @@ function New-MockNcFcpAdapterInitiatorsInfo {
     $returnObj.Vserver = $Vserver
     return $returnObj
 }
-function New-MockNcFcpNodeName {
+function New-MockNcFcpNodeName
+{
     param(
         $Name = '20:01:00:a0:98:bf:3e:9b',
         $NcController,
@@ -355,7 +361,8 @@ function New-MockNcFcpNodeName {
     $returnObj.NcController = $NcController
     return $returnObj
 }
-function New-MockNcFcpPingIgroupStatusInfo {
+function New-MockNcFcpPingIgroupStatusInfo
+{
     param(
         $ExtStatus = 'wwpn_logged_in',
         $Igroup = 'fcpIgroup',
@@ -388,7 +395,8 @@ function New-MockNcFcpPingIgroupStatusInfo {
     $returnObj.Wwpn = $Wwpn
     return $returnObj
 }
-function New-MockNcFcpPingStatusInfo {
+function New-MockNcFcpPingStatusInfo
+{
     param(
         $ExtStatus = 'wwpn_logged_in',
         $Lif = 'fc01',
@@ -417,7 +425,8 @@ function New-MockNcFcpPingStatusInfo {
     $returnObj.Wwpn = $Wwpn
     return $returnObj
 }
-function Add-NcFcpService {
+function Add-NcFcpService
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpServiceInfo] )]
     param(
@@ -434,7 +443,8 @@ function Add-NcFcpService {
     )
     New-MockNcFcpService
 }
-function Clear-NcFcpPortNameAlias {
+function Clear-NcFcpPortNameAlias
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     param(
         [Parameter( ParameterSetName = 'ByWwpn' )]
@@ -450,7 +460,8 @@ function Clear-NcFcpPortNameAlias {
     )
     return
 }
-function Disable-NcFcp {
+function Disable-NcFcp
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets' )]
@@ -460,7 +471,8 @@ function Disable-NcFcp {
     )
     return
 }
-function Disable-NcFcpAdapter {
+function Disable-NcFcpAdapter
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpConfigAdapterInfo] )]
     param(
@@ -473,7 +485,8 @@ function Disable-NcFcpAdapter {
     )
     New-MockNcFcpAdapter
 }
-function Enable-NcFcp {
+function Enable-NcFcp
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets' )]
@@ -483,7 +496,8 @@ function Enable-NcFcp {
     )
     return
 }
-function Enable-NcFcpAdapter {
+function Enable-NcFcpAdapter
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpConfigAdapterInfo] )]
     param(
@@ -496,7 +510,8 @@ function Enable-NcFcpAdapter {
     )
     New-MockNcFcpAdapter
 }
-function Get-NcFcpAdapter {
+function Get-NcFcpAdapter
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpConfigAdapterInfo] )]
     param(
@@ -507,7 +522,7 @@ function Get-NcFcpAdapter {
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$NodeName,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpConfigAdapterInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -520,14 +535,15 @@ function Get-NcFcpAdapter {
     )
     New-MockNcFcpAdapter
 }
-function Get-NcFcpAdapterStatistics {
+function Get-NcFcpAdapterStatistics
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpAdapterStatsInfo] )]
     param(
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Adapter,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpAdapterStatsInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -540,7 +556,8 @@ function Get-NcFcpAdapterStatistics {
     )
     New-MockNcFcpAdapterStatsInfo
 }
-function Get-NcFcpInitiator {
+function Get-NcFcpInitiator
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpAdapterInitiatorsInfo] )]
     param(
@@ -549,7 +566,7 @@ function Get-NcFcpInitiator {
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Vserver,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpAdapterInitiatorsInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -566,7 +583,8 @@ function Get-NcFcpInitiator {
     )
     New-MockNcFcpAdapterInitiatorsInfo
 }
-function Get-NcFcpInterface {
+function Get-NcFcpInterface
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpInterfaceInfo] )]
     param(
@@ -577,7 +595,7 @@ function Get-NcFcpInterface {
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Vserver,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpInterfaceInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -594,7 +612,8 @@ function Get-NcFcpInterface {
     )
     New-MockNcFcpInterfaceInfo
 }
-function Get-NcFcpNameserver {
+function Get-NcFcpNameserver
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpNameserverInfo] )]
     param(
@@ -605,7 +624,7 @@ function Get-NcFcpNameserver {
         [Parameter( ParameterSetName = 'ByName' )]
         [System.Nullable[long]]$PortId,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpNameserverInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -622,7 +641,8 @@ function Get-NcFcpNameserver {
     )
     #TODO: Add call to mock
 }
-function Get-NcFcpNodeName {
+function Get-NcFcpNodeName
+{
     [CmdletBinding()]
     [OutputType( [DataONTAP.C.Types.Fcp.NodeName] )]
     param(
@@ -635,7 +655,8 @@ function Get-NcFcpNodeName {
     )
     New-MockNcFcpNodeName
 }
-function Get-NcFcportLinkState {
+function Get-NcFcportLinkState
+{
     [CmdletBinding()]
     [OutputType( [DataONTAP.C.Types.Fcport.LinkStateInfo] )]
     param(
@@ -648,7 +669,8 @@ function Get-NcFcportLinkState {
     )
     #TODO: Add call to mock
 }
-function Get-NcFcpPingIgroup {
+function Get-NcFcpPingIgroup
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpPingIgroupStatusInfo] )]
     param(
@@ -661,7 +683,7 @@ function Get-NcFcpPingIgroup {
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Lif,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpPingIgroupStatusInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -678,7 +700,8 @@ function Get-NcFcpPingIgroup {
     )
     New-MockNcFcpPingIgroupStatusInfo
 }
-function Get-NcFcpPingInitiator {
+function Get-NcFcpPingInitiator
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpPingStatusInfo] )]
     param(
@@ -689,7 +712,7 @@ function Get-NcFcpPingInitiator {
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Lif,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpPingStatusInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -706,7 +729,8 @@ function Get-NcFcpPingInitiator {
     )
     New-MockNcFcpPingStatusInfo
 }
-function Get-NcFcpPortName {
+function Get-NcFcpPortName
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpPortNameInfo] )]
     param(
@@ -717,7 +741,7 @@ function Get-NcFcpPortName {
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Vserver,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpPortNameInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -734,7 +758,8 @@ function Get-NcFcpPortName {
     )
     #TODO: Add call to mock
 }
-function Get-NcFcpPortNameAlias {
+function Get-NcFcpPortNameAlias
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.AliasesInfo] )]
     param(
@@ -745,7 +770,7 @@ function Get-NcFcpPortNameAlias {
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$Vserver,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.AliasesInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -762,14 +787,15 @@ function Get-NcFcpPortNameAlias {
     )
     #TODO: Add call to mock
 }
-function Get-NcFcpService {
+function Get-NcFcpService
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpServiceInfo] )]
     param(
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$NodeName,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpServiceInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -786,7 +812,8 @@ function Get-NcFcpService {
     )
     New-MockNcFcpService
 }
-function Get-NcFcpTopology {
+function Get-NcFcpTopology
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpTopologyInfo] )]
     param(
@@ -797,7 +824,7 @@ function Get-NcFcpTopology {
         [Parameter( ParameterSetName = 'ByName' )]
         [System.Nullable[long]]$DomainId,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpTopologyInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -814,7 +841,8 @@ function Get-NcFcpTopology {
     )
     #TODO: Add call to mock
 }
-function Get-NcFcpTopologyPort {
+function Get-NcFcpTopologyPort
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpTopologyPortInfo] )]
     param(
@@ -827,7 +855,7 @@ function Get-NcFcpTopologyPort {
         [Parameter( ParameterSetName = 'ByName' )]
         [string[]]$PortWwpn,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpTopologyPortInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -840,7 +868,8 @@ function Get-NcFcpTopologyPort {
     )
     #TODO: Add call to mock
 }
-function Get-NcFcpZone {
+function Get-NcFcpZone
+{
     [CmdletBinding( DefaultParameterSetName = 'ByName' )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpZoneInfo] )]
     param(
@@ -855,7 +884,7 @@ function Get-NcFcpZone {
         [Parameter( ParameterSetName = 'ByName' )]
         [System.Nullable[long]]$Unique,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Fcp.FcpZoneInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]
@@ -868,7 +897,8 @@ function Get-NcFcpZone {
     )
     #TODO: Add call to mock
 }
-function Remove-NcFcpService {
+function Remove-NcFcpService
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets' )]
@@ -878,7 +908,8 @@ function Remove-NcFcpService {
     )
     return
 }
-function Set-NcFcpAdapterSpeed {
+function Set-NcFcpAdapterSpeed
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     [OutputType( [DataONTAP.C.Types.Fcp.FcpConfigAdapterInfo] )]
     param(
@@ -893,7 +924,8 @@ function Set-NcFcpAdapterSpeed {
     )
     New-MockNcFcpAdapter
 }
-function Set-NcFcpNodeName {
+function Set-NcFcpNodeName
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
@@ -907,7 +939,8 @@ function Set-NcFcpNodeName {
     )
     return
 }
-function Set-NcFcpPortName {
+function Set-NcFcpPortName
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
@@ -921,7 +954,8 @@ function Set-NcFcpPortName {
     )
     return
 }
-function Set-NcFcpPortNameAlias {
+function Set-NcFcpPortNameAlias
+{
     [CmdletBinding( SupportsShouldProcess = $true )]
     param(
         [Parameter( ParameterSetName = '__AllParameterSets', Mandatory )]
@@ -937,7 +971,8 @@ function Set-NcFcpPortNameAlias {
     )
     return
 }
-function Test-NcFcp {
+function Test-NcFcp
+{
     [CmdletBinding()]
     [OutputType( [System.Boolean] )]
     param(

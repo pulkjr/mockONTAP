@@ -171,7 +171,7 @@ function Get-NcLun
         [Parameter( ParameterSetName = 'ByQuery' )]
         [string]$VserverContext,
         [Parameter( ParameterSetName = 'Template', Mandatory )]
-        [switch]$Template,
+        $Template,
         [Parameter( ParameterSetName = 'ByQuery', Mandatory )]
         [DataONTAP.C.Types.Lun.LunInfo]$Query,
         [Parameter( ParameterSetName = 'ByName' )]

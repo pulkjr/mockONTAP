@@ -96,7 +96,6 @@ function Get-NcCifsShare
         [DataONTAP.C.Types.Cifs.CifsShare]
         $Query,
         [Parameter( ParameterSetName = '2' )]
-        [Switch]
         $Template,
         [NetApp.Ontapi.Filer.C.NcController]
         $Controller
